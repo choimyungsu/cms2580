@@ -1,0 +1,152 @@
+
+
+CREATE TABLE examList
+(
+    `examListID`  INT              NOT NULL    AUTO_INCREMENT COMMENT 'pk', 
+    `examCode`    VARCHAR(10)      NULL        COMMENT '종목코드(구분)', 
+    `domain`      VARCHAR(45)      NULL        COMMENT '영역(과목)', 
+    `year`        VARCHAR(45)      NULL        COMMENT '출제년도', 
+    `turn`        VARCHAR(45)      NULL        COMMENT '회차', 
+    `period`      VARCHAR(45)      NULL        COMMENT '교시', 
+    `examNum`     VARCHAR(5)       NULL        COMMENT '문제번호', 
+    `examDesc`    VARCHAR(1500)    NULL        COMMENT '문제지문', 
+    `examBogi`    VARCHAR(500)     NULL        COMMENT '문제보기', 
+    `answer1`     VARCHAR(50)      NULL        COMMENT '1번', 
+    `answer2`     VARCHAR(50)      NULL        COMMENT '2번', 
+    `answer3`     VARCHAR(50)      NULL        COMMENT '3번', 
+    `answer4`     VARCHAR(50)      NULL        COMMENT '4번', 
+    `answer5`     VARCHAR(50)      NULL        COMMENT '5번', 
+    `answerDesc`  VARCHAR(500)     NULL        COMMENT '문제풀이', 
+    `answer`      VARCHAR(5)       NULL        COMMENT '정답', 
+    PRIMARY KEY (examListID)
+);
+
+ALTER TABLE examList COMMENT '기출문제';
+
+
+
+CREATE TABLE examMaster
+(
+    `examCode`  VARCHAR(10)    NOT NULL    COMMENT '시험코드', 
+    `examName`  VARCHAR(50)    NOT NULL    COMMENT '시험명', 
+    PRIMARY KEY (examCode)
+);
+
+ALTER TABLE examMaster COMMENT '시험종목';
+
+INSERT INTO `cms2580`.`exammaster` (`examCode`, `examName`) VALUES ('A001', '정보관리기술사');
+INSERT INTO `cms2580`.`exammaster` (`examCode`, `examName`) VALUES ('A002', '컴퓨터시스템응용기술사');
+INSERT INTO `cms2580`.`exammaster` (`examCode`, `examName`) VALUES ('B001', '정보보안기사');
+INSERT INTO `cms2580`.`exammaster` (`examCode`, `examName`) VALUES ('B002', 'DAP');
+INSERT INTO `cms2580`.`exammaster` (`examCode`, `examName`) VALUES ('B003', '리눅스마스터1급');
+
+
+
+CREATE TABLE examContents
+(
+    `examContentsID`  INT             NOT NULL    AUTO_INCREMENT COMMENT 'pk', 
+    `examCode`        VARCHAR(10)     NULL        COMMENT '시험코드', 
+    `seq`             VARCHAR(45)     NULL        COMMENT '시퀀스', 
+    `domain`          VARCHAR(45)     NULL        COMMENT '영역', 
+    `subject`         VARCHAR(200)    NULL        COMMENT '목차', 
+    PRIMARY KEY (examContentsID)
+);
+
+ALTER TABLE examContents COMMENT '시험관련 목차(범위)';
+
+
+
+CREATE TABLE linkUrl
+(
+    `linkURLID`     INT            NOT NULL    AUTO_INCREMENT COMMENT 'pk', 
+    `objectLink`    VARCHAR(45)    NULL        COMMENT '연결객체(테이블)', 
+    `objectLinkPK`  VARCHAR(45)    NULL        COMMENT '연결객체PK', 
+    `linkUrl`       VARCHAR(200)    NULL        COMMENT '연결URL', 
+    PRIMARY KEY (linkURLID)
+);
+
+
+CREATE TABLE user
+(
+    `userID`     VARCHAR(45)    NOT NULL    COMMENT '아이디', 
+    `password`   VARCHAR(45)    NULL        COMMENT '패스워드', 
+    `userName`   VARCHAR(45)    NULL        COMMENT '이름', 
+    `email`      VARCHAR(45)    NULL        COMMENT '이메일', 
+    `available`  INT            NULL        COMMENT '탈퇴여부', 
+    PRIMARY KEY (userID)
+);
+
+
+//## 1교시형 랜덤값 구하기
+select * from examlist a
+where a.examCode in('A001','A002')
+and a.period in('1','1.0')
+order by rand() limit 13;
+
+//## 2교시형 랜덤값 구하기
+select * from examlist a
+where a.examCode in('A001','A002')
+and a.period in('2','2.0','3','3.0','4','4.0')
+order by rand() limit 6;
+
+
+
+//## 회차 랜덤값 구하기
+select turn from examlist a
+where a.examCode ='A001'
+group by turn
+order by turn desc
+
+
+
+//## 아우터 조인(컨텐츠와 URL 연결) 
+select 
+a.examContentsID,
+a.seq,
+a.domain,
+a.subject,
+b.linkUrl
+ from  examContents a
+left outer join  linkurl  b
+on a.examContentsID = b.objectLinkPK
+and a.examCode='B001'
+;
+
+
+//단순 게시판 
+CREATE TABLE BBS
+(
+    `bbsID`         INT             NOT NULL    AUTO_INCREMENT, 
+    `bbsTitle`      VARCHAR(45)     NULL, 
+    `userID`        VARCHAR(45)     NULL, 
+    `bbsDate`       VARCHAR(45)     NULL, 
+    `bbsContent`    VARCHAR(500)    NULL, 
+    `bbsAvailable`  INT             NULL, 
+    PRIMARY KEY (bbsID)
+);
+
+ALTER TABLE BBS COMMENT '단순게시판';
+
+
+
+
+
+//검색
+select a.examListID , b.examname,a.turn,a.examDesc
+       from examlist a left outer join examMaster b 
+       on a.examcode = b.examcode  
+       where a.examDesc like %aa%
+       
+       
+CREATE TABLE linkFile
+(
+    `linkFileID`    INT            NOT NULL    AUTO_INCREMENT COMMENT 'pk', 
+    `objectLink`    VARCHAR(45)    NULL        COMMENT '연결객체(테이블)', 
+    `objectLinkPK`  VARCHAR(45)    NULL        COMMENT '연결객체PK', 
+    `fileName`      VARCHAR(45)    NULL        COMMENT '파일명', 
+    `realFileName`  VARCHAR(45)    NULL, 
+    `filePath`      VARCHAR(45)    NULL        COMMENT '경로', 
+    `downloadCnt`   INT            NULL        COMMENT '다운로드수', 
+    PRIMARY KEY (linkFileID)
+);       
+
