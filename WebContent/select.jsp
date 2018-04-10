@@ -81,6 +81,10 @@ function changeSelect2(){
             <option value="A001">정보관리기술사</option>
             <option value="A002">컴퓨터시스템응용기술사</option>
             <option value="B001">정보보안기사</option>
+            <option value="B003">리눅스마스터1급</option>
+            <option value="B004">네트워크관리사1급</option>
+            <option value="B011">9급 전산직(정보보호)</option>
+            <option value="B007">공인중개사1차</option>
             <option value="기타">기타</option>
         </select>
      </div>
@@ -97,7 +101,7 @@ function changeSelect2(){
   
   </form>
   </div><!-- form-group  -->
-  <iframe id="resultExam" name="resultExam" frameborder="1"  height="600" width="100%"> </iframe>
+  <iframe id="resultExam" src="examCount.jsp" name="resultExam" style="display:block; width:100%; height: 80vh; frameborder:1"> </iframe>
 </div><!-- container  -->
 
 

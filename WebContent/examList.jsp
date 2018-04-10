@@ -67,18 +67,17 @@
         userID = (String) session.getAttribute("userID");
     }
 
-String examcode = "";// 시험 종목
-if(request.getParameter("examcode")!=null && request.getParameter("examcode")!=""){
-	examcode = request.getParameter("examcode");
-	System.out.println("examcode========="+ examcode);
-}
-
-String turn = "";// 회차
-if(request.getParameter("turn")!=null && request.getParameter("turn")!=""){
-	turn = request.getParameter("turn");
-	System.out.println("turn========="+ turn);
-}
-
+	String examcode = "";// 시험 종목
+	if(request.getParameter("examcode")!=null && request.getParameter("examcode")!=""){
+		examcode = request.getParameter("examcode");
+		//System.out.println("examcode========="+ examcode);
+	}
+	
+	String turn = "";// 회차
+	if(request.getParameter("turn")!=null && request.getParameter("turn")!=""){
+		turn = request.getParameter("turn");
+		//System.out.println("turn========="+ turn);
+	}
 
 %>
  
@@ -190,14 +189,14 @@ function scoreResult(){ // 전체 문제 채점하기
 	for(int i =0 ; i < list.size(); i++){
 		
 		
-%>					<div <% if(examcode.equals("B001")){ %> class="col-sm-6" <%}else{%> class="col-sm-12"  <%}%>>
+%>					<div <% if(examcode.startsWith("B")){ %> class="col-sm-6" <%}else{%> class="col-sm-12"  <%}%>>
 					
 					<%-- 하나의 문제 유형 시작 --%>	
 						<div id="<%= i %>" style="position:relative" class="text-muted mt-0 mb-1"> <%-- 문제 영역 --%>
 						<img src="img/o.png" class="o" style="position:absolute; top:0px; left:0px; display:none;">
 						<img src="img/x.png" class="x" style="position:absolute; top:0px; left:0px; display:none;">
 						<img src="img/t.png" class="t" style="position:absolute; top:0px; left:0px; display:none;">
-						<% if(examcode.equals("B001")){ %> <hr>	<% } %>
+						<% if(examcode.startsWith("B")){ %> <hr>	<% } %>
 						<% 
 						      if(examcode.equals("A001") || examcode.equals("A002")){
 						    	 // 서로 다른값일때만 교시를 출력  
@@ -208,7 +207,7 @@ function scoreResult(){ // 전체 문제 채점하기
 							
 						%>	
 					    <% if(i==0) { %>
-	                        <div class="row">
+	                        <%-- <div class="row">
 	                            <div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 <%=turn %>회</p></div>
 	                            <div class="col-sm-5"><p></p></div>
 	                            <div class="col-sm-3" style="text-align:right; height:25px;"><p> &nbsp;&nbsp;(시험시간:100분)</p></div>
@@ -222,7 +221,7 @@ function scoreResult(){ // 전체 문제 채점하기
 	                            <div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
 	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>성명</p></div>
 	                            <div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-	                        </div>
+	                        </div> --%>
 
                         <% } %>
                         
@@ -239,6 +238,15 @@ function scoreResult(){ // 전체 문제 채점하기
 						<% if(list.get(i).getExamdesc()!=null) { %>
 						<%=  j %>. 
 						<%=		util.nulltoString(list.get(i).getExamdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")) %> <%-- 줄바꿈 처리 --%>
+						
+							<% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
+									<br><%=  list.get(i).getExamImg()%>
+									<br><%=  list.get(i).getAnswer1()%>
+									<br><%=  list.get(i).getAnswer2()%>
+									<br><%=  list.get(i).getAnswer3()%>
+									<br><%=  list.get(i).getAnswer4()%>
+							<% } %>
+							
 						<% 
 						    j++;//문제 번호 올리기 
 						   }
@@ -246,19 +254,24 @@ function scoreResult(){ // 전체 문제 채점하기
 						%>
 						</div>
 						<br>
-						<% if(examcode.equals("B001")){ %>
+						<% if(examcode.startsWith("B")){ %>
 							<div class="row">
 								<div class="col-sm-6" style="border: 1px solid ; border-radius: 5px; ">&nbsp;
 									① <input type=radio name="checkanswer<%=i%>" value="1">  
 									② <input type=radio name="checkanswer<%=i%>" value="2">  
 									③ <input type=radio name="checkanswer<%=i%>" value="3">  
 									④ <input type=radio name="checkanswer<%=i%>" value="4"> 
+							<% if(examcode.equals("B007")){ %> ⑤ <input type=radio name="checkanswer<%=i%>" value="5">  <% } %>		
 								</div>
 								<div class="col-sm-2"></div>
 								<div class="col-sm-4">
 									<button type="button" class="btn btn-primary btn-sm " onclick="answer( <%=i%> , <%= list.get(i).getAnswer() %>);">정답</button>
-									<% if(list.get(i).getAnswerdesc() !=null){ %><button type="button" class="btn btn-primary btn-sm " onclick="comment( <%= i %>);">해설</button> <% } %>
+									<% if(list.get(i).getAnswerdesc() !=null && list.get(i).getAnswerdesc().length()> 0){ %><button type="button" class="btn btn-primary btn-sm " onclick="comment( <%= i %>);">해설</button> <% } %>
 									<button type="button" class="btn btn-primary btn-sm " onclick="clearAnswer( <%=i%> );">다시</button>
+								    <%    if(userID !=null && userID.equals("cms")){     %>  
+									<a href="examView.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-primary btn-sm pull-right"> 수정 </a>
+									<% } %>
+									
 								</div>
 							</div>
 						<%} %>
@@ -325,6 +338,9 @@ function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+
+
 </script>		
 
 	

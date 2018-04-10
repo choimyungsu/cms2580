@@ -23,6 +23,10 @@ CREATE TABLE examList
 
 ALTER TABLE examList COMMENT '기출문제';
 
+ALTER TABLE `cms2580`.`examList` 
+ADD COLUMN `examImg` VARCHAR(200) NULL AFTER `answer`,
+ADD COLUMN `answerImg` VARCHAR(200) NULL AFTER `examImg`;
+
 
 
 CREATE TABLE examMaster
@@ -53,6 +57,9 @@ CREATE TABLE examContents
 );
 
 ALTER TABLE examContents COMMENT '시험관련 목차(범위)';
+
+ALTER TABLE `cms2580`.`examContents` 
+ADD COLUMN `definition` VARCHAR(1000) NULL AFTER `subject`;
 
 
 
@@ -112,6 +119,7 @@ on a.examContentsID = b.objectLinkPK
 and a.examCode='B001'
 ;
 
+//url 빠르게 입력하는 기능 추가 필요
 
 //단순 게시판 
 CREATE TABLE BBS
@@ -149,4 +157,39 @@ CREATE TABLE linkFile
     `downloadCnt`   INT            NULL        COMMENT '다운로드수', 
     PRIMARY KEY (linkFileID)
 );       
+
+
+
+// 랜덤 컨텐츠 검색
+select  examContentsID,
+        seq,
+        domain,
+        subject, 
+        definition,
+        ifnull(linkUrl,''), 
+        examCode,
+        objectLink  
+        from  examContents   
+        left outer join  linkUrl   
+        on examContentsID = objectLinkPK 
+        where examCode= 'A001' 
+        order by rand() limit 10
+
+        
+        
+        
+//달력         
+CREATE TABLE calendar
+(
+    `calendarID`  INT             NOT NULL    AUTO_INCREMENT, 
+    `id`          VARCHAR(45)     NULL        COMMENT '동일한 일정 묶음', 
+    `title`       VARCHAR(100)    NULL        COMMENT '일정명', 
+    `start`       DATETIME        NULL        COMMENT '시작일', 
+    `end`         DATETIME        NULL        COMMENT '종료일', 
+    `url`         VARCHAR(200)    NULL        COMMENT '연결주소', 
+    `userID`      VARCHAR(45)     NULL        COMMENT '사용자', 
+    PRIMARY KEY (calendarID)
+);
+
+ALTER TABLE calendar COMMENT '일정';
 

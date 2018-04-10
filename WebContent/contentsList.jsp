@@ -20,13 +20,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
 <title> CMS </title>
-<script>
-function search(){
-    
-    alert("개발중입니다.");
-    
-}
-</script>
+
 </head>
 <body>
 <jsp:include page="header.jsp" flush="true" />
@@ -52,12 +46,14 @@ function search(){
                     </h3>   
                 </div>
                 <div class="panel-body">
+                    <div class="table-responsive">
                         <table  class="display" style="text-align: center; border: 1px solid #dddddd" id="tableData1">
                             <thead>
                                 <tr>
                                     <th style="background-color: #eeeeee; text-align: center;">seq</th>
                                     <th style="background-color: #eeeeee; text-align: center;">domain</th>
                                     <th style="background-color: #eeeeee; text-align: center;">subject</th>
+                                    <th style="background-color: #eeeeee; text-align: center;">definition</th>
                                     <th style="background-color: #eeeeee; text-align: center;">linkurl</th>
                                 </tr>
                             </thead>
@@ -73,8 +69,10 @@ function search(){
                                 <tr>
                                     <td><%= list.get(i).getSeq() %></td>
                                     <td><%= list.get(i).getDomain() %></td>
-                                    <td style=" text-align: left;"><%= list.get(i).getSubject() %></td>
+                                    <td style=" text-align: left;"><a href="contentsView.jsp?examContentsID=<%=list.get(i).getExamcontentsid() %>" target="_self">  <%= list.get(i).getSubject() %></a></td>
+                                     <td style=" text-align: left;">  <%= util.cutStirng(list.get(i).getDefinition(),15) %></td>
                                     <td><a href="<%= list.get(i).getLinkurl() %>" target="_blank"> <%= list.get(i).getLinkurl() %> </a></td>
+                                    
                                 </tr>
                         <%
                         
@@ -83,6 +81,7 @@ function search(){
                         %>
                             </tbody>
                             </table>
+                       </div>
 
                 </div>
             </div>
@@ -90,8 +89,14 @@ function search(){
         <script>
             
             $(document).ready(function() {
-                $('#tableData1').DataTable();
+                
+                $('#tableData1').DataTable( {
+                    responsive: true
+                } );
+                
             } );
+
+            
 
         </script>
 </div>

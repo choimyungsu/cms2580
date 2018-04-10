@@ -54,7 +54,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 </h3>   
             </div>
             <div class="panel-body">
-            <form class="form-horizontal" action="examUpdate.jsp" method="post">
+            <form class="form-horizontal" action="examUpdate.jsp" method="post" target="_blank">
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="examListID">examListID</label>
                   <div class="col-sm-5">
@@ -68,7 +68,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="bizscope">문제</label>
                   <div class="col-sm-11"> 
-                  <textarea class="form-control" placeholder="글 내용" name="examDesc" maxlength="2048" style="height: 100px;" > <%= util.nulltoString(examlist.getExamdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"))%> </textarea>
+                  <textarea class="form-control" placeholder="글 내용" name="examDesc" maxlength="2048" style="height: 100px;" > <%= examlist.getExamdesc()%> </textarea>
                   </div>
                 </div>
                 <div class="form-group">
@@ -94,31 +94,31 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="answer1">지문1</label>
                   <div class="col-sm-5">
-                    <input type="text" class="form-control" id="answer1" placeholder="출제년도" value="<%= examlist.getAnswer1() %>">
+                    <input type="text" class="form-control" name="answer1" placeholder="지문1" value="<%= examlist.getAnswer1() %>">
                   </div>
                   <label class="control-label col-sm-1" for="answer2">지문2</label>
                   <div class="col-sm-5"> 
-                    <input type="text" class="form-control" name="answer2" placeholder="회차" value="<%= examlist.getAnswer2() %>">
+                    <input type="text" class="form-control" name="answer2" placeholder="지문2" value="<%= examlist.getAnswer2() %>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="answer3">지문3</label>
                   <div class="col-sm-5">
-                    <input type="text" class="form-control" name="answer3" placeholder="출제년도" value="<%= examlist.getAnswer3() %>">
+                    <input type="text" class="form-control" name="answer3" placeholder="지문3" value="<%= examlist.getAnswer3() %>">
                   </div>
                   <label class="control-label col-sm-1" for="answer4">지문4</label>
                   <div class="col-sm-5"> 
-                    <input type="text" class="form-control" name="answer4" placeholder="회차" value="<%= examlist.getAnswer4() %>">
+                    <input type="text" class="form-control" name="answer4" placeholder="지문4" value="<%= examlist.getAnswer4() %>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="seq">지문5</label>
                   <div class="col-sm-5">
-                    <input type="text" class="form-control" name="answer5" placeholder="출제년도" value="<%= examlist.getAnswer5() %>">
+                    <input type="text" class="form-control" name="answer5" placeholder="지문5" value="<%= examlist.getAnswer5() %>">
                   </div>
                   <label class="control-label col-sm-1" for="answer">정답</label>
                   <div class="col-sm-5"> 
-                    <input type="text" class="form-control" name="answer" placeholder="회차" value="<%= examlist.getAnswer() %>">
+                    <input type="text" class="form-control" name="answer" placeholder="정답" value="<%= examlist.getAnswer() %>">
                   </div>
                 </div> 
                 <div class="form-group">
@@ -127,13 +127,27 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                   <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="2048" style="height: 50px;" > <%= examlist.getAnswerdesc() %> </textarea>
                   </div>
                 </div>
-				<%
-					String userID = null;
-					if(session.getAttribute("userID") !=null ){
-					    userID = (String) session.getAttribute("userID");
-					}
-					if(userID !=null && userID.equals("cms")){
-				%>                
+                
+                <%
+                    String userID = null;
+                    if(session.getAttribute("userID") !=null ){
+                        userID = (String) session.getAttribute("userID");
+                    }
+                    if(userID !=null && userID.equals("cms")){
+                %>                
+                <div class="form-group">
+                  <label class="control-label col-sm-1" for="examImg">문제이미지</label>
+                  <div class="col-sm-11">
+                  <textarea class="form-control" placeholder="글 내용" name="examImg" maxlength="2048" style="height: 30px;" > <%= examlist.getExamImg() %> </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-1" for="answerImg">해설이미지</label>
+                  <div class="col-sm-11">
+                   <textarea class="form-control" placeholder="글 내용" name="answerImg" maxlength="2048" style="height: 30px;" > <%= examlist.getAnswerImg() %> </textarea> 
+                  </div>
+                </div>
+                
                 <div class="form-group"> 
                    <div class="col-sm-offset-1 col-sm-11">
                      <input type="submit" class="btn btn-primary pull-right" value="수정">

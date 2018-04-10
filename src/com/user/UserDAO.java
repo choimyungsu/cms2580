@@ -12,67 +12,75 @@ import com.file.Linkfile;
 
 public class UserDAO {
 
-	
-	public int login(String userID, String userPassword) {
-		String SQL = "SELECT password FROM user WHERE userID = ? ";
+	DataSource ds;
+	public UserDAO() {//생성자 에서 선언
 		try {
 			InitialContext initCtx = new InitialContext();
 			Context envContext = (Context) initCtx.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/cms2580");
-			Connection conn = ds.getConnection();
-			PreparedStatement pstmt  = conn.prepareStatement(SQL);
+			ds = (DataSource) envContext.lookup("jdbc/cms2580");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public int login(String userID, String userPassword) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String SQL = "SELECT password FROM user WHERE userID = ? ";
+		try {
+			conn = ds.getConnection();
+			pstmt  = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				 if(rs.getString(1).equals(userPassword)) {
-					rs.close();
-					pstmt.close();
-					conn.close();
-					initCtx.close();
 					return 1;//로그인 성공
 				 }else{
-					rs.close();
-					pstmt.close();
-					conn.close();
-					initCtx.close();
 					return 0;//비밀번호 불일치
 				 }
 			}
-			rs.close();
-			pstmt.close();
-			conn.close();
-			initCtx.close();
 			return -1;//아이디가 없음
 		}catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return -2;// 데이터 베이스 오류
 	}
 	
 	public int join(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?)";
 		try {
-			InitialContext initCtx = new InitialContext();
-			Context envContext = (Context) initCtx.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/cms2580");
-			Connection conn = ds.getConnection();
-			int i ;
-			PreparedStatement pstmt  = conn.prepareStatement(SQL);
+			conn = ds.getConnection();
+			pstmt  = conn.prepareStatement(SQL);
 			
 			pstmt.setString(1, user.getUserid());
 			pstmt.setString(2, user.getPassword());
 			pstmt.setString(3, user.getUsername());
 			pstmt.setString(4, user.getEmail());
 			pstmt.setInt(5, 1);
-			i = pstmt.executeUpdate();
 			
-			pstmt.close();
-			conn.close();
-			initCtx.close();
-			
-			return i ;
+			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				//if(rs!=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return -1 ; // 데이텁이스 오류
 	}
@@ -80,17 +88,16 @@ public class UserDAO {
 
 //한건 가져오기
 	public Linkfile getFileInformation(String objectLink, String objectLinkPK) {
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		String SQL = " SELECT * FROM linkFile WHERE objectLink = ?  and objectLinkPK = ? ";
 		try {
-			InitialContext initCtx = new InitialContext();
-			Context envContext = (Context) initCtx.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/cms2580");
-			Connection conn = ds.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, objectLink);
 			pstmt.setString(2, objectLinkPK);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			
 			Linkfile fileDTO =new Linkfile();
 			while (rs.next()) {
@@ -104,14 +111,18 @@ public class UserDAO {
 				fileDTO.setDownloadcnt(rs.getInt(7));
 			}
 			
-			rs.close();
-			pstmt.close();
-			conn.close();
-			initCtx.close();
 			return fileDTO;
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt !=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return null;//
 	}

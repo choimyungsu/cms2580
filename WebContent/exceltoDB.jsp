@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
 <head>
 <%@ page import="java.sql.*, javax.sql.*, java.io.*, javax.naming.InitialContext, javax.naming.Context, java.util.List" %>
@@ -7,7 +9,7 @@
 <%
     
 
-String  uploadType="A";//A는 기술사, B는 기사
+String  uploadType="B";//A는 기술사, B는 기사
 if(request.getParameter("uploadType") != null) {
     uploadType = request.getParameter("uploadType");
 }
@@ -27,7 +29,7 @@ if(request.getParameter("uploadType") != null) {
     if(uploadType.equals("A")){
          xlsxList = excelReader.xlsxToDBgisulsaExamList("C:\\excel\\gisulsaxlsx2.xlsx");// 
     }else{
-         xlsxList = excelReader.xlsxToDBgisaExamList("C:\\excel\\boangisa3.xlsx");// 
+         xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/9nits1804.xlsx");// 
     }
     
     ExamlistDAO examlistDAO = new ExamlistDAO();

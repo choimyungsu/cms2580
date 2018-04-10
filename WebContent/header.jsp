@@ -40,7 +40,7 @@
                 <ul class="dropdown-menu">
                      <li><a href="contentsList.jsp?type=B001"> 정보보안기사 </a></li>
                      <li><a href="contentsList.jsp?type=A001"> 정보처리기술사 </a></li>
-                     <li><a href="contentsList.jsp?type=A001"> 감리사 </a></li>
+                     <li><a href="contentsList.jsp?type=B002"> DAP </a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -51,6 +51,8 @@
                      <li><a href="gisulsaExamList.jsp?period=2"> 2교시형</a></li>
                 </ul>
             </li>
+            <li><a href="stickyNote.jsp">오늘의 Topic</a></li>
+            <li><a href="calendar.jsp">시험 일정</a></li>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 기타  <span class="caret"></span></a>

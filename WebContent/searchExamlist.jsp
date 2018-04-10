@@ -46,6 +46,7 @@ if(request.getParameter("search")!=null && request.getParameter("search")!=""){
                     </h3>   
                 </div>
                 <div class="panel-body">
+                    <div class="table-responsive">
                         <table  class="display" style="text-align: center; border: 1px solid #dddddd" id="tableData1">
                             <thead>
                                 <tr>
@@ -71,7 +72,8 @@ if(request.getParameter("search")!=null && request.getParameter("search")!=""){
         }
 %>
                          </tbody>
-                       </table>
+                        </table>
+                       </div>
 				    </div>
 				</div>
 			</div>

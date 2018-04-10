@@ -16,13 +16,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <title> CMS </title>
-<script>
-function search(){
-    
-    alert("개발중입니다.");
-    
-}
-</script>
+
 </head>
 <body>
 
@@ -44,7 +38,7 @@ if(request.getParameter("period")!=null && request.getParameter("period")!=""){
 
   <div class="content-wrapper">
 	<div class="container">
-	<div class="row">
+	<%-- <div class="row">
 		<div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 116회</p></div>
 		<div class="col-sm-5"><p></p></div>
 		<div class="col-sm-3" style="text-align:right; height:25px;"><p>제 <%= period %> 교시 &nbsp;&nbsp;(시험시간:100분)</p></div>
@@ -58,7 +52,7 @@ if(request.getParameter("period")!=null && request.getParameter("period")!=""){
 		<div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
 		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>성명</p></div>
 		<div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-	</div>
+	</div> --%>
 	<hr>
 	<div class="row">
 	<% if(period.equals("1.0") || period.equals("1")){ %>

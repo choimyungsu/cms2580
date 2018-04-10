@@ -21,7 +21,19 @@ public class Examcontents {
  //linkUrl
  private String linkurl;
 
- public String getLinkurl() {
+ 
+ //Á¤ÀÇ
+ private String definition;
+ 
+ public String getDefinition() {
+	return definition;
+}
+
+public void setDefinition(String definition) {
+	this.definition = definition;
+}
+
+public String getLinkurl() {
 	return linkurl;
 }
 
@@ -78,6 +90,7 @@ public Integer getExamcontentsid() {
      this.subject = param.getSubject();
      this.linkurl = param.getLinkurl();
      this.domain = param.getDomain();
+     this.definition = param.getDefinition();
  }
  
  

@@ -46,7 +46,44 @@
     System.out.println("examDesc"+request.getParameter("examDesc"));
     System.out.println("answerDesc"+request.getParameter("answerDesc"));
     System.out.println("answer"+request.getParameter("answer"));
- */          
+ */  
+ 
+ Examlist examlist = new Examlist();
+ 
+ examlist.setExamlistid(examListID);
+ 
+ if(request.getParameter("answer1") != null && request.getParameter("answer1") !="" ){
+	 examlist.setAnswer1(request.getParameter("answer1"));
+ }
+ if(request.getParameter("answer2") != null && request.getParameter("answer2") !="" ){
+     examlist.setAnswer2(request.getParameter("answer2"));
+}
+ if(request.getParameter("answer3") != null && request.getParameter("answer3") !="" ){
+     examlist.setAnswer3(request.getParameter("answer3"));
+}
+ if(request.getParameter("answer4") != null && request.getParameter("answer4") !="" ){
+     examlist.setAnswer4(request.getParameter("answer4"));
+}
+ if(request.getParameter("answer5") != null && request.getParameter("answer5") !="" ){
+     examlist.setAnswer5(request.getParameter("answer5"));
+} 
+ if(request.getParameter("answer") != null && request.getParameter("answer") !="" ){
+     examlist.setAnswer(request.getParameter("answer"));
+}
+ if(request.getParameter("answerDesc") != null && request.getParameter("answerDesc") !="" ){
+     examlist.setAnswerdesc(request.getParameter("answerDesc"));
+}
+ if(request.getParameter("examDesc") != null && request.getParameter("examDesc") !="" ){
+     examlist.setExamdesc(request.getParameter("examDesc"));
+}
+ if(request.getParameter("examImg") != null && request.getParameter("examImg") !="" ){
+     examlist.setExamImg(request.getParameter("examImg"));
+}
+ if(request.getParameter("answerImg") != null && request.getParameter("answerImg") !="" ){
+     examlist.setAnswerImg(request.getParameter("answerImg"));
+} 
+ 
+ 
     if(request.getParameter("examDesc") == null || request.getParameter("examDesc").equals("") ){
                 
                 PrintWriter script = response.getWriter();
@@ -57,7 +94,9 @@
     }else{
                 
             ExamlistDAO examlistDAO = new ExamlistDAO();
-            int result = examlistDAO.update(examListID, request.getParameter("examDesc"),request.getParameter("answerDesc"),request.getParameter("answer") );
+            //int result = examlistDAO.update(examListID, request.getParameter("examDesc"),request.getParameter("answerDesc"),request.getParameter("answer") );
+            int result = examlistDAO.update(examlist);
+            
             
             if(result == -1){
                 PrintWriter script = response.getWriter();

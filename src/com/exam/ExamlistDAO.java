@@ -101,7 +101,28 @@ public class ExamlistDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
 		if(examcode.equals("A001")  || examcode.equals("A002")) { turn = turn+".0";}
-		String SQL = "SELECT * FROM examList WHERE examcode = ? and turn = ? ";
+		//String SQL = "SELECT * FROM examList WHERE examCode = ? and turn = ? ";
+		String SQL = " select examListID, " +
+			     "  examCode, " +
+			     "  domain, " +
+			     "  year, " +
+			     "  round(turn), " +
+			     "  round(period), " +
+			     "  examNum, " +
+			     "  examDesc, " +
+			     "  examBogi, " +
+			     "  ifnull(answer1,''), " +
+			     "  ifnull(answer2,''), " +
+			     "  ifnull(answer3,''), " +
+			     "  ifnull(answer4,''), " +
+			     "  ifnull(answer5,''), " +
+			     "  ifnull(answerDesc,''), " +
+		  	     "  answer, " +
+		  	     "  ifnull(examImg,''), " +
+		  	     "  ifnull(answerImg,'') " +
+			     " from examList a" +
+			     " WHERE examCode = ? and turn = ?  ";
+		
 		 ArrayList<Examlist> list = new ArrayList();
 		
 		try {
@@ -129,6 +150,8 @@ public class ExamlistDAO {
 		        examlist.setAnswer5(rs.getString(14));
 		        examlist.setAnswerdesc(rs.getString(15));
 		        examlist.setAnswer(rs.getString(16));
+		        examlist.setExamImg(rs.getString(17));
+		        examlist.setAnswerImg(rs.getString(18));
 		        
 		        list.add(examlist);
 				
@@ -165,13 +188,15 @@ public class ExamlistDAO {
 					     "  examNum, " +
 					     "  examDesc, " +
 					     "  examBogi, " +
-					     "  answer1, " +
-					     "  answer2, " +
-					     "  answer3, " +
-					     "  answer4, " +
-					     "  answer5, " +
-					     "  answerDesc, " +
-				  	     "  answer " +
+					     "  ifnull(answer1,''), " +
+					     "  ifnull(answer2,''), " +
+					     "  ifnull(answer3,''), " +
+					     "  ifnull(answer4,''), " +
+					     "  ifnull(answer5,''), " +
+					     "  ifnull(answerDesc,''), " +
+				  	     "  answer, " +
+				  	     "  ifnull(examImg,''), " +
+				  	     "  ifnull(answerImg,'') " +
 					     " from examList a" + 
 					     " WHERE examListID = ? ";
 			try {
@@ -198,6 +223,8 @@ public class ExamlistDAO {
 			        examlist.setAnswer5(rs.getString(14));
 			        examlist.setAnswerdesc(rs.getString(15));
 			        examlist.setAnswer(rs.getString(16));
+			        examlist.setExamImg(rs.getString(17));
+			        examlist.setAnswerImg(rs.getString(18));
 			        return examlist;
 				}
 				
@@ -252,6 +279,59 @@ public class ExamlistDAO {
 		
 	}	
 		
+	//한건 수정하기
+		public int update(Examlist examlist) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "UPDATE examList SET " +
+					     " examDesc = ? , " +
+					     " answerDesc = ?, " +
+					     " answer1 =?,  " +
+					     " answer2 =?,  " +
+					     " answer3 =?,  " +
+					     " answer4 =?,  " +
+					     " answer5 =?,  " +
+					     " answer =?,  " +
+					     " examImg =?,  " +
+					     " answerImg =?  " +
+					     " WHERE examListID = ?";
+					
+			try {
+				
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				
+				pstmt.setString(1, examlist.getExamdesc());
+				pstmt.setString(2, examlist.getAnswerdesc());
+				pstmt.setString(3, examlist.getAnswer1());
+				pstmt.setString(4, examlist.getAnswer2());
+				pstmt.setString(5, examlist.getAnswer3());
+				pstmt.setString(6, examlist.getAnswer4());
+				pstmt.setString(7, examlist.getAnswer5());
+				pstmt.setString(8, examlist.getAnswer());
+				pstmt.setString(9, examlist.getExamImg());
+				pstmt.setString(10, examlist.getAnswerImg());
+				
+				pstmt.setInt(11, examlist.getExamlistid());
+				
+				return  pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+			
+		}	
+	
 	
 	//한건 삭제하기
 	
@@ -444,6 +524,80 @@ public class ExamlistDAO {
 			return list;//
 			
 		}
+		
+		// 
+		public ArrayList<Examgroupcount> getExamGroupList(){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null; 
+			String SQL = " select a.examCode,b.examName, count(a.examListID) from examList a ,examMaster b" + 
+						 " where a.examCode = b.examCode " + 
+						 " group by a.examCode";
+					
+			ArrayList<Examgroupcount> list = new ArrayList<Examgroupcount>();
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					Examgroupcount  examgroupcount = new Examgroupcount();
+					examgroupcount.setExamgroup(rs.getString(2));
+					examgroupcount.setCount(rs.getString(3));
+
+					list.add(examgroupcount);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return list;//
+		}
+
+
+	//바 차트 유형 
+	public String getExamGroupListJSON() {
+		StringBuffer result = new StringBuffer("");
+		ArrayList<Examgroupcount> examgroupcount = this.getExamGroupList();
+		for(int i=0; i<examgroupcount.size(); i++) {
+			result.append("[\"" +examgroupcount.get(i).getExamgroup() + "\",");
+			result.append( examgroupcount.get(i).getCount() + ",\"white blue\"]");
+			//마지막 줄 처리 
+			if(examgroupcount.size() > (i+1)) { result.append(",");}
+			
+		}
+
+		return result.toString();
+		
+	}
+	
+	//도넛 차트 유형 
+	public String getExamGroupListJSON2() {
+		StringBuffer result = new StringBuffer("");
+		ArrayList<Examgroupcount> examgroupcount = this.getExamGroupList();
+		for(int i=0; i<examgroupcount.size(); i++) {
+			result.append("[\"" +examgroupcount.get(i).getExamgroup() + "\",");
+			result.append( examgroupcount.get(i).getCount() + "]");
+			//마지막 줄 처리 
+			if(examgroupcount.size() > (i+1)) { result.append(",");}
+			
+		}
+
+		return result.toString();
+		
+	}	
+		
+		
+		
 		
 	
 }

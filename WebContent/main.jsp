@@ -3,8 +3,9 @@
     
 <%@ page import="com.user.UserDAO" %>
 <%@ page import="com.file.Linkfile" %>
+<%@ page import="com.exam.ExamlistDAO" %>  
+<%@ page import="com.exam.Examlist" %> 
 
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +13,50 @@
 <meta name="viewport" content="width=device-width", initial-scale="1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      //google.charts.load('current', {'packages':['corechart']});
+      google.charts.load("visualization", "1", {packages:["corechart"]});//챠트의 리사이즈가 가능하도록
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+
+     <%
+            ExamlistDAO examlistDAO = new ExamlistDAO();
+            String examGroupListJSON ="";
+            examGroupListJSON = examlistDAO.getExamGroupListJSON2();
+    %>         	
+          ['유형', '건수'],
+          
+          <%= examGroupListJSON%>
+
+        ]);
+
+        var options = {
+          title: '기출문제DB 등록건수',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+      
+      
+      $(window).resize(function(){
+    	  drawChart();
+    	});
+      
+      
+
+    </script>
+
+
 <title> CMS </title>
 
 <style>
@@ -30,6 +73,16 @@
 #footer p {
    text-align: center;
    font-size: 12px;
+}
+
+.chart {
+  margin:0;
+  width: 100%; 
+  min-height: 500px;
+  max-height: 900px;
+}
+.row {
+  margin:0 !important;
 }
 </style>
 </head>
@@ -88,7 +141,11 @@
     </a>
   </div>
 </div>
-    
+
+<div id="piechart"></div>
+
+
+</div>  
 
 
 <div id="footer">

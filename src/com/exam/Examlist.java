@@ -50,6 +50,14 @@ public class Examlist {
 
  // 정답 
  private String answer;
+ 
+
+
+// 문제 이미지
+ private String examImg;
+ 
+ //풀이 이미지
+ private String answerImg;
 
  public Integer getExamlistid() {
      return examlistid;
@@ -179,6 +187,21 @@ public class Examlist {
      this.answer = answer;
  }
 
+public String getExamImg() {
+	return examImg;
+}
+
+public void setExamImg(String examImg) {
+	this.examImg = examImg;
+}
+
+public String getAnswerImg() {
+	return answerImg;
+}
+
+public void setAnswerImg(String answerImg) {
+	this.answerImg = answerImg;
+}
  // Examlist 모델 복사
  public void CopyData(Examlist param)
  {
@@ -198,5 +221,7 @@ public class Examlist {
      this.answer5 = param.getAnswer5();
      this.answerdesc = param.getAnswerdesc();
      this.answer = param.getAnswer();
+     this.examImg = param.getExamImg();
+     this.answerImg = param.getAnswerImg();
  }
 }
