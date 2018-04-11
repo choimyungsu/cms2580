@@ -82,6 +82,10 @@
  if(request.getParameter("answerImg") != null && request.getParameter("answerImg") !="" ){
      examlist.setAnswerImg(request.getParameter("answerImg"));
 } 
+
+ if(request.getParameter("examBogi") != null && request.getParameter("examBogi") !="" ){
+     examlist.setExambogi(request.getParameter("examBogi"));
+} 
  
  
     if(request.getParameter("examDesc") == null || request.getParameter("examDesc").equals("") ){

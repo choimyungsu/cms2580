@@ -88,7 +88,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                   </div>
                   <label class="control-label col-sm-1" for="auditname">문제보기</label>
                   <div class="col-sm-5"> 
-                    <textarea class="form-control" placeholder="글 내용" name="exambogi" id="exambogi"  maxlength="2048" style="height: 100px;" ><%=examlist.getExambogi()  %></textarea>
+                    <textarea class="form-control" placeholder="글 내용" name="examBogi"  maxlength="2048" style="height: 100px;" ><%=examlist.getExambogi()  %></textarea>
                   </div>
                 </div>
                 <div class="form-group">

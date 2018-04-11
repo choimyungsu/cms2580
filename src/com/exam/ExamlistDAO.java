@@ -121,7 +121,8 @@ public class ExamlistDAO {
 		  	     "  ifnull(examImg,''), " +
 		  	     "  ifnull(answerImg,'') " +
 			     " from examList a" +
-			     " WHERE examCode = ? and turn = ?  ";
+			     " WHERE examCode = ? and turn = ?  " +
+			     " order by round(examNum) ";
 		
 		 ArrayList<Examlist> list = new ArrayList();
 		
@@ -294,7 +295,8 @@ public class ExamlistDAO {
 					     " answer5 =?,  " +
 					     " answer =?,  " +
 					     " examImg =?,  " +
-					     " answerImg =?  " +
+					     " answerImg =?,  " +
+					     " examBogi =?  " +
 					     " WHERE examListID = ?";
 					
 			try {
@@ -312,8 +314,9 @@ public class ExamlistDAO {
 				pstmt.setString(8, examlist.getAnswer());
 				pstmt.setString(9, examlist.getExamImg());
 				pstmt.setString(10, examlist.getAnswerImg());
+				pstmt.setString(11, examlist.getExambogi());
 				
-				pstmt.setInt(11, examlist.getExamlistid());
+				pstmt.setInt(12, examlist.getExamlistid());
 				
 				return  pstmt.executeUpdate();
 				

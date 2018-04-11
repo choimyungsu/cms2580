@@ -11,9 +11,6 @@
 <link rel="stylesheet" href="css/custom.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
-<script>
-
-</script>
 
 </head>
 <body>
@@ -23,7 +20,7 @@
 <div class="content-wrapper">
 <div class="container-fluid">
 
- <iframe id="sticky" src="stickyNoteiframe.jsp" name="sticky" frameborder="0"  height="700" width="100%"> </iframe>
+ <iframe id="sticky" src="stickyNoteiframe.jsp" name="sticky" style="display:block; width:100%; height: 80vh; frameborder:0"> </iframe>
   
 </div><!-- container  -->
 </div><!-- content-wrapper  -->

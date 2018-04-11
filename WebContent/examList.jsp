@@ -58,6 +58,8 @@
 #myBtn2:hover {
   background-color: #555;
 }
+
+
 </style>
 </head>
 
@@ -196,7 +198,26 @@ function scoreResult(){ // 전체 문제 채점하기
 						<img src="img/o.png" class="o" style="position:absolute; top:0px; left:0px; display:none;">
 						<img src="img/x.png" class="x" style="position:absolute; top:0px; left:0px; display:none;">
 						<img src="img/t.png" class="t" style="position:absolute; top:0px; left:0px; display:none;">
-						<% if(examcode.startsWith("B")){ %> <hr>	<% } %>
+						<%    
+						    if(examcode.startsWith("B")){
+	                            // 서로 다른 도메인(과목) 일때만 도메인을 출력  
+                                a[1]=a[0];
+                                a[0]=list.get(i).getDomain();
+                                if(!a[0].equals(a[1])){
+						    	
+						
+						%>
+						          <div id="domain" style="border:1px solid gray; text-align:center; box-shadow: 5px 5px 10px grey ; padding:10px; margin: 40px">
+									<h4><%=  list.get(i).getDomain() %></h4>
+								  </div>
+						          
+						<% 
+						        } // 도메인 이 다를때만 
+                        %>
+						 <hr>	
+						<% 
+						     } // B유형(객관식 시험) 
+						%>
 						<% 
 						      if(examcode.equals("A001") || examcode.equals("A002")){
 						    	 // 서로 다른값일때만 교시를 출력  
@@ -225,7 +246,10 @@ function scoreResult(){ // 전체 문제 채점하기
 
                         <% } %>
                         
-						         <h3> <%=  list.get(i).getPeriod() %> 교시</h3><br>
+                         <div id="domain" style="border:1px solid gray; text-align:center; box-shadow: 5px 5px 10px grey ; padding:10px; margin: 40px">
+						         <p> <%=  list.get(i).getPeriod() %> 교시</p>
+						 </div>
+						 
 						<%
 						     }//서로다른 교시를 확인하는 코드 끝
 						%>
@@ -239,13 +263,28 @@ function scoreResult(){ // 전체 문제 채점하기
 						<%=  j %>. 
 						<%=		util.nulltoString(list.get(i).getExamdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")) %> <%-- 줄바꿈 처리 --%>
 						
+						    <%-- 보기가 있을때 --%>
+                            <% if(list.get(i).getExambogi()!=null && list.get(i).getExambogi().length()> 0 ) { %>
+                            <div class="row">	
+                                <div class="col-sm-6" style="border: 1px solid ; border-radius: 5px; margin: 10px"><%= list.get(i).getExambogi().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") %> </div>
+                            </div>
+                            <% } %>	
+						    <%-- 문제 이미지가  있을때 --%>
 							<% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
+							<div class="row" style=" margin: 10px ">
 									<br><%=  list.get(i).getExamImg()%>
-									<br><%=  list.get(i).getAnswer1()%>
-									<br><%=  list.get(i).getAnswer2()%>
-									<br><%=  list.get(i).getAnswer3()%>
-									<br><%=  list.get(i).getAnswer4()%>
+                            </div>									
 							<% } %>
+							 <%-- 문제 보기가  있을때 --%>
+							<% if(list.get(i).getAnswer1()!=null && list.get(i).getAnswer1().length()> 0 ) { %>
+                            <div class="row" style=" margin: 10px ">
+                                    <br><%=  list.get(i).getAnswer1()%>
+                                    <br><%=  list.get(i).getAnswer2()%>
+                                    <br><%=  list.get(i).getAnswer3()%>
+                                    <br><%=  list.get(i).getAnswer4()%>
+                            </div>                                  
+                            <% } %>
+							
 							
 						<% 
 						    j++;//문제 번호 올리기 
@@ -256,12 +295,12 @@ function scoreResult(){ // 전체 문제 채점하기
 						<br>
 						<% if(examcode.startsWith("B")){ %>
 							<div class="row">
-								<div class="col-sm-6" style="border: 1px solid ; border-radius: 5px; ">&nbsp;
+								<div class="col-sm-6" style="border: 1px solid ; border-radius: 5px;  margin: 10px ">&nbsp;
 									① <input type=radio name="checkanswer<%=i%>" value="1">  
 									② <input type=radio name="checkanswer<%=i%>" value="2">  
 									③ <input type=radio name="checkanswer<%=i%>" value="3">  
 									④ <input type=radio name="checkanswer<%=i%>" value="4"> 
-							<% if(examcode.equals("B007")){ %> ⑤ <input type=radio name="checkanswer<%=i%>" value="5">  <% } %>		
+							<% if(examcode.equals("B007")){ %> ⑤ <input type=radio name="checkanswer<%=i%>" value="5"> <!-- 공인중개사 시험 --> <% } %>		
 								</div>
 								<div class="col-sm-2"></div>
 								<div class="col-sm-4">
@@ -293,7 +332,7 @@ function scoreResult(){ // 전체 문제 채점하기
 %>					
 	<input type="hidden" name="count" value="<%= list.size() %>">
 	
-	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	<button onclick="topFunction()" id="myBtn" title="Go to top">위로</button>
 	
 		</div><!-- row 끝  -->
 	</div><!-- container 끝  -->
