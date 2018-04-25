@@ -54,8 +54,36 @@ function changeSelect2(){
     var secondSelect = document.getElementById("level2");
     var secondValue = secondSelect.options[secondSelect.selectedIndex].value;    // select element에서 선택된 option의 value가 저장된다.
     
+    var thirdSelect = document.getElementById("level3");
+    thirdSelect.selectedIndex = 0; // 초기화
+    
     document.form1.target = "resultExam";
     document.form1.action = "examList.jsp";
+    document.form1.examcode.value = firstValue;
+    document.form1.turn.value = secondValue;
+    
+    document.form1.submit();
+}
+
+function changeSelect3(){
+
+    var firstSelect = document.getElementById("level1");
+    var firstValue = firstSelect.options[firstSelect.selectedIndex].value;    // select element에서 선택된 option의 value가 저장된다.
+    
+    var secondSelect = document.getElementById("level2");
+    var secondValue = secondSelect.options[secondSelect.selectedIndex].value;    // select element에서 선택된 option의 value가 저장된다.
+    
+    var thirdSelect = document.getElementById("level3");
+    var thirdValue = thirdSelect.options[thirdSelect.selectedIndex].value;    // select element에서 선택된 option의 value가 저장된다.
+    
+    document.form1.target = "resultExam";
+    
+    if(thirdValue=='one'){
+        document.form1.action = "examDetailView.jsp";
+    }else{
+    	document.form1.action = "examList.jsp";
+    }
+    
     document.form1.examcode.value = firstValue;
     document.form1.turn.value = secondValue;
     
@@ -81,9 +109,14 @@ function changeSelect2(){
             <option value="A001">정보관리기술사</option>
             <option value="A002">컴퓨터시스템응용기술사</option>
             <option value="B001">정보보안기사</option>
+            <option value="A003">정보보안기사 실기</option>
             <option value="B003">리눅스마스터1급</option>
+            <option value="A004">리눅스마스터1급 실기</option>
             <option value="B004">네트워크관리사1급</option>
             <option value="B011">9급 전산직(정보보호)</option>
+            <option value="B012">9급 전산직(전산개발)</option>
+            <option value="B014">7급 전산직</option>
+            <option value="B013">정보처리기사</option>
             <option value="B007">공인중개사1차</option>
             <option value="기타">기타</option>
         </select>
@@ -91,9 +124,15 @@ function changeSelect2(){
      <div class="col-sm-3" >
         <select id="level2" name="level2" onchange="changeSelect2()" class="form-control">
             <option value="" selected="selected">회차</option>
-
         </select>
     </div>
+     <div class="col-sm-3" >
+        <select id="level3" name="level3" onchange="changeSelect3()" class="form-control">
+            <option value="all" selected="selected">전체 보기</option>
+            <option value="one" >한문제씩 보기</option>
+        </select>
+    </div>
+
 
   </div><!-- row  -->
   <input type="hidden" name="examcode">

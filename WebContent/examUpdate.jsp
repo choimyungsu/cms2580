@@ -85,7 +85,12 @@
 
  if(request.getParameter("examBogi") != null && request.getParameter("examBogi") !="" ){
      examlist.setExambogi(request.getParameter("examBogi"));
-} 
+}
+ 
+//소스보기
+if(request.getParameter("syntaxDesc") != null && request.getParameter("syntaxDesc") !="" ){
+     examlist.setSyntexDesc(request.getParameter("syntaxDesc"));
+}
  
  
     if(request.getParameter("examDesc") == null || request.getParameter("examDesc").equals("") ){

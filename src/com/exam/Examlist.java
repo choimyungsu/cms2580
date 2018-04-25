@@ -58,8 +58,19 @@ public class Examlist {
  
  //풀이 이미지
  private String answerImg;
+ 
+ //소스 지문
+ private String syntexDesc;
 
- public Integer getExamlistid() {
+ public String getSyntexDesc() {
+	return syntexDesc;
+}
+
+public void setSyntexDesc(String syntexDesc) {
+	this.syntexDesc = syntexDesc;
+}
+
+public Integer getExamlistid() {
      return examlistid;
  }
 
@@ -223,5 +234,6 @@ public void setAnswerImg(String answerImg) {
      this.answer = param.getAnswer();
      this.examImg = param.getExamImg();
      this.answerImg = param.getAnswerImg();
+     this.syntexDesc = param.getSyntexDesc();
  }
 }

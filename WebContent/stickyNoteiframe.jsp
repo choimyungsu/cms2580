@@ -13,7 +13,8 @@
 <link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css"> 
 <link  href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet" type="text/css"> 
 <link  href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css"> 
-<link  href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet" type="text/css"> 
+<link  href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet" type="text/css">
+<link  href="http://fonts.googleapis.com/earlyaccess/notosanssc.css" rel="stylesheet" type="text/css"> 
 
 
 <style type="text/css">
@@ -64,7 +65,7 @@ ul li h2{
   padding-bottom:10px;
 }
 ul li p{
-  font-family:"Nanum Pen Script",arial,sans-serif;/* 글씨체 추가 */
+  font-family:"Nanum Pen Script",arial,sans-serif, "Noto Sans SC";/* 글씨체 추가 */
   /*font-family:"Reenie Beanie","Hanna",arial,sans-serif;/* 글씨체 추가 */
   font-size:140%;
 }

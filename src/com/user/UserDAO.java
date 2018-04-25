@@ -3,11 +3,13 @@ package com.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.exam.Examlist;
 import com.file.Linkfile;
 
 public class UserDAO {
@@ -126,4 +128,56 @@ public class UserDAO {
 		}
 		return null;//
 	}
+	
+	
+	
+	//회원 정보 가져오기
+		public ArrayList<User> userList(){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null; 
+			String SQL = " select userID, " +
+				     "  userName, " +
+				     "  email, " +
+				     "  available " +
+				     " from user " ;
+
+			
+			 ArrayList<User> list = new ArrayList();
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					User user = new User();	
+					user.setUserid(rs.getString(1));
+					user.setUsername(rs.getString(2));
+					user.setEmail(rs.getString(3));
+					user.setAvailable(rs.getInt(4));
+			        list.add(user);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return list;//
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	
 }

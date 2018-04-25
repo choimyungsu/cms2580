@@ -96,6 +96,15 @@
             aria-expanded="false"> <%= userID%> 님 <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="logoutAction.jsp">로그아웃</a></li>
+    <%
+        if(userID.equals("cms")){
+    %>                
+                 <li><a href="userList.jsp">회원보기</a></li>
+                 
+     <% 
+         } 
+     %>
+                
             </ul>
         </li>
     </ul>

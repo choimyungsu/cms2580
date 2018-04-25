@@ -17,14 +17,23 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 
+
+<!-- SynaxHighlighter 시작 -->
+<script type="text/javascript" src="js/vendor/sh/shCore.js"></script>
+<script type="text/javascript" src="js/vendor/sh/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/vendor/sh/shBrushJava.js"></script>
+<script type="text/javascript" src="js/vendor/sh/shBrushCpp.js"></script>
+<link type="text/css" rel="stylesheet" href="css/vendor/sh/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
 <style>
 #myBtn {
   display: none;
   position: fixed;
   top: 60px;
-  right: 30px;
+  right: 20px;
   z-index: 99;
-  font-size: 18px;
+  font-size: 12px;
   border: none;
   outline: none;
   background-color: #0080FF ;
@@ -42,9 +51,9 @@
 #myBtn2 {
   position: fixed;
   top: 20px;
-  right: 30px;
+  right: 20px;
   z-index: 99;
-  font-size: 18px;
+  font-size: 12px;
   border: none;
   outline: none;
   background-color: #0080FF ;
@@ -135,6 +144,9 @@ function comment(check){
   
     $("#title").html("해설");
     $("#content").html(str[0].value);
+    // 해설 이미지가 있는 경우 이미지도 모달창에 띄워준다.
+    //var img = document.getElementById('myImg');
+    
     //modal을 띄워준다.  
     $("#myModal").modal('show');
 }
@@ -177,8 +189,8 @@ function scoreResult(){ // 전체 문제 채점하기
 
 	<div class="row">
 	
-	<% 	if(!examcode.equals("A001") && !examcode.equals("A002")){ %>
-		<button onclick="scoreResult()" id="myBtn2" title="score">채점</button>
+	<% 	if(!examcode.startsWith("A")){ %><%-- 주관식 시험이면 채점 버튼 안보임 --%>
+		<button onclick="scoreResult()" id="myBtn2" title="score" class="btn btn-primary btn-sm">채점</button>
 	<% } %>	
 
  <%
@@ -199,8 +211,8 @@ function scoreResult(){ // 전체 문제 채점하기
 						<img src="img/x.png" class="x" style="position:absolute; top:0px; left:0px; display:none;">
 						<img src="img/t.png" class="t" style="position:absolute; top:0px; left:0px; display:none;">
 						<%    
-						    if(examcode.startsWith("B")){
-	                            // 서로 다른 도메인(과목) 일때만 도메인을 출력  
+						    if(examcode.startsWith("B") || examcode.equals("A003") || examcode.equals("A004")){
+	                            // 서로 다른 도메인(과목) 일때만 도메인을 출력  , 정보보안기사 실기 추가
                                 a[1]=a[0];
                                 a[0]=list.get(i).getDomain();
                                 if(!a[0].equals(a[1])){
@@ -219,7 +231,7 @@ function scoreResult(){ // 전체 문제 채점하기
 						     } // B유형(객관식 시험) 
 						%>
 						<% 
-						      if(examcode.equals("A001") || examcode.equals("A002")){
+						      if(examcode.equals("A001") || examcode.equals("A002")){ // 정보처리 기술사 일때만. 
 						    	 // 서로 다른값일때만 교시를 출력  
 						    	  a[1]=a[0];
 						    	  a[0]=list.get(i).getPeriod();
@@ -227,38 +239,16 @@ function scoreResult(){ // 전체 문제 채점하기
 						    		  j=1;//교시별 문제 번호 초기화 
 							
 						%>	
-					    <% if(i==0) { %>
-	                        <%-- <div class="row">
-	                            <div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 <%=turn %>회</p></div>
-	                            <div class="col-sm-5"><p></p></div>
-	                            <div class="col-sm-3" style="text-align:right; height:25px;"><p> &nbsp;&nbsp;(시험시간:100분)</p></div>
-	                        </div>
-	                        <div class="row">
-	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>분야</p></div>
-	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>정보통신</p></div>
-	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>자격종목</p></div>
-	                            <div class="col-sm-3" style="border:1px solid gray; text-align:center; "><p><%if(examcode.equals("A001")){%>정보관리기술사<%}else{ %>컴퓨터시스템응용기술사<%} %></p></div>
-	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>수험번호</p></div>
-	                            <div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-	                            <div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>성명</p></div>
-	                            <div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-	                        </div> --%>
-
-                        <% } %>
                         
                          <div id="domain" style="border:1px solid gray; text-align:center; box-shadow: 5px 5px 10px grey ; padding:10px; margin: 40px">
 						         <p> <%=  list.get(i).getPeriod() %> 교시</p>
 						 </div>
 						 
 						<%
-						     }//서로다른 교시를 확인하는 코드 끝
+						            }//서로다른 교시를 확인하는 코드 끝
+						     }//기술사 문제일때만 끝 
 						%>
-						
 
-								
-						<%
-						    } //기술사 문제일때만 끝 
-						%>
 						<% if(list.get(i).getExamdesc()!=null) { %>
 						<%=  j %>. 
 						<%=		util.nulltoString(list.get(i).getExamdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")) %> <%-- 줄바꿈 처리 --%>
@@ -268,7 +258,14 @@ function scoreResult(){ // 전체 문제 채점하기
                             <div class="row">	
                                 <div class="col-sm-6" style="border: 1px solid ; border-radius: 5px; margin: 10px"><%= list.get(i).getExambogi().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") %> </div>
                             </div>
-                            <% } %>	
+                            <% } %>
+                            <%-- 소스 지문이  있을때 --%>
+                            <% if(list.get(i).getSyntexDesc()!=null && list.get(i).getSyntexDesc().length()> 0) { %>
+                            <div class="row">
+                                <%= list.get(i).getSyntexDesc() %>
+                            </div>
+                            <% } %>
+                            
 						    <%-- 문제 이미지가  있을때 --%>
 							<% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
 							<div class="row" style=" margin: 10px ">
@@ -284,7 +281,12 @@ function scoreResult(){ // 전체 문제 채점하기
                                     <br><%=  list.get(i).getAnswer4()%>
                             </div>                                  
                             <% } %>
-							
+                            
+<%--                              문제 해설이 있는 주관식 시험 일때
+                            <% if(list.get(i).getAnswerdesc()!=null && list.get(i).getAnswerdesc().length()> 0 && examcode.equals("A003")) { %>
+                            <br> <button type="button" class="btn btn-primary btn-sm " onclick="comment( <%= i %>);">해설</button> 
+
+							<%} %> --%>
 							
 						<% 
 						    j++;//문제 번호 올리기 
@@ -293,27 +295,48 @@ function scoreResult(){ // 전체 문제 채점하기
 						%>
 						</div>
 						<br>
-						<% if(examcode.startsWith("B")){ %>
+						
+							
+							<% if(examcode.startsWith("B")){ %>
 							<div class="row">
 								<div class="col-sm-6" style="border: 1px solid ; border-radius: 5px;  margin: 10px ">&nbsp;
 									① <input type=radio name="checkanswer<%=i%>" value="1">  
 									② <input type=radio name="checkanswer<%=i%>" value="2">  
 									③ <input type=radio name="checkanswer<%=i%>" value="3">  
-									④ <input type=radio name="checkanswer<%=i%>" value="4"> 
-							<% if(examcode.equals("B007")){ %> ⑤ <input type=radio name="checkanswer<%=i%>" value="5"> <!-- 공인중개사 시험 --> <% } %>		
+									④ <input type=radio name="checkanswer<%=i%>" value="4">
+									<% if(examcode.equals("B007")){ %> ⑤ <input type=radio name="checkanswer<%=i%>" value="5"> <!-- 공인중개사 시험 --> <% } %>
 								</div>
-								<div class="col-sm-2"></div>
-								<div class="col-sm-4">
+							</div>
+							<% } %>
+							<div class="row">
+								<div class="col-sm-6">
+							<% if(examcode.startsWith("B")){ %>	
 									<button type="button" class="btn btn-primary btn-sm " onclick="answer( <%=i%> , <%= list.get(i).getAnswer() %>);">정답</button>
-									<% if(list.get(i).getAnswerdesc() !=null && list.get(i).getAnswerdesc().length()> 0){ %><button type="button" class="btn btn-primary btn-sm " onclick="comment( <%= i %>);">해설</button> <% } %>
 									<button type="button" class="btn btn-primary btn-sm " onclick="clearAnswer( <%=i%> );">다시</button>
-								    <%    if(userID !=null && userID.equals("cms")){     %>  
+							<% } %>		
+							<% if(list.get(i).getAnswerdesc() !=null && list.get(i).getAnswerdesc().length()> 0){ %>
+							         <button type="button" class="btn btn-primary btn-sm " onclick="comment( <%= i %>);">해설</button> 
+							<% } %>
+							
+							<%    if(userID !=null && userID.equals("cms")){     %>  
 									<a href="examView.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-primary btn-sm pull-right"> 수정 </a>
-									<% } %>
+							<% } %>
 									
 								</div>
 							</div>
-						<%} %>
+							
+							<% if(userID !=null && userID.length()>0) { %>  
+							<!-- 로그인 한 사용자들만 해설등록 및 보기를 할 수 있음. -->
+							<div class="row">
+                                <div class="col-sm-6">
+                                    <a href="socialAnswer.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-success btn-sm"> 해설등록 </a>
+                                    <!-- 회원 해설이 있는 경우만 나타나도록 변경 필요함. -->
+                                    <a href="socialAnswerList.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-success btn-sm"> 회원해설 </a>
+                           
+                                </div>
+                           </div>
+                            <% } %>
+						
 						<div id="d<%=i%>" class="collapse" style="border: 1px dashed red; border-radius: 5px"><%-- 해설/이미지 영역 --%>
 							&nbsp;<%= list.get(i).getAnswer() %>
 						</div>
@@ -332,7 +355,7 @@ function scoreResult(){ // 전체 문제 채점하기
 %>					
 	<input type="hidden" name="count" value="<%= list.size() %>">
 	
-	<button onclick="topFunction()" id="myBtn" title="Go to top">위로</button>
+	<button onclick="topFunction()" id="myBtn" title="Go to top" class="btn btn-primary btn-sm">위로</button>
 	
 		</div><!-- row 끝  -->
 	</div><!-- container 끝  -->

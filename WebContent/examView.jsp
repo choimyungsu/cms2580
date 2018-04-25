@@ -39,11 +39,11 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
     Util util = new Util();
     Examlist examlist = examlistDAO.searchExamListId(examListID);//""
     
-    if(util.nullCheck(examlist.getAnswerdesc())){
+/*     if(util.nullCheck(examlist.getAnswerdesc())){
     	//System.out.println("널이다.");
     }else{
     	//System.out.println("널 아니다.");
-    }
+    } */
   %>
   
         <div class="panel panel-primary">
@@ -71,6 +71,12 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                   <textarea class="form-control" placeholder="글 내용" name="examDesc" maxlength="2048" style="height: 100px;" > <%= examlist.getExamdesc()%> </textarea>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-1" for="bizscope">소스 지문</label>
+                  <div class="col-sm-11"> 
+                  <textarea class="form-control" placeholder="소스지문" name="syntaxDesc" maxlength="1000" style="height: 100px;" > <%= examlist.getSyntexDesc()%> </textarea>
+                  </div>
+                </div>                
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="seq">출제년도</label>
                   <div class="col-sm-5">

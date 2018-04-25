@@ -173,7 +173,7 @@ public class ExamlistExcelReader {
 	 * @return
 	 */
 	public List<Examlist> xlsxToDBgisaExamList(String filePath) {
-		// 諛섑솚�븷 媛앹껜瑜� �깮�꽦
+		// 반환할 객체를 생성
 		List<Examlist> list = new ArrayList<Examlist>();
 		
 		FileInputStream fis = null;
@@ -182,38 +182,38 @@ public class ExamlistExcelReader {
 		try {
 			
 			fis= new FileInputStream(filePath);
-			// HSSFWorkbook�� �뿊���뙆�씪 �쟾泥� �궡�슜�쓣 �떞怨� �엳�뒗 媛앹껜
+			// HSSFWorkbook은 엑셀파일 전체 내용을 담고 있는 객체 
 			workbook = new XSSFWorkbook(fis);
 			
-			// �깘�깋�뿉 �궗�슜�븷 Sheet, Row, Cell 媛앹껜
+			// 탐색에 사용할 Sheet, Row, Cell 객체
 			XSSFSheet curSheet;
 			XSSFRow   curRow;
 			XSSFCell  curCell;
 			Examlist vo;
 			
-			// Sheet �깘�깋 for 臾�
+			// Sheet 탐색 for 문
 			for(int sheetIndex = 0 ; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
-				// �쁽�옱 Sheet 諛섑솚
+				// 현재 Sheet 반환
 				curSheet = workbook.getSheetAt(sheetIndex);
-				// row �깘�깋 for臾�
+				// row 탐색 for문
 				for(int rowIndex=0; rowIndex < curSheet.getPhysicalNumberOfRows(); rowIndex++) {
-					// row 0�� �뿤�뜑�젙蹂댁씠湲� �븣臾몃뜲 臾댁떆
+					// row 0은 헤더정보이기 때문에 무시
 					if(rowIndex != 0) {
-						// �쁽�옱 row 諛섑솚
+						// 현재 row 반환
 						curRow = curSheet.getRow(rowIndex);
 						vo = new Examlist();
 						String value;
 						
-						// row�쓽 泥ル쾲吏� cell媛믪씠 鍮꾩뼱�엳吏� �븡�� 寃쎌슦留� cell �깘�깋
+						// row의 첫번째 cell값이 비어있지 않은 경우 만 cell탐색
 						if(!"".equals(curRow.getCell(0).getStringCellValue())) {
 							
-							// cell �깘�깋 for 臾�
+							// cell 탐색 for 문
 							for(int cellIndex=0;cellIndex<curRow.getPhysicalNumberOfCells(); cellIndex++) {
 								curCell = curRow.getCell(cellIndex);
 								
 								if(true) {
 									value = "";
-									// cell �뒪���씪�씠 �떎瑜대뜑�씪�룄 String�쑝濡� 諛섑솚 諛쏆쓬
+									// cell 스타일이 다르더라도 String으로 반환 받음
 									switch (curCell.getCellType()){
 					                case HSSFCell.CELL_TYPE_FORMULA:
 					                	value = curCell.getCellFormula();
@@ -235,7 +235,7 @@ public class ExamlistExcelReader {
 										break;
 					                }
 									
-									// �쁽�옱 column index�뿉 �뵲�씪�꽌 vo �뿉 �엯�젰
+									// 현재 column index에 따라서 vo에 입력
 									switch (cellIndex) {
 									case 0: // examCode
 										vo.setExamcode(value);
@@ -259,14 +259,18 @@ public class ExamlistExcelReader {
 										
 									case 5: // answer
 										vo.setAnswer(value);
-										break;									
-		
+										break;	
+
+									case 6: // answerDesc
+										vo.setAnswerdesc(value);
+										break;	
+										
 									default:
 										break;
 									}
 								}
 							}
-							// cell �깘�깋 �씠�썑 vo 異붽�
+							// cell 탐색 이후  vo 추가
 							list.add(vo);
 						}
 					}

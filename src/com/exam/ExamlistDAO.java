@@ -58,12 +58,12 @@ public class ExamlistDAO {
 	}
 	
 	//기사시험 insert(엑셀)
-	public int insertGisa(String examCode, String turn, String domain, String examNum,String examDesc, String answer) {
+	public int insertGisa(String examCode, String turn, String domain, String examNum,String examDesc, String answer, String answerDesc) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO examList(examCode, turn,domain,examNum,examDesc,answer)  VALUES (?, ? ,?, ?, ?, ? )";
+		String SQL = "INSERT INTO examList(examCode, turn,domain,examNum,examDesc,answer,answerDesc)  VALUES (?, ? ,?, ?, ?, ?,? )";
 		
 		try {
 			conn = ds.getConnection();
@@ -74,6 +74,7 @@ public class ExamlistDAO {
 			pstmt.setString(4, examNum);
 			pstmt.setString(5, examDesc);
 			pstmt.setString(6, answer);
+			pstmt.setString(7, answerDesc);
 			
 			return pstmt.executeUpdate();
 			
@@ -119,7 +120,8 @@ public class ExamlistDAO {
 			     "  ifnull(answerDesc,''), " +
 		  	     "  answer, " +
 		  	     "  ifnull(examImg,''), " +
-		  	     "  ifnull(answerImg,'') " +
+		  	     "  ifnull(answerImg,''), " +
+		  	     "  ifnull(syntaxDesc,'') " +
 			     " from examList a" +
 			     " WHERE examCode = ? and turn = ?  " +
 			     " order by round(examNum) ";
@@ -153,6 +155,7 @@ public class ExamlistDAO {
 		        examlist.setAnswer(rs.getString(16));
 		        examlist.setExamImg(rs.getString(17));
 		        examlist.setAnswerImg(rs.getString(18));
+		        examlist.setSyntexDesc(rs.getString(19));
 		        
 		        list.add(examlist);
 				
@@ -173,6 +176,93 @@ public class ExamlistDAO {
 		return list;//
 		
 	}
+	
+	//문제 한건 가져오기
+		public Examlist searchExamList(String examcode,String turn, String examnum){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null; 
+			if(examcode.equals("A001")  || examcode.equals("A002")) { turn = turn+".0";}
+			String SQL = " select examListID, " +
+				     "  examCode, " +
+				     "  ifnull(domain,''), " +
+				     "  year, " +
+				     "  round(turn), " +
+				     "  round(period), " +
+				     "  examNum, " +
+				     "  examDesc, " +
+				     "  examBogi, " +
+				     "  ifnull(answer1,''), " +
+				     "  ifnull(answer2,''), " +
+				     "  ifnull(answer3,''), " +
+				     "  ifnull(answer4,''), " +
+				     "  ifnull(answer5,''), " +
+				     "  ifnull(answerDesc,''), " +
+			  	     "  answer, " +
+			  	     "  ifnull(examImg,''), " +
+			  	     "  ifnull(answerImg,''), " +
+			  	     "  ifnull(syntaxDesc,'') " +
+				     " from examList a" +
+				     " WHERE examCode = ? and turn = ?  " +
+				     " and examNum = round(?)  " ;
+			
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, examcode);
+				pstmt.setString(2, turn);
+				pstmt.setString(3, examnum);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					
+					Examlist examlist = new Examlist();
+					
+			        examlist.setExamlistid(rs.getInt(1));
+			        examlist.setExamcode(rs.getString(2));
+			        examlist.setDomain(rs.getString(3));
+			        examlist.setYear(rs.getString(4));
+			        examlist.setTurn(rs.getString(5));
+			        examlist.setPeriod(rs.getString(6));
+			        examlist.setExamnum(rs.getString(7));
+			        examlist.setExamdesc(rs.getString(8));
+			        examlist.setExambogi(rs.getString(9));
+			        examlist.setAnswer1(rs.getString(10));
+			        examlist.setAnswer2(rs.getString(11));
+			        examlist.setAnswer3(rs.getString(12));
+			        examlist.setAnswer4(rs.getString(13));
+			        examlist.setAnswer5(rs.getString(14));
+			        examlist.setAnswerdesc(rs.getString(15));
+			        examlist.setAnswer(rs.getString(16));
+			        examlist.setExamImg(rs.getString(17));
+			        examlist.setAnswerImg(rs.getString(18));
+			        examlist.setSyntexDesc(rs.getString(19));
+			        
+			        return examlist;
+					
+				}
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return null;//
+			
+		}
+		
+	
+	
+	
 	
 	//한건 가져오기
 		public Examlist searchExamListId(String examListID){
@@ -197,7 +287,8 @@ public class ExamlistDAO {
 					     "  ifnull(answerDesc,''), " +
 				  	     "  answer, " +
 				  	     "  ifnull(examImg,''), " +
-				  	     "  ifnull(answerImg,'') " +
+				  	     "  ifnull(answerImg,''), " +
+				  	     "  ifnull(syntaxDesc,'') " +
 					     " from examList a" + 
 					     " WHERE examListID = ? ";
 			try {
@@ -226,6 +317,7 @@ public class ExamlistDAO {
 			        examlist.setAnswer(rs.getString(16));
 			        examlist.setExamImg(rs.getString(17));
 			        examlist.setAnswerImg(rs.getString(18));
+			        examlist.setSyntexDesc(rs.getString(19));
 			        return examlist;
 				}
 				
@@ -296,7 +388,8 @@ public class ExamlistDAO {
 					     " answer =?,  " +
 					     " examImg =?,  " +
 					     " answerImg =?,  " +
-					     " examBogi =?  " +
+					     " examBogi =?,  " +
+					     " syntaxDesc =?  " +
 					     " WHERE examListID = ?";
 					
 			try {
@@ -315,8 +408,9 @@ public class ExamlistDAO {
 				pstmt.setString(9, examlist.getExamImg());
 				pstmt.setString(10, examlist.getAnswerImg());
 				pstmt.setString(11, examlist.getExambogi());
+				pstmt.setString(12, examlist.getSyntexDesc());
 				
-				pstmt.setInt(12, examlist.getExamlistid());
+				pstmt.setInt(13, examlist.getExamlistid());
 				
 				return  pstmt.executeUpdate();
 				

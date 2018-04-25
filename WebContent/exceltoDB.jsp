@@ -51,8 +51,8 @@ if(request.getParameter("uploadType") != null) {
     if(uploadType.equals("A")){
          xlsxList = excelReader.xlsxToDBgisulsaExamList("C:\\excel\\gisulsaxlsx2.xlsx");// 
     }else{
-         xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/9nits1604.xlsx");//
-        // xlsxList = excelReader.xlsxToDBgisaExamList("C:\\excel\\9nits1604.xlsx");// 
+        xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/7nitg1708.xlsx");//
+         //xlsxList = excelReader.xlsxToDBgisaExamList("C:\\excel\\boangisasilgi10.xlsx");// 
     }
     
     ExamlistDAO examlistDAO = new ExamlistDAO();
@@ -62,7 +62,7 @@ if(request.getParameter("uploadType") != null) {
         if(uploadType.equals("A")){
             examlistDAO.insertGisulsa( xlsxList.get(i).getExamcode(), xlsxList.get(i).getTurn() , xlsxList.get(i).getDomain(),  xlsxList.get(i).getPeriod(),  xlsxList.get(i).getExamdesc() );
         }else{
-            examlistDAO.insertGisa( xlsxList.get(i).getExamcode(), xlsxList.get(i).getTurn(), xlsxList.get(i).getDomain(), xlsxList.get(i).getExamnum(), xlsxList.get(i).getExamdesc(), xlsxList.get(i).getAnswer()) ;
+            examlistDAO.insertGisa( xlsxList.get(i).getExamcode(), xlsxList.get(i).getTurn(), xlsxList.get(i).getDomain(), xlsxList.get(i).getExamnum(), xlsxList.get(i).getExamdesc(), xlsxList.get(i).getAnswer(), xlsxList.get(i).getAnswerdesc()) ;
         }
     }
     

@@ -5,6 +5,7 @@
 <%@ page import="com.exam.Examlist" %> 
 <%@ page import="com.common.Util" %> 
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <!DOCTYPE html>
@@ -31,7 +32,17 @@
 String search = "";// 시험 종목
 if(request.getParameter("search")!=null && request.getParameter("search")!=""){
 	search = request.getParameter("search");
-    System.out.println("search========="+ search);
+    //System.out.println("search========="+ search);
+    
+}
+
+if(request.getParameter("search")==null || request.getParameter("search")==""){
+    
+    PrintWriter script = response.getWriter();
+    script.println("<script>");
+    script.println("alert(' 검색어를 입력하세요.')");
+    script.println("location.href = history.back()");
+    script.println("</script>");
 }
 
 %>
