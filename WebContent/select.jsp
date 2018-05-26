@@ -108,6 +108,7 @@ function changeSelect3(){
             <option value="">시험 선택</option>
             <option value="A001">정보관리기술사</option>
             <option value="A002">컴퓨터시스템응용기술사</option>
+            <option value="B005">정보시스템 감리사</option>
             <option value="B001">정보보안기사</option>
             <option value="A003">정보보안기사 실기</option>
             <option value="B003">리눅스마스터1급</option>

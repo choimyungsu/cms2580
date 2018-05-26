@@ -135,45 +135,7 @@
 <!-- 본문 시작  -->
 
 <script>
-function answer(check, real) {
-	var name = "checkanswer"+check;
-	var checkValue
-	var arrRadio = document.getElementsByName(name);
-	for (var i=0;i<arrRadio.length;i++) {
-	    if (arrRadio[i].checked) {
-	    	checkValue = arrRadio[i].value ;
-	     break;
-	    }
-	 }
-	//초기화
-	$("#"+check).children(".o").hide();
-	$("#"+check).children(".x").hide();
-	$("#"+check).children(".t").hide();
-	
-	if(checkValue == real){
-		//alert("정답입니다.");
-		$("#"+check).children(".o").show();
-	}else{
-		//alert("오답입니다.");
-		$("#"+check).children(".x").show();
-	}
-}
 
-function clearAnswer(check){
-	//alert("clear check" + check);
-	
-	$("#"+check).cexamListIDo").hide();
-	$("#"+check).children(".x").hide();
-	$("#"+check).children(".t").hide();
-	
-	//라디오 선택값 초기화
-	var name = "checkanswer"+check;
-	var arrRadio = document.getElementsByName(name);
-	for (var i=0;i<arrRadio.length;i++) {
-	   arrRadio[i].checked = false;
-	 }
-	
-}
 
 
 function comment(check){
@@ -191,11 +153,8 @@ function comment(check){
     $("#myModal").modal('show');
 }
 
-function modify(Useranswerdescid){
-	//alert("Useranswerdescid="+Useranswerdescid);
-	location.href = "socialAnswer.jsp?Useranswerdescid="+Useranswerdescid+"&examListID=<%=examListID%>";
-	//Useranswerdescid
-}
+
+
 
 
 </script>
@@ -333,11 +292,11 @@ function modify(Useranswerdescid){
 						<div id="d0" class="collapse" style="border: 1px dashed red; border-radius: 5px"><%-- 해설/이미지 영역 --%>
 							&nbsp;<%=examlist.getAnswer()%>
 						</div>
-						<input type="hidden" name="realanswer0" value="<%=examlist.getAnswer()%>">
+						정답 : <input type="text" name="정답" value="<%=examlist.getAnswer()%>">
 						
 						<%
-													if(examlist.getAnswerdesc()!=null) {
-												%>
+							if(examlist.getAnswerdesc()!=null) {
+						%>
 						<input type="hidden" name="answerDesc0" value="<%=examlist.getAnswerdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>">
 						<%
 							}
@@ -361,14 +320,15 @@ function modify(Useranswerdescid){
 		            <tbody>
 					
 					<%
-											UseranswerdescDAO useranswerdescDAO = new UseranswerdescDAO();
-																																				        ArrayList<Useranswerdesc> list = useranswerdescDAO.searchUserAnswerList(Integer.parseInt(examListID));
-																																				        for(int k =0 ; k < list.size(); k++){
-										%>          
+						UseranswerdescDAO useranswerdescDAO = new UseranswerdescDAO();
+				        ArrayList<Useranswerdesc> list = useranswerdescDAO.searchUserAnswerList(Integer.parseInt(examListID));
+				        for(int k =0 ; k < list.size(); k++){
+					%>          
 					                <tr>
 					                    <td><%= list.get(k).getUserid() %></td>
 					                    <td><%= list.get(k).getAnswerdesc() %></td>
-					                    <td><% if(userID.equals(list.get(k).getUserid())){ %> <button type="button" class="btn btn-success btn-sm " onclick="modify( '<%= list.get(k).getUseranswerdescid() %>');">수정</button>  <% } %></td>
+					                    <td><% if(userID.equals(list.get(k).getUserid())){ %> <button type="button" class="btn btn-success btn-sm " onclick="modify(<%= list.get(k).getUseranswerdescid() %>)">수정</button>  <% } %></td>
+					                    <!-- <td> <button type="button" class="btn btn-success btn-sm" onclick="cms()">test</button>  </td> -->
 					                </tr>
 					<% } %>             
 	                </tbody>
@@ -433,6 +393,11 @@ function topFunction() {
 }
 
 
+function modify(Useranswerdescid){
+   // alert("Useranswerdescid="+Useranswerdescid);
+    location.href = "socialAnswer.jsp?Useranswerdescid="+Useranswerdescid+"&examListID=<%=examListID%>";
+    //Useranswerdescid
+}
 
 </script>		
 

@@ -105,8 +105,7 @@
 
 <jsp:include page="header.jsp" flush="true" />
 
- 
-    
+     
   <div class="container">
   
   <div class="row">

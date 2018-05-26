@@ -3,13 +3,12 @@
 <html>
 <head>
 <%@ page import="java.sql.*, javax.sql.*, java.io.*, javax.naming.InitialContext, javax.naming.Context, java.util.List" %>
-<%@ page import="com.excel.ExamlistExcelReader, com.exam.Examlist, com.exam.ExamlistDAO" %>
+<%@ page import="com.excel.ExamlistExcelReader,com.exam.Examlist,com.exam.ExamlistDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 </head>
 <body>
 <%
-
-String userID = null;
+	String userID = null;
 if(session.getAttribute("userID") !=null ){
     userID = (String) session.getAttribute("userID");
 }
@@ -51,7 +50,7 @@ if(request.getParameter("uploadType") != null) {
     if(uploadType.equals("A")){
          xlsxList = excelReader.xlsxToDBgisulsaExamList("C:\\excel\\gisulsaxlsx2.xlsx");// 
     }else{
-        xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/7nitg1708.xlsx");//
+        xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/linux1503.xlsx");//
          //xlsxList = excelReader.xlsxToDBgisaExamList("C:\\excel\\boangisasilgi10.xlsx");// 
     }
     
@@ -68,7 +67,6 @@ if(request.getParameter("uploadType") != null) {
     
     out.println("정상적으로 업로드 하였습니다.");
 }
-    
 %>
 
 </body>

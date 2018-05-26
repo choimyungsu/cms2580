@@ -54,7 +54,7 @@
    Integer Useranswerdescid=0;
    if(request.getParameter("Useranswerdescid")!=null && request.getParameter("Useranswerdescid")!="0"){
        Useranswerdescid = Integer.parseInt(request.getParameter("Useranswerdescid"));
-       System.out.println("들어 왔냐    Useranswerdescid="+Useranswerdescid);
+       //System.out.println("들어 왔냐    Useranswerdescid="+Useranswerdescid);
    }
        
 /*     

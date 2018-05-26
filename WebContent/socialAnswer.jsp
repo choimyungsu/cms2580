@@ -319,9 +319,12 @@ function comment(check){
 				<form class="form-horizontal" action="socialAnswerInsert.jsp" method="post" target="_self">		
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="answerDesc">문제 해설</label>
-                  <div class="col-sm-11"> 
-                  <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="1024" style="height: 50px;" ><% if(useranswerdesc.getAnswerdesc()!=null && useranswerdesc.getAnswerdesc().length()>0){ %><%= useranswerdesc.getAnswerdesc()%><% } %>
-                  </textarea>
+                  <div class="col-sm-11">
+                 <% if(useranswerdesc.getAnswerdesc()!=null && useranswerdesc.getAnswerdesc().length()>0){ %> 
+                  <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="1024" style="height: 50px;"><%= useranswerdesc.getAnswerdesc()%></textarea>
+                  <%}else{%>
+                  <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="1024" style="height: 50px;"></textarea>
+                  <%} %>
                   </div>
                 </div>
                 <div class="form-group"> 
