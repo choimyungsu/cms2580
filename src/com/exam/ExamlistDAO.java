@@ -121,7 +121,8 @@ public class ExamlistDAO {
 		  	     "  answer, " +
 		  	     "  ifnull(examImg,''), " +
 		  	     "  ifnull(answerImg,''), " +
-		  	     "  ifnull(syntaxDesc,'') " +
+		  	     "  ifnull(syntaxDesc,''), " +
+		  	     "  ifnull(url,'') " +
 			     " from examList a" +
 			     " WHERE examCode = ? and turn = ?  " +
 			     " order by round(examNum) ";
@@ -156,6 +157,7 @@ public class ExamlistDAO {
 		        examlist.setExamImg(rs.getString(17));
 		        examlist.setAnswerImg(rs.getString(18));
 		        examlist.setSyntexDesc(rs.getString(19));
+		        examlist.setUrl(rs.getString(20));
 		        
 		        list.add(examlist);
 				
@@ -187,12 +189,12 @@ public class ExamlistDAO {
 			String SQL = " select examListID, " +
 				     "  examCode, " +
 				     "  ifnull(domain,''), " +
-				     "  year, " +
+				     "  ifnull(year,''), " +
 				     "  round(turn), " +
 				     "  round(period), " +
 				     "  examNum, " +
 				     "  examDesc, " +
-				     "  examBogi, " +
+				     "  ifnull(examBogi,''), " +
 				     "  ifnull(answer1,''), " +
 				     "  ifnull(answer2,''), " +
 				     "  ifnull(answer3,''), " +
@@ -202,7 +204,8 @@ public class ExamlistDAO {
 			  	     "  answer, " +
 			  	     "  ifnull(examImg,''), " +
 			  	     "  ifnull(answerImg,''), " +
-			  	     "  ifnull(syntaxDesc,'') " +
+			  	     "  ifnull(syntaxDesc,''), " +
+			  	     "  ifnull(url,'') " +
 				     " from examList a" +
 				     " WHERE examCode = ? and turn = ?  " +
 				     " and examNum = round(?)  " ;
@@ -239,6 +242,7 @@ public class ExamlistDAO {
 			        examlist.setExamImg(rs.getString(17));
 			        examlist.setAnswerImg(rs.getString(18));
 			        examlist.setSyntexDesc(rs.getString(19));
+			        examlist.setUrl(rs.getString(20));
 			        
 			        return examlist;
 					
@@ -273,12 +277,12 @@ public class ExamlistDAO {
 			String SQL = " select examListID, " +
 					     "  examCode, " +
 					     "  domain, " +
-					     "  year, " +
+					     "  ifnull(year,''), " +
 					     "  round(turn), " +
 					     "  round(period), " +
 					     "  examNum, " +
 					     "  examDesc, " +
-					     "  examBogi, " +
+					     "  ifnull(examBogi,''), " +
 					     "  ifnull(answer1,''), " +
 					     "  ifnull(answer2,''), " +
 					     "  ifnull(answer3,''), " +
@@ -288,7 +292,8 @@ public class ExamlistDAO {
 				  	     "  answer, " +
 				  	     "  ifnull(examImg,''), " +
 				  	     "  ifnull(answerImg,''), " +
-				  	     "  ifnull(syntaxDesc,'') " +
+				  	     "  ifnull(syntaxDesc,''), " +
+				  	     "  ifnull(url,'') " +
 					     " from examList a" + 
 					     " WHERE examListID = ? ";
 			try {
@@ -318,6 +323,7 @@ public class ExamlistDAO {
 			        examlist.setExamImg(rs.getString(17));
 			        examlist.setAnswerImg(rs.getString(18));
 			        examlist.setSyntexDesc(rs.getString(19));
+			        examlist.setUrl(rs.getString(20));
 			        return examlist;
 				}
 				
@@ -389,7 +395,8 @@ public class ExamlistDAO {
 					     " examImg =?,  " +
 					     " answerImg =?,  " +
 					     " examBogi =?,  " +
-					     " syntaxDesc =?  " +
+					     " syntaxDesc =?,  " +
+					     " url =?  " +
 					     " WHERE examListID = ?";
 					
 			try {
@@ -409,8 +416,9 @@ public class ExamlistDAO {
 				pstmt.setString(10, examlist.getAnswerImg());
 				pstmt.setString(11, examlist.getExambogi());
 				pstmt.setString(12, examlist.getSyntexDesc());
+				pstmt.setString(13, examlist.getUrl());
 				
-				pstmt.setInt(13, examlist.getExamlistid());
+				pstmt.setInt(14, examlist.getExamlistid());
 				
 				return  pstmt.executeUpdate();
 				
@@ -533,6 +541,196 @@ public class ExamlistDAO {
 		}
 		return list;//
 	}
+	
+	
+	// 맞춤형 랜덤 기술사 문제
+		public ArrayList<Examlist> randomExamMaster(String period,String searchType, String searchTurn){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL ="";
+			String turn = "";
+			if(!searchTurn.equals("3")) { //최근 5회차, 10회차 일대만 조건문 생성 
+				turn = " and round(a.turn) in " + randomExamMasterTurn(searchType,searchTurn);
+			}
+			//System.out.println("turn=====================>"+turn);
+			
+			String examCode = " where a.examCode in('A001','A002') ";
+			//시험 종류(정보관리/컴응)
+			if(searchType.equals("1")) {
+				examCode = " where a.examCode='A001' ";
+			}else if(searchType.equals("2")) {
+				examCode = " where a.examCode='A002' ";
+			}else {//3 즉 전체이면 
+				examCode = " where a.examCode in('A001','A002') ";
+			}
+			
+			if(period.equals("1")) {
+					SQL = " select examListID, " +
+						  "  examCode, " +
+						  "  domain, " +
+						  "  year, " +
+						  "  round(turn), " +
+						  "  round(period), " +
+						  "  examNum, " +
+						  "  examDesc, " +
+						  "  examBogi, " +
+						  "  answer1, " +
+						  "  answer2, " +
+						  "  answer3, " +
+						  "  answer4, " +
+						  "  answer5, " +
+						  "  answerDesc, " +
+						  "  answer " +
+						  " from examList a" + 
+						  examCode +
+			 			  //" where a.examCode in('A001','A002') " + 
+			 		      " and a.period in('1','1.0')" + 
+			 		      turn + 
+			 		      " order by rand() limit 13;" ;
+			}else {
+					SQL = " select examListID, " +
+						  "  examCode, " +
+						  "  domain, " +
+						  "  year, " +
+						  "  round(turn), " +
+						  "  round(period), " +
+						  "  examNum, " +
+						  "  examDesc, " +
+						  "  examBogi, " +
+						  "  answer1, " +
+						  "  answer2, " +
+						  "  answer3, " +
+						  "  answer4, " +
+						  "  answer5, " +
+						  "  answerDesc, " +
+						  "  answer " +		
+						  " from examList a" + 
+						  examCode +
+			 			  //" where a.examCode in('A001','A002') " + 
+			 		      " and a.period in('2','2.0','3','3.0','4','4.0')" + 
+			 		      turn + 
+			 		      " order by rand() limit 6;" ;
+			}
+			 
+			
+			//System.out.println("SQL=====================>"+SQL);
+			 ArrayList<Examlist> list = new ArrayList();
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					Examlist examlist = new Examlist();	
+					
+			        examlist.setExamlistid(rs.getInt(1));
+			        examlist.setExamcode(rs.getString(2));
+			        examlist.setDomain(rs.getString(3));
+			        examlist.setYear(rs.getString(4));
+			        examlist.setTurn(rs.getString(5));
+			        examlist.setPeriod(rs.getString(6));
+			        examlist.setExamnum(rs.getString(7));
+			        examlist.setExamdesc(rs.getString(8));
+			        examlist.setExambogi(rs.getString(9));
+			        examlist.setAnswer1(rs.getString(10));
+			        examlist.setAnswer2(rs.getString(11));
+			        examlist.setAnswer3(rs.getString(12));
+			        examlist.setAnswer4(rs.getString(13));
+			        examlist.setAnswer5(rs.getString(14));
+			        examlist.setAnswerdesc(rs.getString(15));
+			        examlist.setAnswer(rs.getString(16));
+			        
+			        list.add(examlist);
+					
+				}
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return list;//
+		}
+	
+	
+		// 맞춤형 랜덤 문제 가져오기 위한 회차 스트링 뽑기
+		public String randomExamMasterTurn(String searchType, String searchTurn){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL ="";
+			
+			String examCode = " where a.examCode in('A001','A002') ";
+			//시험 종류(정보관리/컴응)
+			if(searchType.equals("1")) {
+				examCode = " where a.examCode='A001' ";
+			}else if(searchType.equals("2")) {
+				examCode = " where a.examCode='A002' ";
+			}else {//3 즉 전체이면 
+				examCode = " where a.examCode in('A001','A002') ";
+			}
+			
+			String limit = "";
+			//회차
+			if(searchTurn.equals("1")) {//최근5회차 
+				limit = " limit 5 ";
+			}else if(searchTurn.equals("2")){ //최근 10회차 
+				limit = " limit 10 ";
+			}else {
+				limit ="";
+			}
+			
+			SQL = "	select round(turn) from examList a "+
+					examCode +
+				  "	group by round(turn) " +
+				  "	desc " +
+				  limit ;
+
+			//System.out.println("SQL=====================>"+SQL);
+			
+				StringBuffer result = new StringBuffer("");
+				
+				try {
+					conn = ds.getConnection();
+					pstmt = conn.prepareStatement(SQL);
+					rs = pstmt.executeQuery();
+					
+					
+					result.append("(");
+					while (rs.next()) {
+						result.append("'"+rs.getString(1)+"'");
+						if(!rs.isLast()) { result.append(",");}
+					}
+					result.append(")");
+					
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt !=null) pstmt.close();
+						if(conn!=null) conn.close();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return result.toString();
+			}
+	
+	
+	
 	
 	
 	// 문제 회차

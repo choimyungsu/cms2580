@@ -74,7 +74,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="bizscope">소스 지문</label>
                   <div class="col-sm-11"> 
-                  <textarea class="form-control" placeholder="소스지문" name="syntaxDesc" maxlength="1000" style="height: 100px;" > <%= examlist.getSyntexDesc()%> </textarea>
+                  <textarea class="form-control" placeholder="소스지문" name="syntaxDesc" maxlength="1000" style="height: 100px;" ><%= examlist.getSyntexDesc()%></textarea>
                   </div>
                 </div>                
                 <div class="form-group">
@@ -94,7 +94,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                   </div>
                   <label class="control-label col-sm-1" for="auditname">문제보기</label>
                   <div class="col-sm-5"> 
-                    <textarea class="form-control" placeholder="글 내용" name="examBogi"  maxlength="2048" style="height: 100px;" ><%=examlist.getExambogi()  %></textarea>
+                    <textarea class="form-control" placeholder="글 내용" name="examBogi"  maxlength="2048" style="height: 100px;" ><%=examlist.getExambogi() %></textarea>
                   </div>
                 </div>
                 <div class="form-group">
@@ -130,7 +130,7 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="answerDesc">문제해설</label>
                   <div class="col-sm-11"> 
-                  <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="2048" style="height: 50px;" > <%= examlist.getAnswerdesc() %> </textarea>
+                  <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="2048" style="height: 50px;" ><%= examlist.getAnswerdesc() %></textarea>
                   </div>
                 </div>
                 
@@ -144,15 +144,21 @@ if(request.getParameter("examListID")!=null && request.getParameter("examListID"
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="examImg">문제이미지</label>
                   <div class="col-sm-11">
-                  <textarea class="form-control" placeholder="글 내용" name="examImg" maxlength="2048" style="height: 30px;" > <%= examlist.getExamImg() %> </textarea>
+                  <textarea class="form-control" placeholder="글 내용" name="examImg" maxlength="2048" style="height: 30px;" ><%= examlist.getExamImg() %></textarea>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-sm-1" for="answerImg">해설이미지</label>
                   <div class="col-sm-11">
-                   <textarea class="form-control" placeholder="글 내용" name="answerImg" maxlength="2048" style="height: 30px;" > <%= examlist.getAnswerImg() %> </textarea> 
+                   <textarea class="form-control" placeholder="글 내용" name="answerImg" maxlength="2048" style="height: 30px;" ><%= examlist.getAnswerImg() %></textarea> 
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-1" for="url">관련 URL</label>
+                  <div class="col-sm-11">
+                   <textarea class="form-control" placeholder="url" name="url" maxlength="2048" style="height: 30px;" ><%= examlist.getUrl() %></textarea> 
+                  </div>
+                </div>                
                 
                 <div class="form-group"> 
                    <div class="col-sm-offset-1 col-sm-11">

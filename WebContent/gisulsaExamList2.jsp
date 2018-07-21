@@ -20,9 +20,6 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" flush="true" />
-
-
 <%
 
 String period = "1";// 교시
@@ -50,23 +47,8 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
 
 
   <div class="content-wrapper">
-	<div class="container">
-	<%-- <div class="row">
-		<div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 116회</p></div>
-		<div class="col-sm-5"><p></p></div>
-		<div class="col-sm-3" style="text-align:right; height:25px;"><p>제 <%= period %> 교시 &nbsp;&nbsp;(시험시간:100분)</p></div>
-	</div>
-	<div class="row">
-		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>분야</p></div>
-		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>정보통신</p></div>
-		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>자격종목</p></div>
-		<div class="col-sm-3" style="border:1px solid gray; text-align:center; "><p>정보관리기술사</p></div>
-		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>수험번호</p></div>
-		<div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-		<div class="col-sm-1" style="border:1px solid gray; text-align:center; "><p>성명</p></div>
-		<div class="col-sm-2" style="border:1px solid gray; text-align:center; "><p>&nbsp;</p></div>
-	</div> --%>
-	<hr>
+	<div class="container-fluid">
+
 	<div class="row">
 	<% if(period.equals("1.0") || period.equals("1")){ %>
 		<h5>&nbsp;&nbsp;&nbsp;*다음 문제 중 10문제를 선택하여 설명하시오. (각 10점)</h5> 
@@ -79,7 +61,7 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
  <%
 	ExamlistDAO examlistDAO = new ExamlistDAO();
 	String temp ="";
-	ArrayList<Examlist> list = examlistDAO.randomExamMaster(period);//
+	ArrayList<Examlist> list = examlistDAO.randomExamMaster(period,searchType,searchTurn);//
 	Util util = new Util();
 	String gubun="관리";
 	

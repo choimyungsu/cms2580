@@ -160,6 +160,24 @@
 </div>
 <br>
 <div class="row">
+	<a href="https://play.google.com/store/apps/details?id=com.cafe24.cms2580.cmsgisa" target="_blank">
+	     <img src="img/app.png" width="250"  alt="앱다운로드">
+    </a>
+    <br>앱을 다운받으면 더욱 편리합니다.
+</div>
+<div class="row">
+    <div class="col-sm-6">
+    <div class="videoWrapper">
+    <iframe width="854" height="480" src="https://www.youtube.com/embed/kg8twIlpYzg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    </div>
+    <div class="col-sm-6">
+    <div class="videoWrapper">
+    <iframe width="854" height="480" src="https://www.youtube.com/embed/PSh0Z_nOlus" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-sm-6">
     <div class="videoWrapper">
     <iframe width="854" height="480" src="https://www.youtube.com/embed/Kc-fMdbsTtE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 

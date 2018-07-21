@@ -35,7 +35,10 @@
 <div class="container">
      <div class="row">
         <div class="col-sm-12">
-            <div align="center"><b color="blue">문제는 지속적으로 업로드 됩니다.</b></div>
+            <div align="center"><b color="blue">문제는 지속적으로 업로드 됩니다.</b> <br>
+                <b color="blue">2018년 6월 서울시 전산직 문제 업로드 되었습니다.</b> <br>
+                <b color="blue">2018년  9급 국가직(국어,영어,한국사) 문제 업로드 되었습니다.</b>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -51,9 +54,13 @@
 		    <!--Table head-->
 		    <thead>
 		        <tr>
-		            <th>#</th>
+		            <!-- <th>#</th> -->
 		            <th>종목</th>
 		            <th>등록  건수</th>
+		            <th>종목</th>
+                    <th>등록  건수</th>
+                    <th>종목</th>
+                    <th>등록  건수</th>
 		        </tr>
 		    </thead>
 		  <!--Table head-->
@@ -67,11 +74,11 @@
         StringBuffer result2 = new StringBuffer("");
         for(int i =0 ; i < list.size(); i++){
 %> 		    
-		        <tr>
-		            <th scope="row"><%= i+1 %></th>
+		       <% if((i%3) == 0) { %> <tr> <% } %>
+		            <%-- <th scope="row"><%= i+1 %></th> --%>
 		            <td><%= list.get(i).getExamgroup() %></td>
 		            <td><%= list.get(i).getCount() %></td>
-		        </tr>
+		        <% if((i%3) == 2 ) { %> </tr> <% } %>
 <% } %>		        
 		         
 		    </tbody>
@@ -132,6 +139,11 @@ var myChart = new Chart(ctx, {
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 99, 132, 0.2)'
             ],
             borderColor: [
@@ -147,6 +159,11 @@ var myChart = new Chart(ctx, {
                 'rgba(153, 102, 255, 1)',
                 'rgba(255,99,132,1)',
                 'rgba(255, 159, 64, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
                 'rgba(255,99,132,1)'
             ],
             borderWidth: 1

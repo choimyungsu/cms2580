@@ -40,7 +40,9 @@
                 <ul class="dropdown-menu">
                      <li><a href="contentsList.jsp?type=B001"> 정보보안기사 </a></li>
                      <li><a href="contentsList.jsp?type=A001"> 정보처리기술사 </a></li>
+                     <li><a href="contentsList.jsp?type=B003"> 리눅스마스터 </a></li>
                      <li><a href="contentsList.jsp?type=B002"> DAP </a></li>
+                     
                 </ul>
             </li>
             <li class="dropdown">
@@ -49,6 +51,7 @@
                 <ul class="dropdown-menu">
                      <li><a href="gisulsaExamList.jsp?period=1"> 1교시형</a></li>
                      <li><a href="gisulsaExamList.jsp?period=2"> 2교시형</a></li>
+                     <li><a href="gisulsaSelect.jsp"> 맞춤조건 출제</a></li>
                 </ul>
             </li>
             <li><a href="stickyNote.jsp">오늘의 Topic</a></li>
@@ -100,6 +103,7 @@
         if(userID.equals("cms")){
     %>                
                  <li><a href="userList.jsp">회원보기</a></li>
+                 <li><a href="fileUpload.jsp">파일업로드</a></li>
                  
      <% 
          } 

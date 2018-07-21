@@ -106,6 +106,11 @@ function changeSelect3(){
      <div class="col-sm-3" >
         <select id="level1" name="level1" onchange="changeSelect()" class="form-control">
             <option value="">시험 선택</option>
+            <option value="B011">9급 전산직(정보보호)</option>
+            <option value="B012">9급 전산직(전산개발)</option>
+            <option value="B014">7급 전산직</option>
+            <option value="B015">서울시 9급 전산직</option>
+            <option value="B016">서울시 7급 전산직</option>
             <option value="A001">정보관리기술사</option>
             <option value="A002">컴퓨터시스템응용기술사</option>
             <option value="B005">정보시스템 감리사</option>
@@ -114,11 +119,11 @@ function changeSelect3(){
             <option value="B003">리눅스마스터1급</option>
             <option value="A004">리눅스마스터1급 실기</option>
             <option value="B004">네트워크관리사1급</option>
-            <option value="B011">9급 전산직(정보보호)</option>
-            <option value="B012">9급 전산직(전산개발)</option>
-            <option value="B014">7급 전산직</option>
             <option value="B013">정보처리기사</option>
             <option value="B007">공인중개사1차</option>
+            <option value="B017">국어(9급 국가직)</option>
+            <option value="B018">영어(9급 국가직)</option>
+            <option value="B019">한국사(9급 국가직)</option>
             <option value="기타">기타</option>
         </select>
      </div>

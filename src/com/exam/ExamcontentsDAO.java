@@ -238,6 +238,41 @@ public class ExamcontentsDAO {
 					return -1;//데이터베이스 오류
 					
 				}	
+				
+				
+				//기술사문제 insert(엑셀) 
+				public int insertContents(String examCode, String seq, String domain,String subject) {
+					
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null;
+					String SQL = "INSERT INTO examContents(examCode,seq,domain,subject)  VALUES (? ,?, ?, ?)";
+					
+					try {
+						conn = ds.getConnection();
+						pstmt = conn.prepareStatement(SQL);
+						pstmt.setString(1, examCode);
+						pstmt.setString(2, seq);
+						pstmt.setString(3, domain);
+						pstmt.setString(4, subject);
+						
+						return pstmt.executeUpdate();
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(rs!=null) rs.close();
+							if(pstmt !=null) pstmt.close();
+							if(conn!=null) conn.close();
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+					return -1;//데이터베이스 오류
+				}
 		
+				
+
 
 }

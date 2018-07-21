@@ -269,13 +269,13 @@ function scoreResult(){ // 전체 문제 채점하기
 						    <%-- 문제 이미지가  있을때 --%>
 							<% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
 							<div class="row" style=" margin: 10px ">
-									<br><%=  list.get(i).getExamImg()%>
+									<%=  list.get(i).getExamImg()%>
                             </div>									
 							<% } %>
 							 <%-- 문제 보기가  있을때 --%>
 							<% if(list.get(i).getAnswer1()!=null && list.get(i).getAnswer1().length()> 0 ) { %>
                             <div class="row" style=" margin: 10px ">
-                                    <br><%=  list.get(i).getAnswer1()%>
+                                    <%=  list.get(i).getAnswer1()%>
                                     <br><%=  list.get(i).getAnswer2()%>
                                     <br><%=  list.get(i).getAnswer3()%>
                                     <br><%=  list.get(i).getAnswer4()%>
@@ -335,6 +335,14 @@ function scoreResult(){ // 전체 문제 채점하기
                            
                                 </div>
                            </div>
+	                           <% if(list.get(i).getUrl().length()>0) { %>  
+	                           <div class="row">
+	                                <div class="col-sm-6">
+	                                <a href="<%= list.get(i).getUrl() %>" target="_blank"> 관련해설 URL: <%= list.get(i).getUrl()  %> </a>
+	                                </div>
+	                           </div>
+	                           <% } %>
+                           
                             <% } %>
 						
 						<div id="d<%=i%>" class="collapse" style="border: 1px dashed red; border-radius: 5px"><%-- 해설/이미지 영역 --%>

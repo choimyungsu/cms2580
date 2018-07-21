@@ -25,7 +25,10 @@ String calendarListJSON ="";
 calendarListJSON = calendarDAO.getCalendarListJSON(today);
 
 //System.out.println(today);
-
+String userID = "";
+if(session.getAttribute("userID") !=null ){
+    userID = (String) session.getAttribute("userID");
+}
 
 %>
 
@@ -33,8 +36,8 @@ calendarListJSON = calendarDAO.getCalendarListJSON(today);
 
   $(document).ready(function() {
 	  var initialLocaleCode = 'ko';
-
-    $('#calendar').fullCalendar({
+     // var calendar1 = $('#calendar').fullCalendar();
+    var calendar = $('#calendar').fullCalendar({
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -43,10 +46,123 @@ calendarListJSON = calendarDAO.getCalendarListJSON(today);
       defaultDate: '<%= today%>',
       locale: initialLocaleCode,
       navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: true, // allow "more" link when too many events (true or false)
      
-      <%= calendarListJSON%>
+      <%= calendarListJSON%>,
+      
+      selectable:true,
+      selectHelper:true,
+      <% if(userID.equals("cms")){ %>
+      select:function(start, end, allDay)
+      {
+    	  var title = prompt("일정을 입력하세요");
+    	  if(title)
+    	  {
+	    		var start =  $.fullCalendar.formatDate(start,"Y-MM-DD HH:mm:ss");
+	    		var end =  $.fullCalendar.formatDate(end,"Y-MM-DD HH:mm:ss");
+	    		$.ajax({
+	    			url:"calendarInsert.jsp",
+	    			type:"POST",
+	    			data:{title:title, start:start, end:end},
+	    			success:function()
+	    			{
+	    				// 리프레쉬 구현 필요
+	    				//calendar.fullCalendar('rerenderEvents');
+	    				//$('#calendar').fullCalendar('rerenderEvents');
+	    				$('#calendar').fullCalendar('rerenderEvents');
+	    			   // $('#calendar').fullCalendar('rerenderEvents');
+	    			  //Updating new events
+	                  $('#calendar').fullCalendar('rerenderEvents');
+	                  //getting latest Events
+	                  //$('#fullCalendar').fullCalendar( 'refetchEvents' );
+	                  //getting latest Resources
+	                  $('#calendar').fullCalendar( 'refetchResources' );
+	    			   
+	    				alert("일정이 등록 되었습니다.");
+	    				location.reload();
+	    			}
+	    		})
+    	   }
+      },
+      editable: true,
+      eventResize:function(event)
+      {
+    	  var start = $.fullCalendar.formatDate(event.start,"Y-MM-DD HH:mm:ss");
+    	  var end = $.fullCalendar.formatDate(event.end,"Y-MM-DD HH:mm:ss");
+    	  var title = event.title;
+    	  var id = event.id;
+    	  var calendarID = event.calendarID;
+    	  $.ajax({
+              url:"calendarUpdate.jsp",
+              type:"POST",
+              data:{title:title, start:start, end:end, id:id, calendarID:calendarID},
+              success:function()
+              {
+            	  //calendar.fullCalendar('rerenderEvents');
+            	  $('#calendar').fullCalendar('rerenderEvents');
+            	  $('#calendar').fullCalendar( 'refetchEvents' );
+            	//remove old data
+                  $('#calendar').fullCalendar('removeEvents');
+                   
+
+                  //Updating new events
+                  $('#calendar').fullCalendar('rerenderEvents');
+                  //getting latest Events
+                  //$('#fullCalendar').fullCalendar( 'refetchEvents' );
+                  //getting latest Resources
+                  $('#calendar').fullCalendar( 'refetchResources' );
+            	  
+            	  
+                  alert("일정이 수정 되었습니다.");
+                  location.reload();
+              }
+          })
+    	  
+      },
+      
+      eventDrop:function(event)
+      {
+    	  var start = $.fullCalendar.formatDate(event.start,"Y-MM-DD HH:mm:ss");
+          var end = $.fullCalendar.formatDate(event.end,"Y-MM-DD HH:mm:ss");
+          var title = event.title;
+          var id = event.id;
+          var calendarID = event.calendarID;
+          $.ajax({
+              url:"calendarUpdate.jsp",
+              type:"POST",
+              data:{title:title, start:start, end:end, id:id, calendarID:calendarID},
+              success:function()
+              {
+            	 //calendar.fullCalendar('rerenderEvents');
+            	  $('#calendar').fullCalendar('rerenderEvents');
+            	  $('#calendar').fullCalendar( 'refetchEvents' );
+                  alert("일정이 수정 되었습니다.");
+                  location.reload();
+              }
+          })          
+    	  
+      },
+      
+      eventClick:function(event)
+      {
+    	  if(confirm("삭제하시겠습니까?"))
+    	  {
+    		  var calendarID = event.calendarID;
+    		  $.ajax({
+                  url:"calendarDelete.jsp",
+                  type:"POST",
+                  data:{calendarID:calendarID},
+                  success:function()
+                  {
+                	  //calendar.fullCalendar('rerenderEvents');
+                	  $('#calendar').fullCalendar('rerenderEvents');
+                      alert("일정이 삭제 되었습니다.");
+                      location.reload();
+                  }
+              })    
+    	  }
+      }
+      <%}%>
 
       /*
       events: [

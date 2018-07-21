@@ -91,6 +91,12 @@
 if(request.getParameter("syntaxDesc") != null && request.getParameter("syntaxDesc") !="" ){
      examlist.setSyntexDesc(request.getParameter("syntaxDesc"));
 }
+
+//관련 URL
+if(request.getParameter("url") != null && request.getParameter("url") !="" ){
+   examlist.setUrl(request.getParameter("url"));
+}
+
  
  
     if(request.getParameter("examDesc") == null || request.getParameter("examDesc").equals("") ){

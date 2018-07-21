@@ -48,9 +48,10 @@ if(request.getParameter("uploadType") != null) {
     List<Examlist> xlsxList;
     
     if(uploadType.equals("A")){
-         xlsxList = excelReader.xlsxToDBgisulsaExamList("C:\\excel\\gisulsaxlsx2.xlsx");// 
+        // xlsxList = excelReader.xlsxToDBgisulsaExamList("C:\\excel\\gisulsaxlsx2.xlsx");// 
+         xlsxList = excelReader.xlsxToDBgisulsaExamList("/home/hosting_users/cms2580/www/excel/9seoul1806.xlsx");// 
     }else{
-        xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/linux1503.xlsx");//
+        xlsxList = excelReader.xlsxToDBgisaExamList("/home/hosting_users/cms2580/www/excel/net1604.xlsx");//
          //xlsxList = excelReader.xlsxToDBgisaExamList("C:\\excel\\boangisasilgi10.xlsx");// 
     }
     
@@ -65,7 +66,14 @@ if(request.getParameter("uploadType") != null) {
         }
     }
     
-    out.println("정상적으로 업로드 하였습니다.");
+    
+  //out.println("정상적으로 업로드 하였습니다.");
+    PrintWriter script = response.getWriter();
+    script.println("<script>");
+    script.println("alert(' 정상적으로 업로드 하였습니다.')");
+    script.println("location.href = 'main.jsp'");
+    script.println("</script>");
+    
 }
 %>
 

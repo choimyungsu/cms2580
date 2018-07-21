@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import com.exam.Examgroupcount;
-import com.exam.Examlist;
 
 public class CalendarDAO {
 	
@@ -25,7 +23,7 @@ public class CalendarDAO {
 		}
 	}
 	
-	//문제 여러건 가져오기
+	//
 		public ArrayList<Calendar> searchCalendarList(String defaultDate, String toDate){
 			
 			Connection conn = null;
@@ -94,6 +92,7 @@ public class CalendarDAO {
 				if(clendar.get(i).getId()!=null && clendar.get(i).getId().length()>0) {
 					result.append("id: \"" +clendar.get(i).getId() + "\",");
 				}
+				result.append("calendarID: \"" +clendar.get(i).getCalendarid() + "\",");
 				result.append("title: \"" +clendar.get(i).getTitle() + "\",");
 				result.append("start: \"" +clendar.get(i).getStart() + "\",");
 				result.append("end: \"" +clendar.get(i).getEnd() + "\",");
@@ -113,9 +112,99 @@ public class CalendarDAO {
 			}
 		
 		
+		//일정 추가 
+		public int insert(String title, Date start, Date end) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "INSERT INTO calendar (title,start,end)  VALUES (? ,?, ? )";
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, title);
+				pstmt.setDate(2, start);
+				pstmt.setDate(3, end);
+				
+				return pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+		}	
 		
 		
+		//일정 변경 
+		public int update(String title, Date start, Date end, Integer calendarID) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "UPDATE  calendar set title =? ,start =? ,end=? where calendarID =? ";
+			
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, title);
+				pstmt.setDate(2, start);
+				pstmt.setDate(3, end);
+				pstmt.setInt(4, calendarID);
+				
+				return pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+		}	
 		
+		//일정 삭제 
+		public int delete( Integer id) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "delete  from calendar  where calendarID =? ";
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, id);
+				
+				return pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+		}
 	
 
 }
