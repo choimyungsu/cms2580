@@ -101,7 +101,8 @@ public class ExamlistDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
-		if(examcode.equals("A001")  || examcode.equals("A002")) { turn = turn+".0";}
+		String turn2 ="";
+		if(examcode.equals("A001")  || examcode.equals("A002")) { turn2 = turn+".0";}
 		//String SQL = "SELECT * FROM examList WHERE examCode = ? and turn = ? ";
 		String SQL = " select examListID, " +
 			     "  examCode, " +
@@ -124,7 +125,7 @@ public class ExamlistDAO {
 		  	     "  ifnull(syntaxDesc,''), " +
 		  	     "  ifnull(url,'') " +
 			     " from examList a" +
-			     " WHERE examCode = ? and turn = ?  " +
+			     " WHERE examCode = ? and ( turn = ? or turn = ? )   " +
 			     " order by round(examNum) ";
 		
 		 ArrayList<Examlist> list = new ArrayList();
@@ -134,6 +135,7 @@ public class ExamlistDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, examcode);
 			pstmt.setString(2, turn);
+			pstmt.setString(3, turn2);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Examlist examlist = new Examlist();	
@@ -185,7 +187,8 @@ public class ExamlistDAO {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null; 
-			if(examcode.equals("A001")  || examcode.equals("A002")) { turn = turn+".0";}
+			String turn2 ="";
+			if(examcode.equals("A001")  || examcode.equals("A002")) { turn2 = turn+".0";}
 			String SQL = " select examListID, " +
 				     "  examCode, " +
 				     "  ifnull(domain,''), " +
@@ -207,7 +210,7 @@ public class ExamlistDAO {
 			  	     "  ifnull(syntaxDesc,''), " +
 			  	     "  ifnull(url,'') " +
 				     " from examList a" +
-				     " WHERE examCode = ? and turn = ?  " +
+				     " WHERE examCode = ? and ( turn = ? or turn = ? )  " +
 				     " and examNum = round(?)  " ;
 			
 			
@@ -216,7 +219,8 @@ public class ExamlistDAO {
 				pstmt = conn.prepareStatement(SQL);
 				pstmt.setString(1, examcode);
 				pstmt.setString(2, turn);
-				pstmt.setString(3, examnum);
+				pstmt.setString(3, turn2);
+				pstmt.setString(4, examnum);
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {

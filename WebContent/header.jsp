@@ -38,11 +38,19 @@
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 학습자료DB  <span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                     <li><a href="https://cms2580.pythonanywhere.com" target="_blank"> 온라인 Book </a></li>
                      <li><a href="contentsList.jsp?type=B001"> 정보보안기사 </a></li>
                      <li><a href="contentsList.jsp?type=A001"> 정보처리기술사 </a></li>
                      <li><a href="contentsList.jsp?type=B003"> 리눅스마스터 </a></li>
                      <li><a href="contentsList.jsp?type=B002"> DAP </a></li>
-                     
+    <%
+        if(userID != null && userID.equals("cms")){
+    %>                     
+                     <li><a href="contentsListiFrame.jsp?type=B003"> myBook </a></li>
+     <% 
+         } 
+     %>
+                             
                 </ul>
             </li>
             <li class="dropdown">
@@ -61,7 +69,7 @@
                    aria-haspopup="true" aria-expanded="false"> 기타  <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                      <li><a href="bbs.jsp"> 게시판 </a></li>
-                     <li><a href="#"> ..  </a></li>
+                     <li><a href="https://cafe.naver.com/ictbox" target="_blank"> 원본자료 Cafe  </a></li>
                 </ul>
             </li>
         </ul>

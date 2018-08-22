@@ -16,8 +16,20 @@ public class User {
 
     // ≈ª≈ø©∫Œ 
     private Integer available;
+    
+    // ∞°¿‘¿œ 
+    private String joinDate;
+    
 
-    public String getUserid() {
+    public String getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+
+	public String getUserid() {
         return userid;
     }
 

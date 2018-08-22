@@ -36,8 +36,8 @@
      <div class="row">
         <div class="col-sm-12">
             <div align="center"><b color="blue">문제는 지속적으로 업로드 됩니다.</b> <br>
-                <b color="blue">2018년 6월 서울시 전산직 문제 업로드 되었습니다.</b> <br>
-                <b color="blue">2018년  9급 국가직(국어,영어,한국사) 문제 업로드 되었습니다.</b>
+                <b color="blue">2018년 6월 서울시 전산직,2018년  9급 국가직(국어,영어,한국사) 문제 업로드 되었습니다.</b> <br> 
+                <b color="blue"><a href="https://cafe.naver.com/ictbox" target="_blank"> 원본자료(PDF,HWP)도 Cafe에 올리고있습니다.</a></b>
             </div>
         </div>
     </div>

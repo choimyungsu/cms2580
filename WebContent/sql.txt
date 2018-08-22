@@ -209,3 +209,14 @@ CREATE TABLE userAnswerDesc
 
 ALTER TABLE userAnswerDesc COMMENT '사용자 해설';
 
+
+ALTER TABLE `cms2580`.`user` 
+ADD COLUMN `joinDate` VARCHAR(45) NULL AFTER `available`;
+
+
+//사용자 해설 들옥건수 보기
+SELECT c.examName, COUNT( a.examListID ) 
+FROM cms2580.userAnswerDesc a, cms2580.examList b, cms2580.examMaster c
+WHERE a.examListID = b.examListID
+AND b.examCode = c.examCode
+GROUP BY c.examCode

@@ -73,7 +73,9 @@
                                     <th style="background-color: #eeeeee; text-align: center;">ID</th>
                                     <th style="background-color: #eeeeee; text-align: center;">이름</th>
                                     <th style="background-color: #eeeeee; text-align: center;">이메일</th>
+                                    <th style="background-color: #eeeeee; text-align: center;">가입일</th>
                                     <th style="background-color: #eeeeee; text-align: center;">탈퇴여부</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,6 +91,7 @@
                                     <td><%= list.get(i).getUserid() %></td>
                                     <td><%= list.get(i).getUsername() %></td>
                                     <td><%= list.get(i).getEmail() %></td>
+                                    <td><%= list.get(i).getJoinDate() %></td>
                                     <td><%= list.get(i).getAvailable() %></td>
                                     
                                 </tr>

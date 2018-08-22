@@ -61,7 +61,7 @@ public class UserDAO {
 	public int join(User user) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?,now())";
 		try {
 			conn = ds.getConnection();
 			pstmt  = conn.prepareStatement(SQL);
@@ -140,7 +140,8 @@ public class UserDAO {
 			String SQL = " select userID, " +
 				     "  userName, " +
 				     "  email, " +
-				     "  available " +
+				     "  available, " +
+				     "  joinDate " +
 				     " from user " ;
 
 			
@@ -156,6 +157,7 @@ public class UserDAO {
 					user.setUsername(rs.getString(2));
 					user.setEmail(rs.getString(3));
 					user.setAvailable(rs.getInt(4));
+					user.setJoinDate(rs.getString(5));
 			        list.add(user);
 				}
 			}catch(Exception e) {
