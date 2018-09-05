@@ -23,7 +23,6 @@ public class ExamlistDAO {
 		}
 	}
 	
-	
 	//±â¼ú»ç¹®Á¦ insert(¿¢¼¿) 
 	public int insertGisulsa(String examCode, String turn, String domain,String period, String examDesc) {
 		

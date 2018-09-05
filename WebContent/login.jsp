@@ -41,29 +41,24 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="select.jsp">기출문제DB</a></li>
-            <li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                   aria-haspopup="true" aria-expanded="false"> 학습자료DB  <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                     <li><a href="contentsList.jsp?type=B001"> 정보보안기사 </a></li>
-                     <li><a href="contentsList.jsp?type=A001"> 정보처리기술사 </a></li>
-                     <li><a href="contentsList.jsp?type=A001"> 감리사 </a></li>
-                </ul>
-            </li>
+            <li><a href="book.jsp">학습 Book</a></li>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 정보처리기술사 랜덤 출제  <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                      <li><a href="gisulsaExamList.jsp?period=1"> 1교시형</a></li>
                      <li><a href="gisulsaExamList.jsp?period=2"> 2교시형</a></li>
+                     <li><a href="gisulsaSelect.jsp"> 맞춤조건 출제</a></li>
                 </ul>
             </li>
+            <li><a href="stickyNote.jsp">오늘의 Topic</a></li>
+            <li><a href="calendar.jsp">시험 일정</a></li>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 기타  <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                     <li><a href="#"> 게시판 </a></li>
-                     <li><a href="#"> ..  </a></li>
+                     <li><a href="bbs.jsp"> 게시판 </a></li>
+                     <li><a href="https://cafe.naver.com/ictbox" target="_blank"> 원본자료 Cafe  </a></li>
                 </ul>
             </li>
         </ul>

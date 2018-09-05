@@ -220,3 +220,70 @@ FROM cms2580.userAnswerDesc a, cms2580.examList b, cms2580.examMaster c
 WHERE a.examListID = b.examListID
 AND b.examCode = c.examCode
 GROUP BY c.examCode
+
+
+
+
+
+
+
+
+
+
+
+
+
+//책
+
+CREATE TABLE book
+(
+    `ID`            INT              NOT NULL    AUTO_INCREMENT COMMENT 'id', 
+    `TITLE`         VARCHAR(45)      NULL        COMMENT '제목', 
+    `AUTHOR`        VARCHAR(45)      NULL        COMMENT '저자', 
+    `C_DATE`        VARCHAR(45)      NULL        COMMENT '생성일', 
+    `MAIN_IMG_URL`  VARCHAR(500)     NULL        COMMENT '커버이미지', 
+    `U_DATE`        VARCHAR(45)      NULL        COMMENT '변경일', 
+    `CATAGORY`      VARCHAR(45)      NULL        COMMENT '분류', 
+    `STATUS`        VARCHAR(45)      NULL        COMMENT '상태(open or not)', 
+    `P_DATE`        VARCHAR(45)      NULL        COMMENT '발행일', 
+    `DESCRIPTION`   VARCHAR(1000)    NULL        COMMENT '설명', 
+    `SEQ`           VARCHAR(45)      NULL        COMMENT '순서', 
+    PRIMARY KEY (ID)
+);
+
+ALTER TABLE book COMMENT '책 마스터';
+
+//컨텐츠
+CREATE TABLE content
+(
+    `ID`                INT               NOT NULL    AUTO_INCREMENT COMMENT 'id', 
+    `BOOK_ID`           VARCHAR(45)       NULL        COMMENT '책마스터id', 
+    `ORDER`             VARCHAR(45)       NULL        COMMENT '목차', 
+    `SEQ`               VARCHAR(45)       NULL        COMMENT '순서', 
+    `TEXT`              VARCHAR(10000)    NULL        COMMENT '내용', 
+    `C_DATE`            VARCHAR(45)       NULL        COMMENT '생성일', 
+    `U_DATE`            VARCHAR(45)       NULL        COMMENT '변경일', 
+    `P_DATE`            VARCHAR(45)       NULL        COMMENT '발행일', 
+    `CONTENTS_IMG_URL`  VARCHAR(500)      NULL        COMMENT '대표이미지', 
+    `TITLE`             VARCHAR(100)      NULL        COMMENT 'contents 제목', 
+    PRIMARY KEY (ID)
+);
+
+ALTER TABLE content COMMENT '책 목차';
+
+
+// 코멘트
+CREATE TABLE comment
+(
+    `ID`          INT              NOT NULL    AUTO_INCREMENT COMMENT 'id', 
+    `CONTENT_ID`  INT              NULL        COMMENT '컨텐츠ID', 
+    `AUTHOR`      VARCHAR(45)      NULL        COMMENT '작성자', 
+    `COMMENT`     VARCHAR(1000)    NULL        COMMENT '커맨트', 
+    `APPROVED`    CHAR(1)          NULL        COMMENT '승인여부(Y,N)', 
+    `C_DATE`      VARCHAR(45)      NULL        COMMENT '생성일', 
+    PRIMARY KEY (ID)
+);
+
+ALTER TABLE comment COMMENT '댓글';
+
+

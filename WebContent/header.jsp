@@ -34,10 +34,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="select.jsp">기출문제DB</a></li>
-            <li class="dropdown">
+            <li><a href="book.jsp">학습 Book</a></li>
+           <%--  <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 학습자료DB  <span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                     <li><a href="book.jsp"> myBook </a></li>
                      <li><a href="https://cms2580.pythonanywhere.com" target="_blank"> 온라인 Book </a></li>
                      <li><a href="contentsList.jsp?type=B001"> 정보보안기사 </a></li>
                      <li><a href="contentsList.jsp?type=A001"> 정보처리기술사 </a></li>
@@ -46,13 +48,14 @@
     <%
         if(userID != null && userID.equals("cms")){
     %>                     
-                     <li><a href="contentsListiFrame.jsp?type=B003"> myBook </a></li>
+                     
+                     <li><a href="contentsListiFrame.jsp?type=B003"> myBook II </a></li>
      <% 
          } 
      %>
                              
                 </ul>
-            </li>
+            </li> --%>
             <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 정보처리기술사 랜덤 출제  <span class="caret"></span></a>
@@ -110,9 +113,8 @@
     <%
         if(userID.equals("cms")){
     %>                
-                 <li><a href="userList.jsp">회원보기</a></li>
-                 <li><a href="fileUpload.jsp">파일업로드</a></li>
-                 
+              <li><a href="userList.jsp">회원보기</a></li>
+              <li><a href="fileUpload.jsp">파일업로드</a></li>
      <% 
          } 
      %>

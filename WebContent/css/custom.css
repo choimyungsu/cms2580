@@ -8,3 +8,87 @@ h1 {
 	font-family : 'Hanna';
 }
 
+#footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:40px;
+   width:100%;
+   background:#F2F2F2;
+   color: #2E2E2E;
+   padding: 10px ;
+}
+#footer p {
+   text-align: center;
+   font-size: 12px;
+}
+
+.chart {
+  margin:0;
+  width: 100%; 
+  min-height: 500px;
+  max-height: 900px;
+}
+.row {
+  margin:0 !important;
+}
+.videoWrapper{
+    position:relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+.videoWrapper iframe{
+    position: absolute;
+    top: o;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*---------------*/
+/***** leftmenu *****/
+/*cms add 2018.08*/
+/*---------------*/
+#leftmenuinner {
+    height:85%;
+    /*width:100%;*/
+    overflow-y:auto !important;
+    overflow-x:hidden;
+    /*padding-top:20px;*/
+  }
+
+/*미디어쿼리 적용 
+모바일에 적용될 스타일을 먼저 작성합니다. */
+@media (max-width: 650px) {/*650이하일때 안보이게..*/
+        #leftmenuinner{
+            display : none;
+        }
+ }
+ @media (min-width: 651px) {/*651이상일때 보이게..*/
+    #leftmenuinner{
+        display : block;
+    }
+}
+
+
+ /*===========================
+  페이지 이동 아이콘
+============================ */
+.prev_icon {
+    position: fixed;
+    top:50%;
+    left: 10%; 
+}
+
+.next_icon {
+    position: fixed;
+    top:50%;
+    right: 10%;
+}
+
+.prev_icon:link, .next_icon:link { color:#ccc; }
+.prev_icon:visited, .next_icon:visited { color: #ccc; }
+.prev_icon:hover, .next_icon:hover { color:#aaa !important; }
+.prev_icon:active, next_icon:active { color: #aaa; }
