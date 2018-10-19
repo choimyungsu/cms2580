@@ -81,7 +81,7 @@ public class BookDAO {
 				+ "STATUS, "
 				+ "P_DATE, " 
 				+ "DESCRIPTION " 
-				+ " FROM BOOK " 
+				+ " FROM book " 
 				//+ " where P_DATE !=null "
 				+ " ORDER BY TITLE asc " ;
 
@@ -146,7 +146,7 @@ public class BookDAO {
 					+ "STATUS, "
 					+ "P_DATE, " 
 					+ "DESCRIPTION " 
-					+ " FROM BOOK " 
+					+ " FROM book " 
 					+ " where ID = ?  "
 					+ " ORDER BY ID DESC " ;
 
@@ -196,7 +196,7 @@ public class BookDAO {
 			String date = bbsDAO.getDate();//현재 날짜 가져오기
 			
 			
-			String SQL = "UPDATE BOOK SET TITLE = ? ,  MAIN_IMG_URL = ? ,CATAGORY = ?, STATUS =?, DESCRIPTION = ?, U_DATE = ? WHERE ID = ?";
+			String SQL = "UPDATE book SET TITLE = ? ,  MAIN_IMG_URL = ? ,CATAGORY = ?, STATUS =?, DESCRIPTION = ?, U_DATE = ? WHERE ID = ?";
 					
 			try {
 				
@@ -233,7 +233,7 @@ public class BookDAO {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String SQL = "DELETE from BOOK WHERE ID = ?";
+			String SQL = "DELETE from book WHERE ID = ?";
 					
 			try {
 				conn = ds.getConnection();

@@ -29,7 +29,7 @@ public class ContentDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO CONTENT (BOOK_ID,TITLE, TEXT,C_DATE,U_DATE,P_DATE,CONTENTS_IMG_URL)  VALUES (?, ? ,?, ?, ?, ?, ? )";
+		String SQL = "INSERT INTO content (BOOK_ID,TITLE, TEXT,C_DATE,U_DATE,P_DATE,CONTENTS_IMG_URL)  VALUES (?, ? ,?, ?, ?, ?, ? )";
 		BbsDAO bbsDAO = new BbsDAO(); 
 		String date = bbsDAO.getDate();
 		try {
@@ -74,9 +74,11 @@ public class ContentDAO {
 				+ "U_DATE, "
 				+ "P_DATE, " 
 				+ "CONTENTS_IMG_URL "
-				+ " FROM CONTENT " 
+				//+ " P_ID "
+				+ " FROM content " 
 				+ " where BOOK_ID = ? "
-				+ " ORDER BY TITLE " ;
+				+ " ORDER BY TITLE " ;	
+
 
 		ArrayList<Content> list = new ArrayList();
 		
@@ -85,7 +87,9 @@ public class ContentDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, bookId);
 			rs = pstmt.executeQuery();
+			int i=0;
 			while (rs.next()) {
+				i++;
 				Content content = new Content();	
 				
 				content.setId(rs.getInt(1));
@@ -96,6 +100,7 @@ public class ContentDAO {
 				content.setUDate(rs.getString(6));
 				content.setPDate(rs.getString(7));
 				content.setContentsImgUrl(rs.getString(8));
+				//content.setPid(rs.getInt(9));
 	
 		        list.add(content);
 			}
@@ -117,7 +122,7 @@ public class ContentDAO {
 	
 	
 	
-	//Read -1건
+//Read -1건
 	
 public Content searchContent(String contentId){
 		
@@ -132,8 +137,9 @@ public Content searchContent(String contentId){
 				+ "C_DATE, "
 				+ "U_DATE, "
 				+ "P_DATE, " 
-				+ "CONTENTS_IMG_URL "
-				+ " FROM CONTENT " 
+				+ "CONTENTS_IMG_URL, "
+				+ "CNT "
+				+ " FROM content " 
 				+ " where ID = ? "
 				+ " ORDER BY TITLE " ;
 
@@ -154,6 +160,8 @@ public Content searchContent(String contentId){
 				content.setUDate(rs.getString(6));
 				content.setPDate(rs.getString(7));
 				content.setContentsImgUrl(rs.getString(8));
+				content.setCnt(rs.getString(9));
+				
 	
 		        return content;
 			}
@@ -178,7 +186,7 @@ public Content searchContent(String contentId){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "UPDATE CONTENT SET TITLE = ? , TEXT = ?, CONTENTS_IMG_URL = ?  WHERE ID = ?";
+		String SQL = "UPDATE content SET TITLE = ? , TEXT = ?, CONTENTS_IMG_URL = ?  WHERE ID = ?";
 				
 		try {
 			
@@ -206,13 +214,46 @@ public Content searchContent(String contentId){
 		return -1;//데이터베이스 오류
 		
 	}
+	
+	
+	//조회수 추가 
+		public int updateCnt(String contentId) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "UPDATE content SET CNT = CNT+1  WHERE ID = ?";
+					
+			try {
+				
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, contentId);
+				
+				return  pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+			
+		}
+	
+	
 
 	//Delete
 	public int deleteContent(int ID) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "DELETE from CONTENT WHERE ID = ?";
+		String SQL = "DELETE from content WHERE ID = ?";
 				
 		try {
 			conn = ds.getConnection();

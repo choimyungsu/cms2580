@@ -9,6 +9,7 @@
 <%@ page import="com.book.Comment" %> 
 <%@ page import="com.common.Util" %> 
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.io.PrintWriter" %>
     
 <!DOCTYPE html>
 <html lang="ko">
@@ -39,6 +40,21 @@
         <![endif]-->
 
 	<% 
+	    String userID = null;
+	    if(session.getAttribute("userID") !=null ){
+	        userID = (String) session.getAttribute("userID");
+	        
+	    }
+	    
+	    if(userID == null){
+	        //System.out.println("userID==>"+userID);
+	        PrintWriter script = response.getWriter();
+	        script.println("<script>");
+	        script.println("alert(' 로그인을 하세요.')");
+	        script.println("location.href = 'login.jsp'");
+	        script.println("</script>");
+	        
+	    }
 		String bookId = "";// 
 		if(request.getParameter("bookId")!=null && request.getParameter("bookId")!=""){
 			bookId = request.getParameter("bookId");
@@ -84,10 +100,22 @@
 				    Util util = new Util();
 				    ArrayList<Content> list = contentDAO.searchContents(bookId);//""
 				    Content content = contentDAO.searchContent(contentId);//한건 찾기 
+				    
+				     // 조회수 추가  2018.10.19
+                    contentDAO.updateCnt(contentId);
+				    
+				    int base=0 ; // 지금 보고있는 기준이 되는 데이터 순서 값 
+                    int pre= 0;  // 이전값
+				    int next=0 ; //이후값
 				    for(int i =0 ; i < list.size(); i++){
+				     
 				%>
                 
-                    <div class="row">
+                    <div class="row"   
+	                    <% if(contentId.equals(list.get(i).getId().toString())){ 
+	                    	base = i ; // 현재 보고 있는 데이터의 순서를 가져옴
+	                    %> style="background-color:#E0ECF8;" 
+                        <%} %> >
                         <div class="sidebar" >
                             <a href="contentDetail.jsp?contentId=<%=list.get(i).getId() %>&bookId=<%=bookId%>"> <%=list.get(i).getTitle()  %></a>   
                         </div>
@@ -99,27 +127,28 @@
                   
                 </div>
             </div>
+            <% if(userID.equals(book.getAuthor())){ %>
             <h3 style="text-align: center;margin-top:0;"><a class="btn btn-default " href="contentCreate.jsp?bookId=<%=bookId %>" >Add Contents</a></h3>
+            <% } %>
         </div>
             <div class="page  col-sm-9 " style="border-left:1px solid #BDBDBD; margin-left:-1px" id="load_content" >
             
                 <a class="pull-left js-toolbar-action" aria-label="" onclick="showandhide()" title="메뉴"><i class="fa fa-align-justify"></i></a>
-                <a class="pull-right" href="contentDelete.jsp?contentId=<%=content.getId() %>&bookId=<%=bookId%>" ><span class="glyphicon glyphicon-remove"></span>삭제</a>
-                <a class="pull-right" href="contentUpdate.jsp?contentId=<%=content.getId() %>&bookId=<%=bookId%>" ><span class="glyphicon glyphicon-pencil"></span>편집 &nbsp;&nbsp;</a>
+                <% if(userID.equals(book.getAuthor())){ %>
+	                <a class="pull-right" href="contentDelete.jsp?contentId=<%=content.getId() %>&bookId=<%=bookId%>" ><span class="glyphicon glyphicon-remove"></span>삭제</a>
+	                <a class="pull-right" href="contentUpdate.jsp?contentId=<%=content.getId() %>&bookId=<%=bookId%>" ><span class="glyphicon glyphicon-pencil"></span>편집 &nbsp;&nbsp;</a>
+                <% } %>
                 <div class="post">
                     <h4><%=content.getTitle() %></h4>
-                    
                     <div class="date">
-                        <p><%=content.getCDate() %></p>
+                        <p><%=content.getCDate() %>   조회수 : <%=content.getCnt() %></p>
                     </div>
                     <div>
                     <% if(content.getContentsImgUrl() !=null) {%>
                         <%=content.getContentsImgUrl() %>
                     <% } %>
                     </div>
-                    <p><label for="id_text">Description:</label> 
-                        <div><%=content.getText() %></div></p>
-                    
+                    <div><%=content.getText() %></div>
                 </div>
                 <a class="btn btn-default" onclick="showComment()" >Add comment</a>
                 <div id="commentBlock" style="display: none;">
@@ -152,18 +181,20 @@
             
         </div>
     </div>
- 
+ <% 
+	 //이전값 , 이후값 가져오기 
+     if(base-1 < 0){ pre=0; }else{pre = base-1;}
+	 if(base+1 > list.size()-1) { next = list.size()-1; }else{ next = base+1 ;}
+ %>
         <div style="" class="prev_next_indicator"><!-- 앞뒤 이동-->
-           <a class="prev_icon" href="" role="button" >
+           <a class="prev_icon" href="contentDetail.jsp?contentId=<%=list.get(pre).getId() %>&bookId=<%=bookId%>" role="button" >
               <span class="glyphicon glyphicon-chevron-left" style="font-size:2em;"></span>
-           </a>       
-           <a class="next_icon" href="" role="button" >
+           </a>  
+           
+               
+           <a class="next_icon" href="contentDetail.jsp?contentId=<%=list.get(next).getId() %>&bookId=<%=bookId%>" role="button" >
                <span class="glyphicon glyphicon-chevron-right" style="font-size:2em;"></span>
            </a>                
-        </div>
-
-        <div id="footer">
-            <p>Copyright © CMS 2018   &nbsp;  cms2580@naver.com </p>
         </div>
         
 

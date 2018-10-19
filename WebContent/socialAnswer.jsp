@@ -130,7 +130,7 @@
 	   Useranswerdescid = Integer.parseInt(request.getParameter("Useranswerdescid"));
 	   useranswerdesc =   useranswerdescDAO.searchUseranswerdescId(Useranswerdescid);
 	   
-	   System.out.println("Useranswerdescid========="+ Useranswerdescid);
+	   //System.out.println("Useranswerdescid========="+ Useranswerdescid);
    }
 
    
@@ -318,7 +318,7 @@ function comment(check){
 				<div class="row">
 				<form class="form-horizontal" action="socialAnswerInsert.jsp" method="post" target="_self">		
                 <div class="form-group">
-                  <label class="control-label col-sm-1" for="answerDesc">문제 해설</label>
+                  <label class="control-label col-sm-1" for="answerDesc">댓글 or 해설</label>
                   <div class="col-sm-11">
                  <% if(useranswerdesc.getAnswerdesc()!=null && useranswerdesc.getAnswerdesc().length()>0){ %> 
                   <textarea class="form-control" placeholder="글 내용" name="answerDesc" maxlength="1024" style="height: 50px;"><%= useranswerdesc.getAnswerdesc()%></textarea>

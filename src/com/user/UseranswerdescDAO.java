@@ -57,6 +57,46 @@ public class UseranswerdescDAO {
 		return -1;//데이터베이스 오류
 	}
 	
+	
+	//문제 여러건 가져오기
+			public Boolean searchUserAnswerListYN(Integer examListID){
+				
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null; 
+				String SQL = " select userAnswerDescID," +
+					     "  userID, " +
+					     "  examListID, " +
+					     "  answerDesc " +
+					     " from userAnswerDesc a" +
+					     " WHERE examListID = ?  " ;
+				
+				try {
+					conn = ds.getConnection();
+					pstmt = conn.prepareStatement(SQL);
+					pstmt.setInt(1, examListID);
+					rs = pstmt.executeQuery();
+					while (rs.next()) {
+						return true;
+					}
+					
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt !=null) pstmt.close();
+						if(conn!=null) conn.close();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return false;//
+				
+			}
+	
+	
 	//문제 여러건 가져오기
 		public ArrayList<Useranswerdesc> searchUserAnswerList(Integer examListID){
 			

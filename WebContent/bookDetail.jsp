@@ -88,7 +88,9 @@
                   
                 </div>
             </div>
+            <% if(userID.equals(book.getAuthor())){ %>
             <h3 style="text-align: center;margin-top:0;"><a class="btn btn-default " href="contentCreate.jsp?bookId=<%=bookId %>" >Add Contents</a></h3>
+            <% } %>
         </div>
             <div class="page  col-sm-9 " style="border-left:1px solid #BDBDBD; margin-left:-1px" id="load_content" >
             
@@ -102,10 +104,10 @@
                     <% if(book.getMainImgUrl() !=null) {%>
                         <%=book.getMainImgUrl() %>
                     <% } %>
-
+                    <% if(userID.equals(book.getAuthor())){ %>
                         <a href="bookUpdate.jsp?bookId=<%=bookId%>"><span class="glyphicon glyphicon-pencil"></span>편집</a>&nbsp;&nbsp;
                         <a href="bookDelete.jsp"><span class="glyphicon glyphicon-remove"></span>삭제</a> <-- 주의: Contents도 모두 삭제됩니다!!
-
+                    <% } %>
                 </div>
             </div>
         </div>

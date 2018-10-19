@@ -5,8 +5,19 @@ public class Content {
 
     // id 
     private Integer id;
+    
+    // pid 부모id
+    private Integer pid;    
 
-    // 책마스터id 
+    public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+	// 책마스터id 
     private String bookId;
 
     // 목차 
@@ -32,8 +43,19 @@ public class Content {
 
     // contents 제목 
     private String title;
+    
+    // 조회수 
+    private String cnt;
 
-    public Integer getId() {
+    public String getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(String cnt) {
+		this.cnt = cnt;
+	}
+
+	public Integer getId() {
         return id;
     }
 

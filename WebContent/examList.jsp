@@ -3,6 +3,7 @@
     
 <%@ page import="com.exam.ExamlistDAO" %>  
 <%@ page import="com.exam.Examlist" %> 
+<%@ page import="com.user.UseranswerdescDAO" %> 
 <%@ page import="com.common.Util" %> 
 <%@ page import="java.util.ArrayList" %>
 
@@ -163,7 +164,7 @@ function scoreResult(){ // 전체 문제 채점하기
 	     var userCheckAnswer 
 		 var arrRadio = document.getElementsByName(checkanswerNo);
 	     
-	     var real = document.getElementsByName(realanswerNo)[0].value;
+	     var real = parseInt(document.getElementsByName(realanswerNo)[0].value);// float 형도 Int 형으로 변환
 		 for (var j=0;j<arrRadio.length;j++) {
 			    if (arrRadio[j].checked) {
 			    	userCheckAnswer = arrRadio[j].value ;
@@ -329,9 +330,18 @@ function scoreResult(){ // 전체 문제 채점하기
 							<!-- 로그인 한 사용자들만 해설등록 및 보기를 할 수 있음. -->
 							<div class="row">
                                 <div class="col-sm-6">
-                                    <a href="socialAnswer.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-success btn-sm"> 해설등록 </a>
+                                    <a href="socialAnswer.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-success btn-sm"> 댓글 </a>
                                     <!-- 회원 해설이 있는 경우만 나타나도록 변경 필요함. -->
+                                    <% 
+		                                //문제 해설이 있는 경우만..    
+	                                    UseranswerdescDAO useranswerdescDAO = new UseranswerdescDAO();
+	                                    Boolean aaa = useranswerdescDAO.searchUserAnswerListYN(list.get(i).getExamlistid());
+	                                    if(aaa){
+                                    %>
                                     <a href="socialAnswerList.jsp?examListID=<%= list.get(i).getExamlistid() %>" class="btn btn-success btn-sm"> 회원해설 </a>
+                                    <% 
+	                                    }
+                                    %>
                            
                                 </div>
                            </div>

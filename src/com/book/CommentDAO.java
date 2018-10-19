@@ -29,7 +29,7 @@ public class CommentDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO COMMENT (CONTENT_ID, AUTHOR, COMMENT, APPROVED,C_DATE)  VALUES (?, ? ,?, 'N',? )";
+		String SQL = "INSERT INTO comment (CONTENT_ID, AUTHOR, COMMENT, APPROVED,C_DATE)  VALUES (?, ? ,?, 'N',? )";
 		BbsDAO bbsDAO = new BbsDAO(); 
 		String date = bbsDAO.getDate();
 		try {
@@ -68,7 +68,7 @@ public class CommentDAO {
 				+ "AUTHOR, "
 				+ "COMMENT, "
 				+ "C_DATE "
-				+ " FROM COMMENT " 
+				+ " FROM comment " 
 				+ " where CONTENT_ID = ? "
 				+ " ORDER BY C_DATE DESC " ;
 
@@ -206,7 +206,7 @@ public class CommentDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "DELETE from COMMENT WHERE ID = ?";
+		String SQL = "DELETE from comment WHERE ID = ?";
 				
 		try {
 			conn = ds.getConnection();

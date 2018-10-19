@@ -40,15 +40,16 @@
 %>          
             <!-- 반복 시작 -->   
             <div class="col-md-3">
-                <figure class="effect-marley">
-                    <a href="bookDetail.jsp?bookId=<%=  list.get(i).getId() %>"> <%=  list.get(i).getMainImgUrl() %> </a>
-                    <figcaption>
-                        <p class="pull-right"> by <%=list.get(i).getAuthor()  %> </p>  
-                        <p><%=  list.get(i).getTitle() %> </p>
-                        <p><%=  list.get(i).getDescription() %> </p>
-                                 
-                    </figcaption>           
-                </figure>
+	            <div style="width: 250px; height: 325px; " >
+	               <div style="width: 250px; height: 270px;" >
+	                    <a href="bookDetail.jsp?bookId=<%=  list.get(i).getId() %>"> <%=  list.get(i).getMainImgUrl() %> </a>
+	                </div>
+	                <div style="width: 250px; height: 55px;" >    
+	                        <p class="pull-right"> by <%=list.get(i).getAuthor()  %> </p>  
+	                        <p><%=  list.get(i).getTitle() %> </p>
+	                        <p><%=  list.get(i).getDescription() %> </p>
+	                 </div>                
+	            </div>
             </div>
             <!-- 반복 끝 --> 
 <%
@@ -56,14 +57,16 @@
 %>              
             <!-- 마지막 book 만들기 -->
 	        <div class="col-md-3">
-	            <figure class="effect-marley">
-	                <a href="bookCreate.jsp"><img src="img/add_book.png" alt="" class="img-responsive" /></a><!--책 이미지-->
-	                <figcaption>
-	                    <h4>새책 만들기</h4> <!--책제목-->
-	                    <!--책 발행일-->
-	                    <p>블로그처럼  mini-Book 써보자 ^^</p>   <!--책 설명-->         
-	                </figcaption>           
-	            </figure>
+		        <div style="width: 250px; height: 325px;" >
+			            <div style="width: 250px; height: 270px;" >
+			                <a href="bookCreate.jsp"><img src="img/add_book.png" alt="" class="img-responsive" style="width:100%; height:100%; object-fit: contain;"/></a><!--책 이미지-->
+		                </div>
+		                <div style="width: 250px; height: 55px;" >   
+		                    <p>새책 만들기</p> <!--책제목-->
+		                    <!--책 발행일-->
+		                    <p>블로그처럼  mini-Book 써보자 ^^</p>   <!--책 설명-->     
+		               </div>    
+		        </div>
 	        </div>
         </div>
     </div>  

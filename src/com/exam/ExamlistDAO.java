@@ -212,7 +212,6 @@ public class ExamlistDAO {
 				     " WHERE examCode = ? and ( turn = ? or turn = ? )  " +
 				     " and examNum = round(?)  " ;
 			
-			
 			try {
 				conn = ds.getConnection();
 				pstmt = conn.prepareStatement(SQL);
@@ -267,8 +266,6 @@ public class ExamlistDAO {
 			
 		}
 		
-	
-	
 	
 	
 	//한건 가져오기

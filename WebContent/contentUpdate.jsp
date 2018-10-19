@@ -54,7 +54,7 @@
     }
     
     if(userID == null){
-        System.out.println("userID==>"+userID);
+        //System.out.println("userID==>"+userID);
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert(' 로그인을 하세요.')");
@@ -102,9 +102,6 @@
                 <div style="padding-left:20px;padding-right:20px; "> 
                 
 				 <%
-				    BookDAO bookDAO = new BookDAO();
-				    Book book = bookDAO.searchBook(bookId);//""
-				 
 				    ContentDAO contentDAO = new ContentDAO();
 				    Util util = new Util();
 				    ArrayList<Content> list = contentDAO.searchContents(bookId);//""
@@ -121,19 +118,13 @@
                   <%
                       } 
                   %>
-                  
-                    
-                  
-                    
                     
                 </div>
             </div>
             <h3 style="text-align: center;margin-top:0;"><a class="btn btn-default " href="contentCreate.jsp?bookId=<%=bookId %>" >Add Contents</a></h3>
         </div>
             <div class="page  col-sm-9 " style="border-left:1px solid #BDBDBD; margin-left:-1px" id="load_content" >
-            
                 <a class="pull-left js-toolbar-action" aria-label="" onclick="showandhide()" title="메뉴"><i class="fa fa-align-justify"></i></a>
-
                 <form method="POST" class="post-form" action="contentUpdateAction.jsp">
 			        <p><label for="id_title">Title:</label> <input type="text" name="title" class="form-control" width="50" placeholder="목차 제목을 입력해주세요." maxlength="200" required id="id_title" value="<%=content.getTitle() %>" /></p>
 			        <p><label for="id_url">Url:</label> <textarea class="form-control" placeholder="대표 이미지 URL을 입력해주세요." name="contentsImgUrl" maxlength="2048" style="height: 60px;" ><%=content.getContentsImgUrl()%></textarea></p>
@@ -142,18 +133,9 @@
 			        <input type='hidden' name="id"  value="<%=content.getId()%>"/>
 			        <button type="submit" class="save btn btn-default">Save</button>
 			    </form>
-                
-                
-                
             </div>
         </div>
     </div>
- 
-
-
-     <div id="footer">
-         <p>Copyright © CMS 2018   &nbsp;  cms2580@naver.com </p>
-     </div>
         
 	    <script>
 	    $(document).ready(function() {

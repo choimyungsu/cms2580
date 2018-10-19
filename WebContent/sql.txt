@@ -287,3 +287,9 @@ CREATE TABLE comment
 ALTER TABLE comment COMMENT '댓글';
 
 
+
+// 조회수 추가 
+ALTER TABLE `cms2580`.`content` 
+ADD COLUMN `CNT` INT(11) NULL DEFAULT 0 AFTER `TITLE`;
+
+
