@@ -24,6 +24,7 @@ public class ExamcontentsDAO {
 		}
 	}
 	
+	
 	//문제 여러건 가져오기
 		public ArrayList<Examcontents> searchExamcontents(String examcode){
 			

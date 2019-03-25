@@ -2,6 +2,7 @@ package com.file;
 
 public class Linkfile {
 
+	
     // pk 
     private Integer linkfileid;
 

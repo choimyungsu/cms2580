@@ -102,7 +102,7 @@
 	    
 	    for(int i =0 ; i < xlsxList.size(); i++){
 	         
-	       examlistDAO.insertGisulsa( xlsxList.get(i).getExamcode(), xlsxList.get(i).getTurn() , xlsxList.get(i).getDomain(),  xlsxList.get(i).getPeriod(),  xlsxList.get(i).getExamdesc() );
+	       examlistDAO.insertGisulsa( xlsxList.get(i).getExamcode(), xlsxList.get(i).getTurn() , xlsxList.get(i).getDomain(),  xlsxList.get(i).getPeriod(),  xlsxList.get(i).getExamdesc(), xlsxList.get(i).getAnswerdesc()  );
 	    }
 		
 		

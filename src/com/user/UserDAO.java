@@ -175,6 +175,39 @@ public class UserDAO {
 			
 		}
 	
+		
+		//회원 정보 가져오기
+				public Integer userCount(){
+					
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null; 
+					String SQL = " select count(userID) " +
+						     " from user " ;
+					Integer userCount = 0;
+					
+					try {
+						conn = ds.getConnection();
+						pstmt = conn.prepareStatement(SQL);
+						rs = pstmt.executeQuery();
+						while (rs.next()) {
+							userCount = rs.getInt(1);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(rs!=null) rs.close();
+							if(pstmt !=null) pstmt.close();
+							if(conn!=null) conn.close();
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+					return userCount;//
+					
+				}
+			
 	
 	
 	

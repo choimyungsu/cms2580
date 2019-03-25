@@ -293,3 +293,157 @@ ALTER TABLE `cms2580`.`content`
 ADD COLUMN `CNT` INT(11) NULL DEFAULT 0 AFTER `TITLE`;
 
 
+// 부모 ID 
+ALTER TABLE `cms2580`.`content` 
+ADD COLUMN `P_ID` VARCHAR(45) NULL DEFAULT 0 AFTER `CNT`;
+
+
+
+//권한관리 추가.2019.02.09
+
+CREATE TABLE ACLRESOURCE
+(
+    `RESOURCE_CD`   VARCHAR(45)    NOT NULL    COMMENT '리소스코드', 
+    `RESOURCE_NM`   VARCHAR(45)    NULL        COMMENT '리소스명칭', 
+    `RESOURCE_DC`   VARCHAR(45)    NULL        COMMENT '설명', 
+    `RESOURCE_URL`  VARCHAR(45)    NULL        COMMENT '패턴', 
+    `CREATE_DT`     VARCHAR(14)    NULL        COMMENT '등록일', 
+    `UPDATE_DT`     VARCHAR(14)    NULL        COMMENT '수정일', 
+    PRIMARY KEY (RESOURCE_CD)
+);
+
+ALTER TABLE ACLRESOURCE COMMENT '리소스 관리';
+
+CREATE TABLE ACLAUTHRESOURCE
+(
+    `AUTH_CD`      VARCHAR(45)    NOT NULL    COMMENT '권한코드', 
+    `RESOURCE_CD`  VARCHAR(45)    NOT NULL    COMMENT '리소스코드', 
+    `USE_YN`       VARCHAR(1)     NULL        COMMENT '사용여부', 
+    `CREATE_YN`    VARCHAR(1)     NULL        COMMENT '생성권한', 
+    `READ_YN`      VARCHAR(1)     NULL        COMMENT '읽기권한', 
+    `UPDATE_YN`    VARCHAR(1)     NULL        COMMENT '수정권한', 
+    `DELETE_YN`    VARCHAR(1)     NULL        COMMENT '삭제권한', 
+    `CREATE_DT`    VARCHAR(14)    NULL        COMMENT '등록일', 
+    `UPDATE_DT`    VARCHAR(14)    NULL        COMMENT '수정일', 
+    PRIMARY KEY (AUTH_CD)
+);
+
+ALTER TABLE ACLAUTHRESOURCE COMMENT '권한별 리소스 관리';
+
+CREATE TABLE ACLAUTH
+(
+    `AUTH_CD`    VARCHAR(45)     NOT NULL    COMMENT '권한코드', 
+    `AUTH_NM`    VARCHAR(45)     NULL        COMMENT '권한명칭', 
+    `AUTH_DC`    VARCHAR(200)    NULL        COMMENT '권한설명', 
+    `CREATE_DT`  VARCHAR(14)     NULL        COMMENT '등록일', 
+    `UPDATE_DT`  VARCHAR(14)     NULL        COMMENT '수정일', 
+    PRIMARY KEY (AUTH_CD)
+);
+
+ALTER TABLE ACLAUTH COMMENT '권한관리';
+
+CREATE TABLE ACLUSERAUTH
+(
+    `USER_ID`    VARCHAR(45)    NOT NULL    COMMENT '사용자아이디', 
+    `AUTH_CD`    VARCHAR(45)    NULL        COMMENT '권한코드', 
+    `CREATE_DT`  VARCHAR(14)    NULL        COMMENT '등록일', 
+    `UPDATE_DT`  VARCHAR(14)    NULL        COMMENT '수정일', 
+    PRIMARY KEY (USER_ID)
+);
+
+ALTER TABLE ACLUSERAUTH COMMENT '사용자권한관리';
+
+INSERT INTO `cms2580`.`aclauth` (`AUTH_CD`, `AUTH_NM`, `AUTH_DC`, `CREATE_DT`) VALUES ('ADMIN', 'ADMIN', 'ADMIN 관리자', '2019-02-09');
+INSERT INTO `cms2580`.`aclauth` (`AUTH_CD`, `AUTH_NM`, `AUTH_DC`, `CREATE_DT`) VALUES ('Gold', 'Gold', 'Gold', '2019-02-09');
+INSERT INTO `cms2580`.`aclauth` (`AUTH_CD`, `AUTH_NM`, `AUTH_DC`, `CREATE_DT`) VALUES ('Silver', 'Silver', 'Silver', '2019-02-09');
+INSERT INTO `cms2580`.`aclauth` (`AUTH_CD`, `AUTH_NM`, `AUTH_DC`, `CREATE_DT`) VALUES ('Bronze', 'Bronze', 'Bronze', '2019-02-09');
+INSERT INTO `cms2580`.`aclauth` (`AUTH_CD`, `AUTH_NM`, `AUTH_DC`, `CREATE_DT`) VALUES ('General', 'General', 'General', '2019-02-09');
+
+
+
+
+INSERT INTO `cms2580`.`aclresource` (`RESOURCE_CD`, `RESOURCE_NM`, `RESOURCE_DC`, `RESOURCE_URL`, `CREATE_DT`) VALUES ('MENU001', 'MENU001', '기출문제', 'select.jsp', '2019-02-09');
+INSERT INTO `cms2580`.`aclresource` (`RESOURCE_CD`, `RESOURCE_NM`, `RESOURCE_DC`, `RESOURCE_URL`, `CREATE_DT`) VALUES ('MENU002', 'MENU002', 'BOOK', 'book.jsp', '2019-02-09');
+INSERT INTO `cms2580`.`aclresource` (`RESOURCE_CD`, `RESOURCE_NM`, `RESOURCE_DC`, `RESOURCE_URL`, `CREATE_DT`) VALUES ('MENU003', 'MENU003', '시험일정', 'calendar.jsp', '2019-02-09');
+
+
+INSERT INTO `cms2580`.`aclauthresource` (`AUTH_CD`, `RESOURCE_CD`, `USE_YN`, `CREATE_YN`, `READ_YN`, `UPDATE_YN`, `DELETE_YN`, `CREATE_DT`) VALUES ('ADMIN', 'MENU001', 'Y', 'Y', 'Y', 'Y', 'Y', '2019-02-09');
+
+
+ALTER TABLE `cms2580`.`aclauthresource` 
+ADD COLUMN `PRINT_YN` VARCHAR(1) NULL AFTER `UPDATE_DT`;
+
+
+
+
+CREATE TABLE VISIT
+(
+    `VISIT_ID`  INT            NOT NULL    AUTO_INCREMENT COMMENT 'pk', 
+    `VISIT_DT`  VARCHAR(45)    NULL        COMMENT '방문일', 
+    `USER_ID`   VARCHAR(45)    NULL        COMMENT '사용자', 
+    `USER_IP`   VARCHAR(45)    NULL        COMMENT 'IP', 
+    PRIMARY KEY (VISIT_ID)
+);
+
+ALTER TABLE VISIT COMMENT '웹사이트 방문 기록';
+
+
+
+//cafe24에 Function 만드는 권한이 없다.ㅠ.ㅠ
+/* 계층형 mysql 쿼리 정렬 함수 */
+DROP FUNCTION IF EXISTS hierarchy_connect_by_parent_eq_prior_no;
+DELIMITER $$
+CREATE FUNCTION hierarchy_connect_by_parent_eq_prior_no(value INT) RETURNS INTEGER
+NOT DETERMINISTIC
+READS SQL DATA
+  BEGIN
+    DECLARE _parent INT;
+    DECLARE _rank INT;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET @id = NULL;
+
+    SET _parent = @id;
+    SET _rank = 0;
+
+    IF @id IS NULL THEN
+      RETURN NULL;
+    END IF;
+
+    LOOP
+      SET @innerrank = 0;
+      SELECT p.ID
+          INTO   @id
+      FROM   (
+             SELECT   ID, @innerrank := @innerrank+1 AS ran
+             FROM     content
+             WHERE    COALESCE(P_ID, 0) = _parent
+             ORDER BY SEQ -- seq 로 정렬
+             ) p
+      WHERE   p.ran > _rank LIMIT 0, 1;
+      IF @id IS NOT NULL OR _parent = @start_with THEN
+        SET @level = @level + 1;
+        RETURN @id;
+      END IF;
+      SET @level := @level - 1;
+      SET @innerrank = 0;
+      SELECT COALESCE(p.P_ID, 0), p.ran
+          INTO   _parent, _rank
+      FROM   (
+             SELECT ID, P_ID, @innerrank := @innerrank+1 AS ran
+             FROM    content
+             WHERE   COALESCE(P_ID, 0) = (
+                                           SELECT COALESCE(P_ID, 0) FROM content WHERE ID = _parent
+                                           )
+             ORDER BY SEQ
+             ) p
+      WHERE p.ID = _parent;
+    END LOOP;
+  END;
+$$
+DELIMITER ;
+
+
+
+ALTER TABLE `cms2580`.`content` 
+ADD COLUMN `CATAGORY` VARCHAR(45) NULL COMMENT '분류' AFTER `CNT`;
+
+

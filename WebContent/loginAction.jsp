@@ -32,11 +32,15 @@
 	
 	UserDAO userDAO = new UserDAO();
 	int result = userDAO.login(user.getUserid(), user.getPassword());
+	
+	System.out.println("id="+user.getUserid());
+	System.out.println("pw="+user.getPassword());
+	
 	if(result == 1) {
 		session.setAttribute("userID", user.getUserid());//세션 부여
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href = 'main.jsp'");
+		script.println("location.href = 'index.jsp'");
 		script.println("</script>");
 	} 
 	else if (result == 0){

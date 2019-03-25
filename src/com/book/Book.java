@@ -1,7 +1,6 @@
 package com.book;
 
 public class Book {
-
     // id 
     private Integer id;
 

@@ -70,7 +70,36 @@
 }
 
 
+
+#myBtn3 {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 12px;
+  border: none;
+  outline: none;
+  background-color: #0080FF ;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  opacity: 0.5; /* 투명도 설정 */
+}
+
+#myBtn3:hover {
+  background-color: #555;
+}
+
+ 
 </style>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3728893017240396",
+    enable_page_level_ads: true
+  });
+</script> 
 </head>
 
 <% 
@@ -152,6 +181,12 @@ function comment(check){
     $("#myModal").modal('show');
 }
 
+function answerfull(){
+	
+	//modal을 띄워준다.  
+    $("#myModal2").modal('show');
+}
+
 function scoreResult(){ // 전체 문제 채점하기
 	
 	var sum=0;
@@ -192,6 +227,7 @@ function scoreResult(){ // 전체 문제 채점하기
 	
 	<% 	if(!examcode.startsWith("A")){ %><%-- 주관식 시험이면 채점 버튼 안보임 --%>
 		<button onclick="scoreResult()" id="myBtn2" title="score" class="btn btn-primary btn-sm">채점</button>
+		<button onclick="answerfull()" id="myBtn3" title="score" class="btn btn-primary btn-sm">전체답</button>
 	<% } %>	
 
  <%
@@ -201,6 +237,10 @@ function scoreResult(){ // 전체 문제 채점하기
 	ArrayList<Examlist> list = examlistDAO.searchExamList(examcode,turn);//""
 	String[] a = new String[2];// 교시를 출력하기 위한 배열
 	int j=1;
+	
+	StringBuffer answerhtml = new StringBuffer("");
+
+	
 	for(int i =0 ; i < list.size(); i++){
 		
 		
@@ -367,6 +407,20 @@ function scoreResult(){ // 전체 문제 채점하기
 
 
 					</div> <!-- col-sm-6 blog-main 끝  -->
+					<% 
+					  
+					if((i%10) == 0){ answerhtml.append("<tr border=0>"); }// 10 번에 한번
+						answerhtml.append("<td><table class=\"table table-bordered\">");
+						answerhtml.append("<tr><td align=center>");
+						answerhtml.append(i+1);
+						answerhtml.append("</td></tr>");
+						answerhtml.append("<tr><td align=center>");
+						answerhtml.append(util.answerChange(list.get(i).getAnswer())); //answerChange
+	                    answerhtml.append("</td></tr>");
+						answerhtml.append("</table></td>");
+					if((i%10) == 9) {answerhtml.append("</tr>");}// 10 번에 한번
+					%>
+					
 
 <%
 	}
@@ -399,6 +453,34 @@ function scoreResult(){ // 전체 문제 채점하기
       </div>
     </div>
   </div>  
+
+
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title">정답표</h4>
+        </div>
+        <div class="modal-body">
+          <p id="content">
+           <table>
+          <%=  answerhtml.toString() %> 
+           
+           </table>
+          
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> 
 
 		
 <script>

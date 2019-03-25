@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jqTree</title>
+<link rel="stylesheet" href="./jqtree.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="./tree.jquery.js"></script>
+<script src="./jqTreeContextMenu.js"></script>
+</head>
+<body>
+
+<div id="tree1"></div>
+
+<ul id="ContextMenu" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <li class="add"><a href="#add"><i class="icon-plus"></i> Add</a></li>
+    <li class="edit"><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
+    <li class="divider"></li>
+    <li class="delete"><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
+</ul>
+
+<script>
+$(function () {
+    var edt_node = null;
+
+    var data = [{
+        label: "node1",
+        children: [{ label: '<a href="#">child1</a>' },
+                   { label: "<a href='#'>child2</a>" }]
+    },{
+        label: "node2",
+        children: [{ label: "<a href='#'>child3</a>"}]
+    }, {
+        label: "node3"
+    }];
+
+    var $tree = $("#tree1");
+
+    $tree.tree({
+        data: data,
+        onCreateLi: function(node, $li) {
+            // Add 'icon' span before title
+            $li.find('.jqtree-title').before('<span class="icon"></span>');
+        },
+        closedIcon: $('<i class="fas fa-arrow-circle-right"></i>'),
+        openedIcon: $('<i class="fas fa-arrow-circle-down"></i>'),
+        autoOpen: true,
+        autoEscape: false,
+        dragAndDrop: true,
+        usecontextmenu: true
+    });
+
+    $tree.jqTreeContextMenu($("#ContextMenu"), {
+        "add": function (node) {
+            $tree.tree("appendNode", { label: "new node" }, node);
+            $tree.tree("openNode", node);
+        },
+        "edit": function (node) {
+            var $edit = $("#edit_label");
+            if(edt_node != node && $edit.size() > 0) {
+                var $input = $edit.find("input:text");
+                var label = $.trim($input.val());
+
+                updateNodeLabel(edt_node, label);
+                $edit.remove();
+            }
+
+            edt_node = node;
+            var $el = $(node.element);
+            $el.find("span.jqtree-title:first").after('<span id="edit_label"><input type="text" name="label" value="'+node.name+'"><button type="button" id="edit_submit">수정</button></span>').hide();
+        },
+        "delete": function (node) {
+            $tree.tree("removeNode", node);
+        }
+    });
+
+    $(document).on("click", "#edit_submit", function() {
+        var $this = $(this);
+        var $input = $this.siblings("input:text");
+        var label = $.trim($input.val());
+        $this.siblings(".jqtree-title").show();
+        $("#edit_label").remove();
+
+        updateNodeLabel(edt_node, label);
+    });
+
+    function updateNodeLabel(node, label)
+    {
+        $tree.tree("updateNode", node, label);
+        edt_node = null;
+    }
+});
+</script>
+
+</body>
+</html>

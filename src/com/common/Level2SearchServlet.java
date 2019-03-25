@@ -27,6 +27,7 @@ public class Level2SearchServlet extends HttpServlet {
 		response.getWriter().write(getJSON(level1));
 	}
 	
+	
 	// [ 특수문자 처리가 필요함..
 	public String getJSON(String examcode) {
 		if(examcode == null) examcode="";

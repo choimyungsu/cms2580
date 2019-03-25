@@ -9,6 +9,7 @@ public class Examcontents {
  // 시험코드 
  private String examcode;
 
+ 
  // 시퀀스 
  private String seq;
  

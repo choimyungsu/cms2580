@@ -54,4 +54,5 @@ public class Useranswerdesc {
         this.examlistid = param.getExamlistid();
         this.answerdesc = param.getAnswerdesc();
     }
+    
 }

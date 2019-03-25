@@ -1,19 +1,18 @@
 package com.book;
 
-
 public class Content {
 
     // id 
     private Integer id;
     
     // pid ºÎ¸ðid
-    private Integer pid;    
+    private String pid;    
 
-    public Integer getPid() {
+    public String getPid() {
 		return pid;
 	}
 
-	public void setPid(Integer pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 

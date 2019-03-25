@@ -101,7 +101,7 @@
 
 </style>
 </head>
-<body>
+<body class="nav-md">
 
 <jsp:include page="header.jsp" flush="true" />
 
@@ -159,6 +159,16 @@
 	</div>
 </div>
 <br>
+
+
+
+           
+
+
+
+
+
+
 <div class="row">
 	<a href="https://play.google.com/store/apps/details?id=com.cafe24.cms2580.cmsgisa" target="_blank">
 	     <img src="img/app.png" width="250"  alt="앱다운로드">

@@ -35,6 +35,7 @@
 					  <div class="row" style="padding:5px;">
 					    &nbsp; <b>교시 :</b>  <input type=radio name="period" id="period" checked  value="1"> 1교시
 					     <input type=radio name="period" id="period"  value="2"> 2교시
+					     <input type=radio name="period" id="period"  value="3"> 1+2교시(혼합 1교시 7개,2교시 3개)
 					  </div><!-- row  -->
 					                                       
 					  <div class="row" style="padding:5px;">
@@ -49,7 +50,7 @@
 					     &nbsp; <button type="button" onclick="submitForm()" class="btn btn-success" >검색</button>
 					  </div><!-- row  -->
 					  
-					  
+					 
 					  <input type="hidden" name="examcode">
 					  <input type="hidden" name="turn">
 					  

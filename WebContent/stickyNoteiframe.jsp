@@ -45,8 +45,8 @@ ul li a{
   color:#000;
   background:#ffc;
   display:block;
-  height:15em; /* 포스트잇 높이 */ 
-  width:15em;  /* 포스트이 넓이 */
+  height:13em; /* 포스트잇 높이 */ 
+  width:13em;  /* 포스트이 넓이 */
   padding:1em;
   -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
   -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);

@@ -98,7 +98,7 @@
 				 
 				    ContentDAO contentDAO = new ContentDAO();
 				    Util util = new Util();
-				    ArrayList<Content> list = contentDAO.searchContents(bookId);//""
+				    ArrayList<Content> list = contentDAO.searchContents(bookId,"");//""
 				    Content content = contentDAO.searchContent(contentId);//한건 찾기 
 				    
 				     // 조회수 추가  2018.10.19

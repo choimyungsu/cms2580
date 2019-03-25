@@ -3,6 +3,7 @@ package com.exam;
 //기출문제 
 public class Examlist {
 
+	
  // pk 
  private Integer examlistid;
 

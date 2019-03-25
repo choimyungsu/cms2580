@@ -2,6 +2,7 @@ package com.user;
 
 public class User {
 
+	
     // ¾ÆÀÌµğ 
     private String userid;
 

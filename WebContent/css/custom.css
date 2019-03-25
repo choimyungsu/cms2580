@@ -79,7 +79,7 @@ h1 {
 .prev_icon {
     position: fixed;
     top:50%;
-    left: 10%; 
+    left: 20%; 
 }
 
 .next_icon {
@@ -92,3 +92,9 @@ h1 {
 .prev_icon:visited, .next_icon:visited { color: #ccc; }
 .prev_icon:hover, .next_icon:hover { color:#aaa !important; }
 .prev_icon:active, next_icon:active { color: #aaa; }
+
+
+
+.fixed_height_420 {
+    height: 420px
+}

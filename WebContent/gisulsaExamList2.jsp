@@ -52,8 +52,10 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
 	<div class="row">
 	<% if(period.equals("1.0") || period.equals("1")){ %>
 		<h5>&nbsp;&nbsp;&nbsp;*다음 문제 중 10문제를 선택하여 설명하시오. (각 10점)</h5> 
-	<%}else{ %>
+	<%}else if(period.equals("2.0") || period.equals("2")){ %>
 		<h5>&nbsp;&nbsp;&nbsp;*다음 문제 중 4문제를 선택하여 설명하시오. (각 25점)</h5>
+	<% }else{ %>
+	   <h5>&nbsp;&nbsp;&nbsp;*1~7번까지 1교시 형(각 10점), 8~10번까지 2교시 형(각25점) 5개,2개 선택 100분</h5>
 	<% } %>
 	</div>
 	<br>
@@ -77,6 +79,14 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
 						<div id="<%= i %>" style="position:relative" class="text-muted mt-0 mb-1"> <%-- 문제 영역 --%>
 
 						<%=i+1%>. <%= list.get(i).getExamdesc().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") %>  ( <%= gubun%> <%= list.get(i).getTurn() %>회 ) <%-- 줄바꿈 처리 --%>
+						
+						<%-- 문제 이미지가  있을때 --%>
+                        <% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
+                        <div class="row" style=" margin: 10px ">
+                                <%=  list.get(i).getExamImg()%>
+                        </div>                                  
+                        <% } %>
+						
 					</div>
 					<br>
 

@@ -72,13 +72,13 @@
 				 
 				    ContentDAO contentDAO = new ContentDAO();
 				    Util util = new Util();
-				    ArrayList<Content> list = contentDAO.searchContents(bookId);//""
+				    ArrayList<Content> list = contentDAO.searchContents(bookId,"");//""
 				    for(int i =0 ; i < list.size(); i++){
 				%>
                 
                     <div class="row">
                         <div class="sidebar" >
-                            <a href="contentDetail.jsp?contentId=<%=list.get(i).getId() %>&bookId=<%=bookId%>"> <%=list.get(i).getTitle()  %></a>   
+                            <a href="contentDetail.jsp?contentId=<%=list.get(i).getId() %>&bookId=<%=bookId%>"> <%=list.get(i).getTitle()  %> (<%=list.get(i).getCnt() %>)</a>   
                         </div>
                     </div>
                     

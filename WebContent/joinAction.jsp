@@ -98,7 +98,7 @@
 		session.setAttribute("userID", user.getUserid());//세션 부여
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href ='main.jsp' ");
+		script.println("location.href ='index.jsp' ");
 		script.println("</script>");
 			} 
 		

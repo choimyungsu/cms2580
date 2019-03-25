@@ -1,6 +1,5 @@
 package com.bbs;
 
-
 //단순게시판 
 public class Bbs {
 

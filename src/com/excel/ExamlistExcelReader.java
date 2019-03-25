@@ -128,6 +128,14 @@ public class ExamlistExcelReader {
 									case 4: // examDesc
 										vo.setExamdesc(value);
 										break;
+										
+									case 5: // answer
+										vo.setAnswer(value);
+										break;	
+
+									case 6: // answerDesc
+										vo.setAnswerdesc(value);
+										break;										
 									
 		
 									default:

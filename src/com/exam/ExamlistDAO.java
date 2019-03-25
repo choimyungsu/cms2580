@@ -24,12 +24,12 @@ public class ExamlistDAO {
 	}
 	
 	//±â¼ú»ç¹®Á¦ insert(¿¢¼¿) 
-	public int insertGisulsa(String examCode, String turn, String domain,String period, String examDesc) {
+	public int insertGisulsa(String examCode, String turn, String domain,String period, String examDesc, String answerDesc) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO examList(examCode,turn,domain,period,examDesc)  VALUES (? ,?, ?, ?, ? )";
+		String SQL = "INSERT INTO examList(examCode,turn,domain,period,examDesc,answerDesc)  VALUES (? ,?, ?, ?, ?, ? )";
 		
 		try {
 			conn = ds.getConnection();
@@ -39,6 +39,7 @@ public class ExamlistDAO {
 			pstmt.setString(3, domain);
 			pstmt.setString(4, period);
 			pstmt.setString(5, examDesc);
+			pstmt.setString(6, answerDesc);
 			
 			return pstmt.executeUpdate();
 			
@@ -468,7 +469,8 @@ public class ExamlistDAO {
 					  "  answer4, " +
 					  "  answer5, " +
 					  "  answerDesc, " +
-					  "  answer " +
+					  "  answer, " +
+					  "  examImg " +
 					  " from examList a" + 
 		 			  " where a.examCode in('A001','A002') " + 
 		 		      " and a.period in('1','1.0')" + 
@@ -489,7 +491,8 @@ public class ExamlistDAO {
 					  "  answer4, " +
 					  "  answer5, " +
 					  "  answerDesc, " +
-					  "  answer " +		
+					  "  answer, " +
+					  "  examImg " +	
 					  " from examList a" + 
 		 			  " where a.examCode in('A001','A002') " + 
 		 		      " and a.period in('2','2.0','3','3.0','4','4.0')" + 
@@ -522,6 +525,7 @@ public class ExamlistDAO {
 		        examlist.setAnswer5(rs.getString(14));
 		        examlist.setAnswerdesc(rs.getString(15));
 		        examlist.setAnswer(rs.getString(16));
+		        examlist.setExamImg(rs.getString(17));
 		        
 		        list.add(examlist);
 				
@@ -582,14 +586,15 @@ public class ExamlistDAO {
 						  "  answer4, " +
 						  "  answer5, " +
 						  "  answerDesc, " +
-						  "  answer " +
+						  "  answer, " +
+						  "  examImg " +
 						  " from examList a" + 
 						  examCode +
 			 			  //" where a.examCode in('A001','A002') " + 
 			 		      " and a.period in('1','1.0')" + 
 			 		      turn + 
 			 		      " order by rand() limit 13;" ;
-			}else {
+			}else if(period.equals("2")) {
 					SQL = " select examListID, " +
 						  "  examCode, " +
 						  "  domain, " +
@@ -605,13 +610,64 @@ public class ExamlistDAO {
 						  "  answer4, " +
 						  "  answer5, " +
 						  "  answerDesc, " +
-						  "  answer " +		
+						  "  answer, " +
+						  "  examImg " +		
 						  " from examList a" + 
 						  examCode +
 			 			  //" where a.examCode in('A001','A002') " + 
 			 		      " and a.period in('2','2.0','3','3.0','4','4.0')" + 
 			 		      turn + 
 			 		      " order by rand() limit 6;" ;
+			}else {// È¥ÇÕÇü
+				
+				SQL = "( select examListID, " +
+						  "  examCode, " +
+						  "  domain, " +
+						  "  year, " +
+						  "  round(turn), " +
+						  "  round(period), " +
+						  "  examNum, " +
+						  "  examDesc, " +
+						  "  examBogi, " +
+						  "  answer1, " +
+						  "  answer2, " +
+						  "  answer3, " +
+						  "  answer4, " +
+						  "  answer5, " +
+						  "  answerDesc, " +
+						  "  answer, " +
+						  "  examImg " +
+						  " from examList a" + 
+						  examCode +
+			 			  //" where a.examCode in('A001','A002') " + 
+			 		      " and a.period in('1','1.0')" + 
+			 		      turn + 
+			 		      " order by rand() limit 7 )" +
+			 		     " union all " +
+			 		     " ( select examListID, " +
+						  "  examCode, " +
+						  "  domain, " +
+						  "  year, " +
+						  "  round(turn), " +
+						  "  round(period), " +
+						  "  examNum, " +
+						  "  examDesc, " +
+						  "  examBogi, " +
+						  "  answer1, " +
+						  "  answer2, " +
+						  "  answer3, " +
+						  "  answer4, " +
+						  "  answer5, " +
+						  "  answerDesc, " +
+						  "  answer, " +
+						  "  examImg " +	
+						  " from examList a" + 
+						  examCode +
+			 			  //" where a.examCode in('A001','A002') " + 
+			 		      " and a.period in('2','2.0','3','3.0','4','4.0')" + 
+			 		      turn + 
+			 		      " order by rand() limit 3)" ;
+				
 			}
 			 
 			
@@ -642,6 +698,7 @@ public class ExamlistDAO {
 			        examlist.setAnswer5(rs.getString(14));
 			        examlist.setAnswerdesc(rs.getString(15));
 			        examlist.setAnswer(rs.getString(16));
+			        examlist.setExamImg(rs.getString(17));
 			        
 			        list.add(examlist);
 					
@@ -859,6 +916,7 @@ public class ExamlistDAO {
 		}
 
 
+		
 	//¹Ù Â÷Æ® À¯Çü 
 	public String getExamGroupListJSON() {
 		StringBuffer result = new StringBuffer("");

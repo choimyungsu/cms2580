@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 public class LinkfileDAO {
 	
+	
 	DataSource ds;
 	public LinkfileDAO() {//생성자 에서 선언
 		try {

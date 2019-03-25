@@ -35,6 +35,7 @@
         <ul class="nav navbar-nav">
             <li><a href="select.jsp">기출문제DB</a></li>
             <li><a href="book.jsp">학습 Book</a></li>
+            <li><a href="book2.jsp">Book II</a></li>
            <%--  <li class="dropdown">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false"> 학습자료DB  <span class="caret"></span></a>
