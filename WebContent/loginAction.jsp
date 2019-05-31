@@ -33,8 +33,8 @@
 	UserDAO userDAO = new UserDAO();
 	int result = userDAO.login(user.getUserid(), user.getPassword());
 	
-	System.out.println("id="+user.getUserid());
-	System.out.println("pw="+user.getPassword());
+	/* System.out.println("id="+user.getUserid());
+	System.out.println("pw="+user.getPassword()); */
 	
 	if(result == 1) {
 		session.setAttribute("userID", user.getUserid());//세션 부여

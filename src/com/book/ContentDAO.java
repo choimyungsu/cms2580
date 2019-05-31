@@ -33,12 +33,12 @@ public class ContentDAO {
 	}
 	
 	//create
-	public int insertContent(String bookID, String title, String text, String imgurl, String pid ) {
+	public int insertContent(String bookID, String title, String text, String imgurl, String pid, String tDate ) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "INSERT INTO content (BOOK_ID,TITLE, TEXT,C_DATE,U_DATE,P_DATE,CONTENTS_IMG_URL,P_ID)  VALUES (?, ? ,?, ?, ?, ?, ?, ? )";
+		String SQL = "INSERT INTO content (BOOK_ID,TITLE, TEXT,C_DATE,U_DATE,P_DATE,CONTENTS_IMG_URL,P_ID,T_DATE)  VALUES (?, ? ,?, ?, ?, ?, ?, ?, ? )";
 		BbsDAO bbsDAO = new BbsDAO(); 
 		String date = bbsDAO.getDate();
 		if(pid == null) {
@@ -56,6 +56,7 @@ public class ContentDAO {
 			pstmt.setString(6, date);//발행일
 			pstmt.setString(7, imgurl);
 			pstmt.setString(8, pid);//부모 ID
+			pstmt.setString(9, tDate);//timeline date
 			
 			return pstmt.executeUpdate();
 			
@@ -233,10 +234,11 @@ public class ContentDAO {
 					+ "P_DATE, " 
 					+ "CONTENTS_IMG_URL, "
 					+ "CNT, "
-					+ "P_ID "
+					+ "P_ID, "
+					+ "T_DATE "
 					+ " FROM content " 
 					+ " where BOOK_ID is null "
-					+ " ORDER BY SEQ " ;	
+					+ " ORDER BY T_DATE DESC " ;	
 
 
 			ArrayList<Content> list = new ArrayList();
@@ -260,6 +262,7 @@ public class ContentDAO {
 					content.setContentsImgUrl(rs.getString(8));
 					content.setCnt(rs.getString(9));
 					content.setPid(rs.getString(10));
+					content.settdate(rs.getString(11));
 		
 			        list.add(content);
 				}
@@ -432,7 +435,8 @@ public Content searchContent(String contentId){
 				+ "P_DATE, " 
 				+ "CONTENTS_IMG_URL, "
 				+ "CNT, "
-				+ "P_ID "
+				+ "P_ID, "
+				+ "T_DATE "
 				+ " FROM content " 
 				+ " where ID = ? "
 				+ " ORDER BY TITLE " ;
@@ -456,6 +460,7 @@ public Content searchContent(String contentId){
 				content.setContentsImgUrl(rs.getString(8));
 				content.setCnt(rs.getString(9));
 				content.setPid(rs.getString(10));
+				content.settdate(rs.getString(11));
 				
 	
 		        return content;
@@ -513,6 +518,75 @@ public Content searchContent(String contentId){
 		
 	}
 	
+	//Update
+		public int updateContent2(int contentId, String Title, String text,   String imgurl, String pid, String seq, String tdate) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "UPDATE content SET TITLE = ? , TEXT = ?, CONTENTS_IMG_URL = ?, P_ID =? , SEQ=?, T_DATE=?  WHERE ID = ?";
+					
+			try {
+				
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				
+				pstmt.setString(1, Title);
+				pstmt.setString(2, text);
+				pstmt.setString(3, imgurl);
+				pstmt.setString(4, pid);
+				pstmt.setString(5, seq);
+				pstmt.setString(6, tdate);
+				
+				pstmt.setInt(7, contentId);
+				
+				return  pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+			
+		}
+	
+	//Update Book
+		public int updateContentToLinkBook(int contentId, String bookId) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String SQL = "UPDATE content SET BOOK_ID=?  WHERE ID = ?";
+					
+			try {
+				
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				
+				pstmt.setString(1, bookId);
+				pstmt.setInt(2, contentId);
+				
+				return  pstmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return -1;//데이터베이스 오류
+			
+		}
 	
 	//조회수 추가 
 		public int updateCnt(String contentId) {

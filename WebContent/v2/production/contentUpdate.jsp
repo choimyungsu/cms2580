@@ -110,10 +110,10 @@ Content content = contentDAO.searchContent(contentId);//한건 찾기
 		        <p><label for="id_title">Title:</label> <input type="text" name="title" class="form-control" width="50" placeholder="목차 제목을 입력해주세요." maxlength="200" required id="id_title"  value="<%=content.getTitle() %>" /></p>
 		        <p><label for="p_id">부모 목차:</label>
 		          <select id="level2" name="pid" class="form-control">
-                          <option value="" selected="selected">부모목차</option>
+                          <option value="0" selected="selected">부모목차</option>
                   </select>
                 </p>
-		        <p><label for="id_url">Url:</label> <input type="text" name="contentsImgUrl" class="form-control" width="50" placeholder="대표 이미지 URL을 입력해주세요." alt="class=&quot;img-responsive&quot;" maxlength="500" id="id_url"  value="<%=content.getContentsImgUrl() %>" /></p>
+		        <p><label for="id_url">Url:</label> <input type="text" name="contentsImgUrl" class="form-control" width="50" placeholder="대표 이미지 URL을 입력해주세요." alt="class=&quot;img-responsive&quot;" maxlength="500" id="id_url"  value='<%=content.getContentsImgUrl() %>' /></p>
 		        <p><label for="id_text">Description:</label> <textarea id="summernote" name="text"  class="form-control" required id="id_text"><%=content.getText() %></textarea></p>
 		        <input type='hidden' name="bookId"  value="<%=bookId%>"/>
 		        <input type='hidden' name="id"  value="<%=content.getId()%>"/>
@@ -176,7 +176,7 @@ Content content = contentDAO.searchContent(contentId);//한건 찾기
           dataType:'json',
           success : function(data){
               $(level2).children().remove();// 두번째 셀렉트 부분 데이터 삭제
-              $(level2).append("<option value=''>선택</option>");// 옵션 하나 추가
+              $(level2).append("<option value='0'>선택</option>");// 옵션 하나 추가
           var result = data["result"];
               
               var mcCode = "";

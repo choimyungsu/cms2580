@@ -15,7 +15,35 @@
 <link rel="stylesheet" href="css/custom.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
 <title> CMS </title>
+
+<style>
+
+#cmd {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 12px;
+  border: none;
+  outline: none;
+  background-color: #0080FF ;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  opacity: 0.5; /* 투명도 설정 */
+}
+
+#cmd:hover {
+  background-color: #555;
+}
+
+</style>
 
 </head>
 <body>
@@ -51,6 +79,7 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
 
   <div class="content-wrapper">
 	<div class="container">
+	<button id="cmd">PDF다운</button>
 	<%-- <div class="row">
 		<div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 116회</p></div>
 		<div class="col-sm-5"><p></p></div>
@@ -108,7 +137,81 @@ if(request.getParameter("searchTurn")!=null && request.getParameter("searchTurn"
 	</div><!-- container 끝  -->
 </div><!-- container wrapper 끝  -->
 		
-		
+<script>
+
+
+
+var doc = new jsPDF();
+/* var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+}; */
+
+/*
+$("#cmd").click(function () {
+
+        
+      // var pdf = new jsPDF('p', 'mm', 'a4')
+      //  var canvas = pdf.canvas
+        var pageWidth = 200 //캔버스 너비 mm
+        var pageHeight = 295 //캔버스 높이 mm
+        // canvas.width = pageWidth
+
+        //var imgHeight = $("content").outerHeight();
+        
+        
+        html2canvas(document.getElementById("pdfContents"), {
+             onrendered : function(canvas){
+              var imgData = canvas.toDataURL('image/png');
+              var doc = new jsPDF('p','mm','a4');
+              //doc.addImage(imgData, 'PNG', 5,5,200,25);//pdf.addImage(imgData, 'png', 0, position, pageWidth, imgHeight, undefined, 'slow')
+              doc.addImage(imgData, 'PNG', 5,5,pageWidth,1000);
+              doc.save('problem.pdf');
+                } 
+            });
+         
+    });
+*/
+
+$("#cmd").click(function () {
+//현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
+html2canvas(document.body, {
+  onrendered: function(canvas) {
+ 
+    //  alert("aaa");
+    // 캔버스를 이미지로 변환
+    //var imgData = canvas.toDataURL('image/png');
+    var imgData = canvas.toDataURL('image/jpeg');//용량줄이기
+     
+    var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+    var imgHeight = canvas.height * imgWidth / canvas.width;
+    var heightLeft = imgHeight;
+     
+        var doc = new jsPDF('p', 'mm');
+        var position = 0;
+         
+        // 첫 페이지 출력
+        doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);//PNG
+        heightLeft -= pageHeight;
+         
+        // 한 페이지 이상일 경우 루프 돌면서 출력
+        while (heightLeft >= 20) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);//PNG
+          heightLeft -= pageHeight;
+        }
+ 
+        // 파일 저장
+        doc.save('random_test_A4.pdf');
+  }
+});
+
+});
+
+</script>   		
   
   
   

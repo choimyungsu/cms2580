@@ -225,7 +225,7 @@ function comment(check){
 						    <%-- 문제 이미지가  있을때 --%>
 							<% if(examlist.getExamImg()!=null && examlist.getExamImg().length()> 0 ) { %>
 							<div class="row" style=" margin: 10px ">
-									<br><%=  examlist.getExamImg()%>
+									<br><%=  util.imgurlcheck(examlist.getExamImg())%>
                             </div>									
 							<% } %>
 							<%-- 소스 지문이  있을때 --%>

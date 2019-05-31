@@ -42,7 +42,7 @@
           
           
           <div class="page-title">
-              <div class="title_left">
+              <!-- <div class="title_left">
                 <H3>Catagory</H3>
               </div>
               <form  action="bookSearch.jsp" method="post">
@@ -50,13 +50,13 @@
                 <div class="col-md-9 col-sm-9 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
                     
-                    <div class="col-sm-1" >
+                    <div class="col-sm-3" >
                                 <select id="level1" name="level1" onchange="changeSelect()" class="form-control">
                                     <option value="">1단계</option>
                                     <option value="기타">기타</option>
                                 </select>
                              </div>
-                             <div class="col-sm-1" >
+                             <div class="col-sm-3" >
                                 <select id="level2" name="level2" onchange="changeSelect2()" class="form-control">
                                     <option value="" selected="selected">2단계</option>
                                 </select>
@@ -71,7 +71,7 @@
                   </div>
                 </div>
               </div>
-              </form>
+              </form> -->
             </div>
           
           
@@ -112,7 +112,7 @@
 
 
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Note</h2>

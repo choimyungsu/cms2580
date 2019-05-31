@@ -442,6 +442,92 @@ public class ExamlistDAO {
 	//한건 삭제하기
 	
 	//한건 등록하기
+		
+		
+		
+		//모의고사 랜덤 가져오기
+		public ArrayList<Examlist> randomExamList(String examcode){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null; 
+			//String turn2 ="";
+			//String SQL = "SELECT * FROM examList WHERE examCode = ? and turn = ? ";
+			String SQL = " select examListID, " +
+				     "  examCode, " +
+				     "  domain, " +
+				     "  year, " +
+				     "  round(turn), " +
+				     "  round(period), " +
+				     "  examNum, " +
+				     "  examDesc, " +
+				     "  examBogi, " +
+				     "  ifnull(answer1,''), " +
+				     "  ifnull(answer2,''), " +
+				     "  ifnull(answer3,''), " +
+				     "  ifnull(answer4,''), " +
+				     "  ifnull(answer5,''), " +
+				     "  ifnull(answerDesc,''), " +
+			  	     "  answer, " +
+			  	     "  ifnull(examImg,''), " +
+			  	     "  ifnull(answerImg,''), " +
+			  	     "  ifnull(syntaxDesc,''), " +
+			  	     "  ifnull(url,'') " +
+				     " from examList a" +
+				     " WHERE examCode = ? " +
+				     " order by rand() limit 100 ";
+			
+			 ArrayList<Examlist> list = new ArrayList();
+			
+			try {
+				conn = ds.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, examcode);
+
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					Examlist examlist = new Examlist();	
+					
+			        examlist.setExamlistid(rs.getInt(1));
+			        examlist.setExamcode(rs.getString(2));
+			        examlist.setDomain(rs.getString(3));
+			        examlist.setYear(rs.getString(4));
+			        examlist.setTurn(rs.getString(5));
+			        examlist.setPeriod(rs.getString(6));
+			        examlist.setExamnum(rs.getString(7));
+			        examlist.setExamdesc(rs.getString(8));
+			        examlist.setExambogi(rs.getString(9));
+			        examlist.setAnswer1(rs.getString(10));
+			        examlist.setAnswer2(rs.getString(11));
+			        examlist.setAnswer3(rs.getString(12));
+			        examlist.setAnswer4(rs.getString(13));
+			        examlist.setAnswer5(rs.getString(14));
+			        examlist.setAnswerdesc(rs.getString(15));
+			        examlist.setAnswer(rs.getString(16));
+			        examlist.setExamImg(rs.getString(17));
+			        examlist.setAnswerImg(rs.getString(18));
+			        examlist.setSyntexDesc(rs.getString(19));
+			        examlist.setUrl(rs.getString(20));
+			        
+			        list.add(examlist);
+					
+				}
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt !=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return list;//
+			
+		}		
 	
 	
 	

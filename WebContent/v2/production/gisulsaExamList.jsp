@@ -57,6 +57,29 @@
     <link href='../../css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
     
+    <style>
+
+	#cmd {
+	  position: fixed;
+	  top: 120px;
+	  right: 20px;
+	  z-index: 99;
+	  font-size: 12px;
+	  border: none;
+	  outline: none;
+	  background-color: #0080FF ;
+	  color: white;
+	  cursor: pointer;
+	  padding: 5px;
+	  border-radius: 4px;
+	  opacity: 0.5; /* 투명도 설정 */
+	}
+	
+	#cmd:hover {
+	  background-color: #555;
+	}
+	
+	</style>
     
   </head>
 
@@ -68,7 +91,7 @@
        <jsp:include page="common.jsp" flush="true" />
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="pdf_Area">
           <div class="">
 
 
@@ -78,7 +101,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>랜덤 문제 출제  <small>(<%= period%>교시형)</small> </h2>
+                    <h2> 랜덤 문제 출제 사이트 : cms2580.cafe24.com  </h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -99,13 +122,14 @@
                   
                   <div class="x_content">
 
-                    <div class="row">
+                    <div class="row"  >
 
 						 
 						<!-- 본문 시작  -->
 						
 						  <div class="content-wrapper">
 						    <div class="container">
+						    <button id="cmd">PDF다운</button>
 						    <%-- <div class="row">
 						        <div class="col-sm-4" style="text-align:left; height:25px;"><p>기술사 &nbsp;&nbsp;&nbsp;제 116회</p></div>
 						        <div class="col-sm-5"><p></p></div>
@@ -162,9 +186,6 @@
 						    </div><!-- container 끝  -->
 						</div><!-- container wrapper 끝  -->
 
-
-                      
-
                     </div>
                   </div>
                 </div>
@@ -197,17 +218,79 @@
     <script src="../vendors/nprogress/nprogress.js"></script>
 
     <!-- FullCalendar -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
+    <!-- <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src='../../js/ko.js'></script>
+    <script src='../../js/ko.js'></script> -->
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+
+<script>
 
 
 
+var doc = new jsPDF();
+/*
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
 
+$('#cmd').click(function () {
+    doc.fromHTML($('#pdf_Area').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+});
+*/
+// canvas 이후 pdf 로 전환 
+
+$("#cmd").click(function () {
+//현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
+html2canvas($('#pdf_Area'),{
+
+//html2canvas(document.body, { //
+  onrendered: function(canvas) {
+ 
+    // 캔버스를 이미지로 변환
+    //var imgData = canvas.toDataURL('image/png');
+    var imgData = canvas.toDataURL('image/jpeg');//용량줄이기
+     
+    var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+    var imgHeight = canvas.height * imgWidth / canvas.width;
+    var heightLeft = imgHeight;
+     
+        var doc = new jsPDF('p', 'mm');
+        var position = 0;
+         
+        // 첫 페이지 출력
+        doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);//PNG
+        heightLeft -= pageHeight;
+         
+        // 한 페이지 이상일 경우 루프 돌면서 출력
+        while (heightLeft >= 20) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);//PNG
+          heightLeft -= pageHeight;
+        }
+ 
+        // 파일 저장
+        doc.save('random_test_A4.pdf');
+  }
+});
+
+});
+
+</script>           
+  
 
 
   </body>

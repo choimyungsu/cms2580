@@ -91,7 +91,7 @@
 	    ExamcontentsDAO examcontentsDAO = new ExamcontentsDAO();
 	    
 	    for(int i =0 ; i < xlsxList.size(); i++){
-	        	examcontentsDAO.insertContents( xlsxList.get(i).getExamcode(), xlsxList.get(i).getSeq() , xlsxList.get(i).getDomain(),  xlsxList.get(i).getSubject());
+	        	examcontentsDAO.insertContents( xlsxList.get(i).getExamcode(), xlsxList.get(i).getSeq() , xlsxList.get(i).getDomain(),  xlsxList.get(i).getSubject(),  xlsxList.get(i).getDefinition());
 	    }
 	}else if(type.equals("B")){ // 기술사 유형일때 
 		

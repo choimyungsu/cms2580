@@ -43,7 +43,7 @@
 				}else{
 					
 					ContentDAO contentDAO = new ContentDAO();
-					System.out.println("content.getContentsImgUrl()===>"+content.getContentsImgUrl());
+					//System.out.println("content.getContentsImgUrl()===>"+content.getContentsImgUrl());
 					int result = contentDAO.updateContent(content.getId(),content.getTitle(),content.getText(), content.getContentsImgUrl(),"0","0");
 					
 					if(result == -1){

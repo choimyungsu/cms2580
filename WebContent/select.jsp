@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="css/custom.css">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
+
+<!--1. clipboard.js 파일 cdn을 통해서 로드-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+
 <script>
 //json 처리 스크립트 
 var request = new XMLHttpRequest();
@@ -90,7 +94,7 @@ function changeSelect3(){
     document.form1.submit();
 }
 
-  
+
 
 </script>
 </head>
@@ -119,6 +123,7 @@ function changeSelect3(){
             <option value="B003">리눅스마스터1급</option>
             <option value="A004">리눅스마스터1급 실기</option>
             <option value="B004">네트워크관리사1급</option>
+            <option value="B020">네트워크관리사2급</option>
             <option value="B013">정보처리기사</option>
             <option value="B007">공인중개사1차</option>
             <option value="B017">국어(9급 국가직)</option>
@@ -138,12 +143,15 @@ function changeSelect3(){
             <option value="one" >한문제씩 보기</option>
         </select>
     </div>
+    <div class="col-sm-3" >
+        <button class="btn btn-primary btn-sm" data-clipboard-text="http://cms2580.cafe24.com">URL 클립보드 복사</button>
+        <!-- <button onclick="urlcopy()" id="btn1"  class="btn btn-primary btn-sm">URL 클립보드 복사</button> -->
+    </div>
 
 
   </div><!-- row  -->
   <input type="hidden" name="examcode">
   <input type="hidden" name="turn">
-  
   </form>
   </div><!-- form-group  -->
   <iframe id="resultExam" src="examCount.jsp" name="resultExam" style="display:block; width:100%; height: 80vh; frameborder:1"> </iframe>
@@ -151,7 +159,34 @@ function changeSelect3(){
 
 
 </div>
+<script>
+//3. 웹 문서가 로드되면 클립보드 객체 생성
+$(document).ready(function(){
 
+    var clipboard = new Clipboard('.btn');
+    clipboard.on('success', function(e) {
+        console.log("Success");
+
+        /*
+        아래 함수를 통해서 블록지정을 없앨 수 있습니다.
+        */
+        var selection = window.getSelection();
+        //selection.removeAllRanges();
+    });
+    clipboard.on('error', function(e) {
+        console.log("Fail");
+    });
+
+    // 아래와 같이 button 태그만 가져오는 방법도 가능하다.
+    /*
+    var btns = document.querySelectorAll('button');
+    var clipboard = new Clipboard(btns);
+    */
+
+
+});
+
+</script>
  
 </body>
  

@@ -310,7 +310,7 @@ function scoreResult(){ // 전체 문제 채점하기
 						    <%-- 문제 이미지가  있을때 --%>
 							<% if(list.get(i).getExamImg()!=null && list.get(i).getExamImg().length()> 0 ) { %>
 							<div class="row" style=" margin: 10px ">
-									<%=  list.get(i).getExamImg()%>
+									<%= util.imgurlcheck( list.get(i).getExamImg()) %>
                             </div>									
 							<% } %>
 							 <%-- 문제 보기가  있을때 --%>

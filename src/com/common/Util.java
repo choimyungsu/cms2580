@@ -93,6 +93,24 @@ public class Util {
 			}
 			
 		}
+		
+		
+		public String imgurlcheck(String inputString) { // 원하는 글자수 만큼 잘라내기.
+			String outputString ="";
+			if(inputString == null || inputString =="" )
+			{
+				return outputString;
+			}
+			else if (inputString.contains("<img")) {
+				
+				return inputString;
+				
+			}else {
+				outputString ="<img src=\""+ inputString + "\"  border=\"0\" />" ;
+			}
+			
+			return outputString;
+		}
 	
 
 }

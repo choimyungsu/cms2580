@@ -24,6 +24,58 @@ public class ExamcontentsDAO {
 		}
 	}
 	
+	//문제 여러건 가져오기
+			public ArrayList<Examcontents> searchExamcontents(){
+				
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null; 
+				String SQL = "	select " + 
+				 		"	examContentsID," + 
+				 		"	seq," + 
+				 		"	domain," + 
+				 		"	subject," + 
+				 		"	ifnull(definition,'')," +
+				 		"	examCode " +
+				 		"	from  examContents  " + 
+				 		"   order by seq ";
+				 
+				 
+				 ArrayList<Examcontents> list = new ArrayList();
+				
+				try {
+					conn = ds.getConnection();
+					pstmt = conn.prepareStatement(SQL);
+					rs = pstmt.executeQuery();
+					
+					while (rs.next()) {
+						Examcontents examcontents = new Examcontents();	
+						examcontents.setExamcontentsid(rs.getInt(1));
+						examcontents.setSeq(rs.getString(2));
+						examcontents.setDomain(rs.getString(3));
+						examcontents.setSubject(rs.getString(4));
+						examcontents.setDefinition(rs.getString(5));
+						examcontents.setExamcode(rs.getString(6));
+						
+				        list.add(examcontents);
+					}
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) rs.close();
+						if(pstmt !=null) pstmt.close();
+						if(conn!=null) conn.close();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return list;//
+				
+			}
+	
+	
 	
 	//문제 여러건 가져오기
 		public ArrayList<Examcontents> searchExamcontents(String examcode){
@@ -93,11 +145,11 @@ public class ExamcontentsDAO {
 					String SQL = "	select " + 
 					 		"	examContentsID," + 
 					 		"	seq," + 
-					 		"	domain," + 
+					 		"	ifnull(domain,'')," + 
 					 		"	subject," + 
 					 		"	ifnull(definition,'')," +
 					 		"	ifnull(linkUrl,''), " +
-					 		"	examCode," +
+					 		"	ifnull(examCode,'')," +
 					 		"	objectLink " + 
 					 		"	from  examContents  " + 
 					 		"	left outer join  linkUrl   " + 
@@ -201,26 +253,29 @@ public class ExamcontentsDAO {
 				
 				
 				//한건 수정하기
-				public int updateExamcontents(int examContentsID, String definition, String linkUrl) {
+				public int updateExamcontents(int examContentsID, String subject, String definition, String domain, String examCode) {
 					Connection conn = null;
 					PreparedStatement pstmt = null;
 					ResultSet rs = null;
-					String SQL = "UPDATE examContents SET definition = ? WHERE examContentsID = ?";
+					String SQL = "UPDATE examContents SET subject = ?, definition = ?, domain = ?, examCode = ?  WHERE examContentsID = ?";
 							
 					try {
 						
 						conn = ds.getConnection();
 						pstmt = conn.prepareStatement(SQL);
 						
-						pstmt.setString(1, definition);
-						pstmt.setInt(2, examContentsID);
+						pstmt.setString(1, subject);
+						pstmt.setString(2, definition);
+						pstmt.setString(3, domain);
+						pstmt.setString(4, examCode);
+						pstmt.setInt(5, examContentsID);
 						
 						int a = pstmt.executeUpdate();
 						
-						if(linkUrl !=null && linkUrl.length()> 0) {
+/*						if(linkUrl !=null && linkUrl.length()> 0) {
 							LinkurlDAO linkurlDAO = new LinkurlDAO();
 							linkurlDAO.insertLinkUrl("examContents", Integer.toString(examContentsID), linkUrl);
-						}
+						}*/
 						
 						return  a;
 						
@@ -273,7 +328,38 @@ public class ExamcontentsDAO {
 					return -1;//데이터베이스 오류
 				}
 		
-				
+				//기술사문제 insert
+				public int insertContents(String examCode, String seq, String domain,String subject,String definition) {
+					
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null;
+					String SQL = "INSERT INTO examContents(examCode,seq,domain,subject,definition)  VALUES (? ,?, ?, ?,?)";
+					
+					try {
+						conn = ds.getConnection();
+						pstmt = conn.prepareStatement(SQL);
+						pstmt.setString(1, examCode);
+						pstmt.setString(2, seq);
+						pstmt.setString(3, domain);
+						pstmt.setString(4, subject);
+						pstmt.setString(5, definition);
+						
+						return pstmt.executeUpdate();
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(rs!=null) rs.close();
+							if(pstmt !=null) pstmt.close();
+							if(conn!=null) conn.close();
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+					return -1;//데이터베이스 오류
+				}
 
 
 }

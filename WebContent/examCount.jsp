@@ -26,7 +26,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
-            
+<!--1. clipboard.js 파일 cdn을 통해서 로드-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>            
 
 
 </head>
@@ -36,8 +37,9 @@
      <div class="row">
         <div class="col-sm-12">
             <div align="center"><b color="blue">문제는 지속적으로 업로드 됩니다.</b> <br>
-                <b color="blue">2018년 6월 서울시 전산직,2018년  9급 국가직(국어,영어,한국사) 문제 업로드 되었습니다.</b> <br> 
+                <b color="blue">2019년 9급 전산직,2019년  기사 문제 업로드 되었습니다.</b> <br> 
                 <b color="blue"><a href="https://cafe.naver.com/ictbox" target="_blank"> 원본자료(PDF,HWP)도 Cafe에 올리고있습니다.</a></b>
+            <button class="btn btn-primary btn-sm" data-clipboard-text="http://cms2580.cafe24.com">URL 클립보드 복사</button>
             </div>
         </div>
     </div>
@@ -179,6 +181,36 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+
+
+// 3. 웹 문서가 로드되면 클립보드 객체 생성
+$(document).ready(function(){
+
+    var clipboard = new Clipboard('.btn');
+    clipboard.on('success', function(e) {
+        console.log("Success");
+        alert("복사되었습니다.")
+
+        /*
+        아래 함수를 통해서 블록지정을 없앨 수 있습니다.
+        */
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+    });
+    clipboard.on('error', function(e) {
+        console.log("Fail");
+    });
+
+    // 아래와 같이 button 태그만 가져오는 방법도 가능하다.
+    /*
+    var btns = document.querySelectorAll('button');
+    var clipboard = new Clipboard(btns);
+    */
+
+
+});   
 </script>
     
 

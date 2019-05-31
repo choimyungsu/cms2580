@@ -54,12 +54,14 @@
                       <li><a href="bbs.jsp">공지사항</a></li>
                       <li><a href="stickyNote.jsp">오늘의 토픽</a></li>
                       <li><a href="https://cafe.naver.com/ictbox" target="_blank">원본자료 Cafe</a></li>
+                      <li><a href="https://cms2580.tistory.com" target="_blank">보안블로그</a></li>
                     </ul>
                   </li>
 
                   
                   <li><a href="select2.jsp"><i class="fa fa-database"></i> 기출문제</a>
-                  <li><a href="note.jsp"><i class="fa fa-image"></i> Note</a>
+                  <li><a href="select3.jsp"><i class="fa fa-random"></i> 모의고사(랜덤)</a>
+                  <li><a href="timeline.jsp"><i class="fa fa-image"></i> 긍정의 한줄</a>
                   <li><a href="book.jsp"><i class="fa fa-book"></i> Book</a>
                   <li><a href="calendar.jsp"><i class="fa fa-calendar"></i>시험일정</a>
                   </li>
@@ -90,7 +92,8 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> 관리자 기능 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="../../userList.jsp">회원 현황</a></li>
+                      <li><a href="noteCreate.jsp">노트 등록</a></li>
+                      <li><a href="noteLinkBook.jsp">노트 <->Book 연결</a></li>
                       <li><a href="../../fileUpload.jsp">파일업로드</a></li>
                       <li><a><i class="fa fa-sitemap"></i> 회원 및 권한관리 <span class="fa fa-chevron-down"></span></a>
 	                    <ul class="nav child_menu">
@@ -100,6 +103,8 @@
 	                    </ul>
 	                  </li>
                      <!--  <li><a href="acl.jsp">권한관리</a></li> -->
+                      <li><a href="word.jsp">IT용어</a></li>
+                      <li><a href="chart.jsp">chart</a></li>
                       <li><a href="projects.html">Projects</a></li>
                       <li><a href="project_detail.html">Project Detail</a></li>
                       <li><a href="contacts.html">Contacts</a></li>
@@ -126,7 +131,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" <%   if(userID != null){%> href="../../logoutAction.jsp" <%}%> >
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>

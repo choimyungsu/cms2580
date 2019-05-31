@@ -8,8 +8,9 @@
 <jsp:setProperty name="content" property="title" />
 <jsp:setProperty name="content" property="text" />
 <jsp:setProperty name="content" property="bookId" />
-<jsp:setProperty name="content" property="contentsImgUrl" />
+<jsp:setProperty name="content" property="contentsImgUrl" /> 
 <jsp:setProperty name="content" property="pid" />
+<jsp:setProperty name="content" property="tdate" />
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,7 @@
 				}else{
 					
 					ContentDAO contentDAO = new ContentDAO();
-					int result = contentDAO.insertContent(content.getBookId(),content.getTitle(),content.getText(), content.getContentsImgUrl(),content.getPid());
+					int result = contentDAO.insertContent(content.getBookId(),content.getTitle(),content.getText(), content.getContentsImgUrl(),content.getPid(),content.gettdate());
 					
 					//insertContent(String bookID, String title, String text, String imgurl )
 					if(result == -1){
@@ -55,7 +56,15 @@
 					}else{
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
-						script.println("location.href='bookDetail.jsp?bookId="+content.getBookId()+"'");
+						if(content.getBookId() !=null && content.getBookId() !="")
+						{
+							script.println("location.href='bookDetail.jsp?bookId="+content.getBookId()+"'");
+						}else{
+							/**
+							 bookID가 없는 경우는 note.jsp로 보냄 
+							*/
+							script.println("location.href='timeline.jsp'");
+						}
 						script.println("</script>");
 					}
 				}

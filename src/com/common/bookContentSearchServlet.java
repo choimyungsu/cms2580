@@ -44,7 +44,7 @@ public class bookContentSearchServlet extends HttpServlet {
 			
 		}
 		result.append("]}");
-		System.out.println(result.toString());
+		//System.out.println(result.toString());
 		return result.toString();
 					
 		}

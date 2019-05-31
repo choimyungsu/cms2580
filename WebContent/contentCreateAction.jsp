@@ -42,7 +42,8 @@
 				}else{
 					
 					ContentDAO contentDAO = new ContentDAO();
-					int result = contentDAO.insertContent(content.getBookId(),content.getTitle(),content.getText(), content.getContentsImgUrl());
+					//int result = contentDAO.insertContent(content.getBookId(),content.getTitle(),content.getText(), content.getContentsImgUrl());
+					int result = contentDAO.insertContent(content.getBookId(),content.getTitle(),content.getText(), content.getContentsImgUrl(),content.getPid(),content.gettdate());
 					//insertContent(String bookID, String title, String text, String imgurl )
 					if(result == -1){
 						PrintWriter script = response.getWriter();

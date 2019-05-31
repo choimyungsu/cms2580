@@ -105,7 +105,6 @@ function changeSelect3(){
     document.form1.submit();
 }
 
-  
 
 </script>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -155,6 +154,7 @@ function changeSelect3(){
 					            <option value="B003">리눅스마스터1급</option>
 					            <option value="A004">리눅스마스터1급 실기</option>
 					            <option value="B004">네트워크관리사1급</option>
+					            <option value="B020">네트워크관리사2급</option>
 					            <option value="B013">정보처리기사</option>
 					            <option value="B007">공인중개사1차</option>
 					            <option value="B017">국어(9급 국가직)</option>
@@ -174,8 +174,7 @@ function changeSelect3(){
 					            <option value="one" >한문제씩 보기</option>
 					        </select>
 					    </div>
-					
-					
+					    
 					  </div><!-- row  -->
 					  <input type="hidden" name="examcode">
 					  <input type="hidden" name="turn">
@@ -221,5 +220,6 @@ function changeSelect3(){
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+	   
   </body>
 </html>

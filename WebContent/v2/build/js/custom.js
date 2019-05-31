@@ -2606,15 +2606,17 @@ if (typeof NProgress != 'undefined') {
 
 			}
 			
+			
 			if ($('#graph_donut').length ){
 			
 				Morris.Donut({
 				  element: 'graph_donut',
 				  data: [
-					{label: 'Jam', value: 25},
-					{label: 'Frosted', value: 40},
+					{label: '참여감리원', value: 90},
+					{label: '비참여', value: 10}/*,
 					{label: 'Custard', value: 25},
-					{label: 'Sugar', value: 10}
+					{label: 'Sugar', value: 10}*/
+					
 				  ],
 				  colors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
 				  formatter: function (y) {

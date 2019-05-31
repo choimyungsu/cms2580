@@ -104,7 +104,7 @@
 				 <%
 				    ContentDAO contentDAO = new ContentDAO();
 				    Util util = new Util();
-				    ArrayList<Content> list = contentDAO.searchContents(bookId);//""
+				    ArrayList<Content> list = contentDAO.searchContents(bookId,contentId);//""
 				    Content content = contentDAO.searchContent(contentId);//한건 찾기 
 				    for(int i =0 ; i < list.size(); i++){
 				%>

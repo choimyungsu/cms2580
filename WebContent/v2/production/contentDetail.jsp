@@ -105,6 +105,19 @@
     <!-- tree viewer CSS -->
     <link rel="stylesheet" href="../vendors/tree-viewer/tree-viewer.css">
     
+    <!-- timeline -->
+    <link rel="stylesheet" type="text/css" href="../vendors/timeline/style.css">
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+<style>
+/* 이미지를 자동으로 화면에 맞게 리사이즈 되도록 */
+img {
+    max-width: 100%; /* 이미지의 최대사이즈 */
+    width /***/: auto; /* IE8 */
+    height: auto;
+    vertical-align: bottom;
+}
+</style>
     
   </head>
 
@@ -168,7 +181,7 @@
                                 <h3 style="text-align: center;margin-top:0;"><a class="btn btn-default " href="contentCreate.jsp?bookId=<%=bookId %>" >Add Contents</a></h3>
                                 <% } %>
                             </div>
-                                <div class="page  col-sm-9 " style="border-left:1px solid #BDBDBD; margin-left:-1px" id="load_content" >
+                                <div class="page  col-sm-9 " style="border-left:1px solid #BDBDBD; margin-left:-1px" id="load_content" > 
                                 
                                 
                                 
@@ -185,12 +198,12 @@
                                         <div class="date">
                                             <p><%=content.getCDate() %>   조회수 : <%=content.getCnt() %></p>
                                         </div>
-                                        <div>
+                                        <div class="img">
                                         <% if(content.getContentsImgUrl() !=null) {%>
-                                            <%=content.getContentsImgUrl() %>
+                                            <%= util.imgurlcheck(content.getContentsImgUrl()) %>
                                         <% } %>
                                         </div>
-                                        <div><%=content.getText() %></div>
+                                        <div class="img"><%=content.getText() %></div>
                                     </div>
                                     <a class="btn btn-default" onclick="showComment()" >Add comment</a>
                                     <div id="commentBlock" style="display: none;">

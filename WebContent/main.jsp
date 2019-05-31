@@ -17,6 +17,10 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!--1. clipboard.js 파일 cdn을 통해서 로드-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+
+
     <script type="text/javascript">
       //google.charts.load('current', {'packages':['corechart']});
       google.charts.load("visualization", "1", {packages:["corechart"]});//챠트의 리사이즈가 가능하도록
@@ -52,7 +56,32 @@
     	  drawChart();
     	});
       
-      
+   // 3. 웹 문서가 로드되면 클립보드 객체 생성
+      $(document).ready(function(){
+
+          var clipboard = new Clipboard('.btn');
+          clipboard.on('success', function(e) {
+              console.log("Success");
+              alert("복사되었습니다.")
+
+              /*
+              아래 함수를 통해서 블록지정을 없앨 수 있습니다.
+              */
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+          });
+          clipboard.on('error', function(e) {
+              console.log("Fail");
+          });
+
+          // 아래와 같이 button 태그만 가져오는 방법도 가능하다.
+          /*
+          var btns = document.querySelectorAll('button');
+          var clipboard = new Clipboard(btns);
+          */
+
+
+      });   
 
     </script>
 
@@ -159,7 +188,7 @@
 	</div>
 </div>
 <br>
-
+<button class="btn btn-primary btn-sm" data-clipboard-text="http://cms2580.cafe24.com">URL 클립보드 복사</button>
 
 
            

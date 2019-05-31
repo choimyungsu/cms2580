@@ -23,7 +23,7 @@ import com.exam.Examcontents;
 public class ContentslistExcelReader {
 	
 	/**
-	 * XLSX 업로드List<Examlist> 
+	 * XLSX 업로드List<ExamContent> 
 	 * @param filePath
 	 * @return
 	 */
@@ -107,7 +107,10 @@ public class ContentslistExcelReader {
 									case 3: // subject
 										vo.setSubject(value);
 										break;
-									
+										
+									case 4: // definition
+										vo.setDefinition(value);
+										break;
 		
 									default:
 										break;

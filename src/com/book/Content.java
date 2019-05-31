@@ -36,8 +36,11 @@ public class Content {
 
     // 발행일 
     private String pDate;
+    
 
-    // 대표이미지 
+
+
+	// 대표이미지 
     private String contentsImgUrl;
 
     // contents 제목 
@@ -45,6 +48,9 @@ public class Content {
     
     // 조회수 
     private String cnt;
+    
+    // 
+    private String tdate;
 
     public String getCnt() {
 		return cnt;
@@ -117,6 +123,14 @@ public class Content {
     public void setPDate(String pDate) {
         this.pDate = pDate;
     }
+    
+    public String gettdate() {
+		return tdate;
+	}
+
+	public void settdate(String tdate) {
+		this.tdate = tdate;
+	}
 
     public String getContentsImgUrl() {
         return contentsImgUrl;
@@ -145,6 +159,7 @@ public class Content {
         this.cDate = param.getCDate();
         this.uDate = param.getUDate();
         this.pDate = param.getPDate();
+        this.tdate = param.gettdate();
         this.contentsImgUrl = param.getContentsImgUrl();
         this.title = param.getTitle();
     }
